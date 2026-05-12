@@ -351,45 +351,88 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 130px 40px 80px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 36px;
+      padding: 110px 40px 50px;
       position: relative;
       z-index: 2;
-      max-width: 1500px;
+      max-width: 1600px;
       margin: 0 auto;
-      gap: 80px;
     }
 
-    .hero-left {
-      flex: 1;
+    /* TOP META STRIP */
+    .hero-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 30px;
+      align-items: center;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       position: relative;
     }
-
-    .hero-meta-line {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 36px;
-      font-family: var(--mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.22em;
-      color: var(--cyan);
-      text-transform: uppercase;
+    .hero-strip::before,
+    .hero-strip::after {
+      content: "";
+      position: absolute;
+      width: 6px; height: 6px;
+      border: 1px solid var(--cyan);
+      transform: rotate(45deg);
+      top: 50%;
+      margin-top: -3px;
     }
-    .hero-meta-line .ml {
-      width: 40px;
-      height: 1px;
-      background: var(--cyan);
+    .hero-strip::before { left: -3px; }
+    .hero-strip::after { right: -3px; }
+
+    .strip-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .strip-cell.right { align-items: flex-end; text-align: right; }
+    .strip-cell.center { align-items: center; text-align: center; }
+    .strip-meta {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    .strip-val {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--t-1);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .strip-val .live-dot {
+      width: 7px; height: 7px;
+      background: #00ff88;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ff88;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+
+    /* MAIN BLOCK */
+    .hero-main {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 60px;
+      align-items: center;
+      position: relative;
     }
 
     .hero-name {
       font-family: var(--display);
-      font-size: clamp(4.5rem, 11vw, 11rem);
+      font-size: clamp(4.5rem, 14.5vw, 15rem);
       font-weight: 700;
-      line-height: 0.9;
+      line-height: 0.86;
       text-transform: uppercase;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
     }
     .hero-name .line {
       display: block;
@@ -414,65 +457,72 @@
       display: inline-block;
     }
 
-    .hero-divider {
-      margin: 32px 0;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.6s forwards;
-    }
-    .hero-divider .line-h {
-      width: 80px; height: 1px;
-      background: linear-gradient(90deg, var(--cyan), transparent);
-    }
-    .hero-divider .marker {
-      width: 8px; height: 8px;
-      border: 1px solid var(--cyan);
-      transform: rotate(45deg);
-    }
     @keyframes fadeIn {
       to { opacity: 1; }
     }
 
+    /* BOTTOM HERO BAR */
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr auto;
+      gap: 50px;
+      align-items: end;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 0.9s ease 0.85s forwards;
+    }
+    .hero-bottom::before {
+      content: "";
+      position: absolute;
+      top: -3px; left: -3px;
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+
     .hero-roles {
       font-family: var(--mono);
-      font-size: 0.82rem;
-      letter-spacing: 0.18em;
+      font-size: 0.74rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--t-2);
-      margin-bottom: 24px;
+      color: var(--cyan);
+      margin-bottom: 14px;
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.7s forwards;
-    }
-    .hero-roles span {
-      position: relative;
     }
     .hero-roles span + span::before {
-      content: "/";
-      margin-right: 16px;
-      color: var(--cyan);
+      content: "·";
+      margin-right: 14px;
+      opacity: 0.5;
     }
 
     .hero-desc {
-      font-size: 1.02rem;
+      font-size: 1rem;
       line-height: 1.7;
       color: var(--t-2);
-      max-width: 520px;
-      margin-bottom: 36px;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.85s forwards;
+      max-width: 540px;
+    }
+
+    .hero-tagline {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--t-1);
+      max-width: 360px;
+    }
+    .hero-tagline em {
+      color: var(--cyan);
+      font-style: normal;
     }
 
     .hero-actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 1s forwards;
     }
     .btn {
       display: inline-flex;
@@ -707,13 +757,12 @@
     }
     .marquee-track {
       display: flex;
+      align-items: center;
       gap: 60px;
-      animation: scroll 40s linear infinite;
+      animation: scroll 45s linear infinite;
       white-space: nowrap;
       width: max-content;
-    }
-    .marquee:hover .marquee-track {
-      animation-play-state: paused;
+      will-change: transform;
     }
     .marquee-item {
       font-family: var(--display);
@@ -722,19 +771,20 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--t-3);
-      display: flex;
-      align-items: center;
-      gap: 60px;
+      flex-shrink: 0;
     }
-    .marquee-item .star {
+    .marquee-sep {
       color: var(--cyan);
-      font-size: 0.8rem;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      opacity: 0.7;
     }
     .marquee-item.bright {
       color: var(--white);
     }
     @keyframes scroll {
-      to { transform: translateX(-50%); }
+      from { transform: translate3d(0, 0, 0); }
+      to   { transform: translate3d(-50%, 0, 0); }
     }
 
     /* ── SECTION GENERAL ── */
@@ -1226,9 +1276,12 @@
     .reveal-d-6 { transition-delay: 0.48s; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 1100px) {
-      .hero { padding: 110px 30px 60px; gap: 60px; }
+    @media (max-width: 1200px) {
+      .hero { padding: 100px 30px 40px; gap: 28px; }
+      .hero-main { grid-template-columns: 1fr 300px; gap: 40px; }
       .photo-card { width: 300px; height: 380px; }
+      .hero-bottom { grid-template-columns: 1fr 1fr; gap: 40px; }
+      .hero-bottom .hero-actions { grid-column: 1 / -1; }
       .about-grid { gap: 50px; }
       .section { padding: 90px 30px; }
     }
@@ -1238,16 +1291,22 @@
       .nav-links { gap: 18px; }
 
       .hero {
-        flex-direction: column;
-        padding: 110px 24px 60px;
-        gap: 60px;
+        padding: 100px 24px 50px;
+        gap: 24px;
       }
-      .hero-right { width: 100%; display: flex; justify-content: center; }
+      .hero-strip { grid-template-columns: 1fr; gap: 12px; padding: 16px 0; }
+      .hero-strip .strip-cell.center, .hero-strip .strip-cell.right { align-items: flex-start; text-align: left; }
+
+      .hero-main { grid-template-columns: 1fr; gap: 50px; }
+      .hero-photo-col { display: flex; justify-content: center; }
       .photo-card { width: 280px; height: 340px; }
       .float-stat.a { right: -20px; }
       .float-stat.b { left: -20px; }
       .hud.top-right { top: -22px; }
       .hud.bottom-left { bottom: -22px; }
+
+      .hero-bottom { grid-template-columns: 1fr; gap: 28px; padding-top: 24px; }
+      .hero-tagline { max-width: none; }
 
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .section { padding: 80px 24px; }
@@ -1258,10 +1317,12 @@
       .nav-links li:not(:last-child) { display: none; }
       .projects-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; }
-      .marquee-item { font-size: 1.1rem; gap: 36px; }
+      .marquee-item { font-size: 1.1rem; }
       .marquee-track { gap: 36px; }
       .section-head { flex-direction: column; align-items: flex-start; }
-      .hero-name { font-size: clamp(3.5rem, 17vw, 6rem); }
+      .hero-name { font-size: clamp(3.5rem, 18vw, 6rem); }
+      .hero-actions { width: 100%; flex-direction: column; }
+      .hero-actions .btn { justify-content: center; width: 100%; }
     }
 
     /* ── Reduce motion ── */
@@ -1300,7 +1361,6 @@
       <div class="logo-orb"></div>
       <div class="logo-text">
         <span class="logo-name">Oliver Libič</span>
-        <span class="logo-sub">SYS · v2.0</span>
       </div>
     </div>
 
@@ -1320,34 +1380,81 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
-    <div class="hero-left">
-      <div class="hero-meta-line">
-        <span class="ml"></span>
-        <span>// PORTFOLIO · 2026</span>
+
+    <!-- TOP STRIP -->
+    <div class="hero-strip">
+      <div class="strip-cell">
+        <span class="strip-meta">// PORTFOLIO</span>
+        <span class="strip-val">EDITION 2026</span>
+      </div>
+      <div class="strip-cell center">
+        <span class="strip-meta">// LOCATION</span>
+        <span class="strip-val">Bratislava, SK</span>
+      </div>
+      <div class="strip-cell right">
+        <span class="strip-meta">// STATUS</span>
+        <span class="strip-val"><span class="live-dot"></span>Available for work</span>
+      </div>
+    </div>
+
+    <!-- MAIN ROW -->
+    <div class="hero-main">
+      <div class="hero-name-col">
+        <h1 class="hero-name">
+          <span class="line"><span class="line-inner scramble" data-text="OLIVER">OLIVER</span></span>
+          <span class="line l2"><span class="line-inner scramble" data-text="LIBIČ">LIBIČ</span></span>
+        </h1>
       </div>
 
-      <h1 class="hero-name">
-        <span class="line"><span class="line-inner scramble" data-text="OLIVER">OLIVER</span></span>
-        <span class="line l2"><span class="line-inner scramble" data-text="LIBIČ">LIBIČ</span></span>
-      </h1>
+      <div class="hero-photo-col">
+        <div class="hud top-right">// IDENTITY.LOAD</div>
+        <div class="hud bottom-left">// SIGNAL: STRONG</div>
 
-      <div class="hero-divider">
-        <div class="line-h"></div>
-        <div class="marker"></div>
+        <div class="photo-card" id="photoCard">
+          <div class="photo-frame">
+            <img src="oliver.jpeg" alt="Oliver Libič" />
+          </div>
+          <div class="photo-corners">
+            <div class="corner tl"></div>
+            <div class="corner tr"></div>
+            <div class="corner bl"></div>
+            <div class="corner br"></div>
+          </div>
+          <div class="photo-badge">
+            <span class="dot"></span>
+            Currently building
+          </div>
+
+          <div class="float-stat a">
+            <div class="num" data-count="10">0</div>
+            <div class="label">Projektov</div>
+          </div>
+          <div class="float-stat b">
+            <div class="num" data-count="3">0</div>
+            <div class="label">Roky+</div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div class="hero-roles">
-        <span>Web Developer</span>
-        <span>Designer</span>
-        <span>Creative Tech</span>
+    <!-- BOTTOM STRIP -->
+    <div class="hero-bottom">
+      <div>
+        <div class="hero-roles">
+          <span>Web Developer</span>
+          <span>Designer</span>
+          <span>Brand Builder</span>
+        </div>
+        <p class="hero-desc">
+          Robím weby pre ľudí, ktorí chcú viac než šablónu —
+          od osobných stránok cez e-shopy po veľké event platformy.
+          Každý projekt riešim osobne, s dôrazom na detail a rýchlosť.
+        </p>
       </div>
-
-      <p class="hero-desc">
-        Staviam rýchle, čisté a vizuálne silné digitálne systémy —
-        od event platforiem a e-shopov po custom webové aplikácie
-        a AI-driven automatizácie. Postavené na detaile.
-      </p>
-
+      <div class="hero-tagline">
+        Postavené v <em>Bratislave</em>.<br>
+        Naživo po celom svete.
+      </div>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">
           <span>Pozri projekty</span>
@@ -1359,66 +1466,35 @@
         </a>
       </div>
     </div>
-
-    <div class="hero-right">
-      <div class="hud top-right">// IDENTITY.LOAD</div>
-      <div class="hud bottom-left">// STATUS: ONLINE</div>
-
-      <div class="photo-card" id="photoCard">
-        <div class="photo-frame">
-          <img src="oliver.jpeg" alt="Oliver Libič" />
-        </div>
-        <div class="photo-corners">
-          <div class="corner tl"></div>
-          <div class="corner tr"></div>
-          <div class="corner bl"></div>
-          <div class="corner br"></div>
-        </div>
-        <div class="photo-badge">
-          <span class="dot"></span>
-          Currently building
-        </div>
-
-        <div class="float-stat a">
-          <div class="num" data-count="10">0</div>
-          <div class="label">Projektov</div>
-        </div>
-        <div class="float-stat b">
-          <div class="num" data-count="3">0</div>
-          <div class="label">Roky+</div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- MARQUEE -->
   <div class="marquee">
     <div class="marquee-track">
-      <div class="marquee-item bright">Web Development</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">UX / UI Design</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">Brand Systems</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">Creative Code</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">AI · Automation</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">E-Commerce</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-
-      <div class="marquee-item bright">Web Development</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">UX / UI Design</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">Brand Systems</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">Creative Code</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">AI · Automation</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">E-Commerce</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
+      <span class="marquee-item bright">Web Development</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">UX / UI Design</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">Brand Identity</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Custom Websites</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">E-Commerce</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Performance</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">Web Development</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">UX / UI Design</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">Brand Identity</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Custom Websites</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">E-Commerce</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Performance</span>
+      <span class="marquee-sep">✦</span>
     </div>
   </div>
 
@@ -1426,40 +1502,40 @@
   <section class="section" id="about">
     <div class="section-head">
       <div>
-        <div class="section-label reveal"><span class="ll"></span><span>// 01 — Approach</span></div>
+        <div class="section-label reveal"><span class="ll"></span><span>// 01 — Prístup</span></div>
         <h2 class="section-title reveal reveal-d-1">
-          Engineered for <span class="stroke">tomorrow.</span>
+          Ako to <span class="stroke">robím.</span>
         </h2>
       </div>
       <p class="section-desc reveal reveal-d-2">
-        Tvorím weby a systémy, ktoré nevyzerajú len pekne — fungujú, škálujú
-        a žijú dlhšie než trendy.
+        Každý web beriem ako vlastnú vec — pýtam sa otázky, premýšľam nad detailmi
+        a stavám stránku tak, aby ti slúžila dlhé roky.
       </p>
     </div>
 
     <div class="about-grid">
       <div class="about-statement reveal">
-        Každý projekt je <span class="hi">vyladený</span> ako prístroj —
-        rýchly, prehľadný a jednoznačný v zámere. Žiadne plnivo,
-        žiadne kompromisy. <span class="hi">Iba čistý systém</span>,
-        ktorý hovorí tvojím jazykom a presviedča dáta.
+        Robím weby pre ľudí, ktorí chcú <span class="hi">viac ako šablónu</span>
+        stiahnutú z internetu. Každý projekt beriem osobne — pýtam sa,
+        premýšľam nad detailmi a stavám stránku tak, aby <span class="hi">fungovala
+        pre tvojich klientov</span>, nielen pekne vyzerala.
       </div>
 
       <div class="about-side">
         <div class="about-card reveal reveal-d-2">
-          <div class="meta">// 001 / Philosophy</div>
-          <div class="h">Performance-first</div>
-          <div class="d">Každý milisekundový load má hodnotu. Optimalizujem od základov — žiadne knižnice navyše, žiadny mŕtvy kód.</div>
+          <div class="meta">// 001 — Rýchlosť</div>
+          <div class="h">Web sa musí načítať hneď</div>
+          <div class="d">Pomalá stránka stráca návštevníkov skôr, než si stihnú prečítať prvú vetu. Ladím každý detail tak, aby sa web zobrazil okamžite — aj na mobile, aj na slabšom internete.</div>
         </div>
         <div class="about-card reveal reveal-d-3">
-          <div class="meta">// 002 / Design</div>
-          <div class="h">Visual systems</div>
-          <div class="d">Dizajn nie je dekorácia — je to štruktúra. Stavám konzistentné systémy, ktoré škálujú s tvojím brandom.</div>
+          <div class="meta">// 002 — Dizajn</div>
+          <div class="h">Pekný web, ktorý aj funguje</div>
+          <div class="d">Stránka nemá byť len pekná. Má viesť návštevníka tam, kam má — zavolať, objednať, prihlásiť sa. Pri každom kroku premýšľam, čo má používateľ urobiť ďalej.</div>
         </div>
         <div class="about-card reveal reveal-d-4">
-          <div class="meta">// 003 / Tech</div>
-          <div class="h">Future-proof stack</div>
-          <div class="d">Moderné nástroje, ale s rozumom. Vyberám tech, ktorý vydrží — nie ten, ktorý je práve trendy.</div>
+          <div class="meta">// 003 — Spoľahlivosť</div>
+          <div class="h">Funguje aj o pár rokov</div>
+          <div class="d">Vyberám technológie, ktoré vydržia. Tvoj web nebude o pol roka zastaraný, ani sa nerozsype, keď budeš chcieť pridať novú sekciu alebo zmeniť obsah.</div>
         </div>
       </div>
     </div>
@@ -1469,14 +1545,14 @@
   <section class="section" id="skills">
     <div class="section-head">
       <div>
-        <div class="section-label reveal"><span class="ll"></span><span>// 02 — Capabilities</span></div>
+        <div class="section-label reveal"><span class="ll"></span><span>// 02 — Čo robím</span></div>
         <h2 class="section-title reveal reveal-d-1">
-          What I <span class="em">build.</span>
+          Služby a <span class="em">remeslo.</span>
         </h2>
       </div>
       <p class="section-desc reveal reveal-d-2">
-        Od frontendu po automatizácie — celý stack v jednej hlave,
-        čo znamená rýchle rozhodnutia a žiadne handoff straty.
+        Špecializujem sa hlavne na weby a e-shopy — od prvého konceptu po spustenie.
+        Keď treba, viem ti k tomu pripojiť aj automatizácie.
       </p>
     </div>
 
@@ -1484,38 +1560,38 @@
       <div class="skill-cell reveal">
         <span class="num">// 01</span>
         <div class="ico"><i class="fa-solid fa-code"></i></div>
-        <div class="t">Frontend Development</div>
-        <div class="d">HTML, CSS, JavaScript. Animácie, performance a accessibility ako default.</div>
+        <div class="t">Tvorba webov</div>
+        <div class="d">Stránky na mieru — od jednoduchých vizitiek po komplexné platformy. HTML, CSS, JavaScript so zameraním na detail.</div>
       </div>
       <div class="skill-cell reveal reveal-d-1">
         <span class="num">// 02</span>
         <div class="ico"><i class="fa-brands fa-wordpress"></i></div>
-        <div class="t">CMS Platforms</div>
-        <div class="d">WordPress, Webflow, Shoptet. Custom témy, integrácie, výkonové ladenie.</div>
+        <div class="t">CMS systémy</div>
+        <div class="d">WordPress, Webflow, Shoptet. Robím vlastné šablóny aj integrácie tak, aby si stránku vedel sám spravovať.</div>
       </div>
       <div class="skill-cell reveal reveal-d-2">
         <span class="num">// 03</span>
-        <div class="ico"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <div class="t">Design Systems</div>
-        <div class="d">Figma, vizuálne identity a UX pre skutočných ľudí — nie len pre prezentácie.</div>
+        <div class="ico"><i class="fa-solid fa-shop"></i></div>
+        <div class="t">E-shopy</div>
+        <div class="d">Shoptet a custom riešenia. Optimalizujem produktové stránky, checkout aj UX tak, aby ľudia naozaj nakupovali.</div>
       </div>
       <div class="skill-cell reveal reveal-d-3">
         <span class="num">// 04</span>
-        <div class="ico"><i class="fa-solid fa-bolt"></i></div>
-        <div class="t">Web Performance</div>
-        <div class="d">Core Web Vitals, image optimizácia, Cloudflare edge. Žiadny render-block.</div>
+        <div class="ico"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div class="t">Dizajn a UX</div>
+        <div class="d">Figma, vizuálne identity, UX pre skutočných ľudí. Stavám dizajn tak, aby viedol návštevníka tam, kam má.</div>
       </div>
       <div class="skill-cell reveal reveal-d-4">
         <span class="num">// 05</span>
-        <div class="ico"><i class="fa-solid fa-robot"></i></div>
-        <div class="t">AI & Automation</div>
-        <div class="d">Make, n8n, Claude API. Automatizujem procesy, ktoré by inak trvali hodiny.</div>
+        <div class="ico"><i class="fa-solid fa-bolt"></i></div>
+        <div class="t">Rýchlosť a SEO</div>
+        <div class="d">Core Web Vitals, optimalizácia obrázkov, Cloudflare edge. Tvoja stránka sa načíta skôr, než ju Google stihne posúdiť.</div>
       </div>
       <div class="skill-cell reveal reveal-d-5">
         <span class="num">// 06</span>
-        <div class="ico"><i class="fa-solid fa-shop"></i></div>
-        <div class="t">E-Commerce</div>
-        <div class="d">Shoptet, custom checkout flows, optimalizácia konverzií a produktových kariet.</div>
+        <div class="ico"><i class="fa-solid fa-robot"></i></div>
+        <div class="t">Automatizácia</div>
+        <div class="d">Make, n8n, AI nástroje. Ak treba, vieme ti k webu pripojiť aj automatizácie, ktoré ti ušetria hodiny rutiny.</div>
       </div>
     </div>
   </section>
@@ -1523,22 +1599,22 @@
   <!-- MARQUEE 2 -->
   <div class="marquee">
     <div class="marquee-track">
-      <div class="marquee-item">Selected Work</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">2024 — 2026</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">Selected Work</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">2024 — 2026</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">Selected Work</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">2024 — 2026</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item">Selected Work</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
-      <div class="marquee-item bright">2024 — 2026</div>
-      <div class="marquee-item"><span class="star">✦</span></div>
+      <span class="marquee-item">Selected Work</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">2024 — 2026</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Selected Work</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">2024 — 2026</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Selected Work</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">2024 — 2026</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item">Selected Work</span>
+      <span class="marquee-sep">✦</span>
+      <span class="marquee-item bright">2024 — 2026</span>
+      <span class="marquee-sep">✦</span>
     </div>
   </div>
 
@@ -1546,14 +1622,14 @@
   <section class="section" id="projects">
     <div class="section-head">
       <div>
-        <div class="section-label reveal"><span class="ll"></span><span>// 03 — Work</span></div>
+        <div class="section-label reveal"><span class="ll"></span><span>// 03 — Práca</span></div>
         <h2 class="section-title reveal reveal-d-1">
-          Selected <span class="stroke">projects.</span>
+          Vybrané <span class="stroke">projekty.</span>
         </h2>
       </div>
       <p class="section-desc reveal reveal-d-2">
-        Reálne projekty, ktoré bežia v produkcii a slúžia klientom.
-        Od jednoduchých vizitiek po e-commerce a event platformy.
+        Reálne stránky, ktoré bežia v produkcii a denne slúžia klientom.
+        Od vizitiek a e-shopov až po platformy pre tisíce ľudí.
       </p>
     </div>
 
@@ -1696,15 +1772,15 @@
   <section class="cta" id="contact">
     <div class="cta-tag reveal">
       <span class="dot"></span>
-      <span>// Available for new projects</span>
+      <span>// Beriem nové projekty</span>
     </div>
     <h2 class="cta-title reveal reveal-d-1">
-      Let's build
-      <span class="stroke">something real.</span>
+      Poďme spraviť
+      <span class="stroke">niečo dobré.</span>
     </h2>
     <p class="cta-desc reveal reveal-d-2">
-      Máš nápad, projekt alebo brand, ktorý si zaslúži viac?
-      Napíš mi — odpoviem do 24 hodín.
+      Máš nápad, biznis alebo brand, ktorý si zaslúži poriadny web?
+      Napíš mi — ozvem sa do 24 hodín.
     </p>
     <a href="mailto:libic.oliver@gmail.com" class="cta-email reveal reveal-d-3">
       <i class="fa-solid fa-envelope"></i>

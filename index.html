@@ -326,6 +326,98 @@
       box-shadow: 0 0 8px var(--cyan);
     }
 
+    /* ── BURGER ── */
+    .burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 200;
+    }
+    .burger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    .nav-drawer {
+      display: none;
+      position: fixed;
+      top: 61px; left: 0; right: 0;
+      background: rgba(0, 0, 0, 0.97);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border-bright);
+      z-index: 99;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), opacity 0.3s ease;
+    }
+    .nav-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    .nav-drawer ul {
+      list-style: none;
+      padding: 8px 0 16px;
+    }
+    .nav-drawer ul li a {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 28px;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--t-2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, padding-left 0.2s;
+    }
+    .nav-drawer ul li a::before {
+      content: "";
+      width: 4px; height: 4px;
+      background: var(--t-3);
+      border-radius: 50%;
+      transition: background 0.2s, box-shadow 0.2s;
+      flex-shrink: 0;
+    }
+    .nav-drawer ul li a:hover {
+      color: var(--cyan);
+      padding-left: 36px;
+    }
+    .nav-drawer ul li a:hover::before {
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
+    .nav-drawer ul li:last-child a { border-bottom: none; }
+    .nav-drawer-status {
+      padding: 14px 28px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+
     .nav-status {
       display: flex;
       align-items: center;
@@ -517,7 +609,7 @@
     .stage-photo {
       position: relative;
       z-index: 2;
-      width: clamp(260px, 30vw, 420px);
+      width: clamp(220px, 22vw, 320px);
       aspect-ratio: 4/5;
       perspective: 1000px;
       opacity: 0;
@@ -1453,7 +1545,10 @@
       .footer-inner { justify-content: center; text-align: center; }
     }
     @media (max-width: 600px) {
-      .nav-links li:not(:last-child) { display: none; }
+      .burger { display: flex; }
+      .nav-links { display: none; }
+      .nav-status { display: none; }
+      .nav-drawer { display: block; }
       .projects-grid { grid-template-columns: 1fr; }
       .skills-grid { grid-template-columns: 1fr; }
       .marquee-item { font-size: 1.1rem; }
@@ -1584,8 +1679,27 @@
         <span class="dot"></span>
         <span>Available <span id="timeNow"></span></span>
       </div>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </nav>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="nav-drawer" id="navDrawer">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-drawer-status">
+      <span class="live-dot"></span>
+      <span>Available for work</span>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero" id="top">
@@ -2184,13 +2298,28 @@
 
     /* ── NAV SCROLL STATE ── */
     const nav = document.getElementById("nav");
-    let lastY = 0;
     window.addEventListener("scroll", () => {
-      const y = window.scrollY;
-      if (y > 50) nav.classList.add("scrolled");
+      if (window.scrollY > 50) nav.classList.add("scrolled");
       else nav.classList.remove("scrolled");
-      lastY = y;
     }, { passive: true });
+
+    /* ── BURGER MENU ── */
+    const burger = document.getElementById("burger");
+    const navDrawer = document.getElementById("navDrawer");
+
+    burger.addEventListener("click", () => {
+      burger.classList.toggle("open");
+      navDrawer.classList.toggle("open");
+      document.body.style.overflow = navDrawer.classList.contains("open") ? "hidden" : "";
+    });
+
+    navDrawer.querySelectorAll("a").forEach(a => {
+      a.addEventListener("click", () => {
+        burger.classList.remove("open");
+        navDrawer.classList.remove("open");
+        document.body.style.overflow = "";
+      });
+    });
   </script>
 </body>
 </html>

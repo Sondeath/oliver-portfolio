@@ -3,23 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Oliver Libič – Portfolio</title>
+  <title>Oliver Libič — Portfolio</title>
+  <meta name="description" content="Oliver Libič — Web Developer, Designer, Creative Tech. Crafting digital systems for the future." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
     :root {
       --bg: #000000;
-      --bg2: #080808;
+      --bg-1: #050505;
+      --bg-2: #0a0a0a;
+      --bg-3: #111111;
       --cyan: #00f0ff;
-      --pink: #ff0066;
-      --purple: #9b00ff;
+      --cyan-soft: rgba(0, 240, 255, 0.6);
+      --pink: #ff2e63;
+      --purple: #8b00ff;
       --white: #ffffff;
-      --gray: #888888;
-      --card-bg: #0a0a0a;
-      --border: rgba(255,255,255,0.07);
+      --t-1: rgba(255, 255, 255, 0.9);
+      --t-2: rgba(255, 255, 255, 0.6);
+      --t-3: rgba(255, 255, 255, 0.4);
+      --t-4: rgba(255, 255, 255, 0.2);
+      --border: rgba(255, 255, 255, 0.06);
+      --border-bright: rgba(0, 240, 255, 0.25);
+      --mono: "JetBrains Mono", ui-monospace, monospace;
+      --sans: "Inter", system-ui, -apple-system, sans-serif;
+      --display: "Space Grotesk", system-ui, sans-serif;
     }
 
     *, *::before, *::after {
@@ -28,132 +39,326 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
+    ::selection {
+      background: var(--cyan);
+      color: var(--bg);
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--white);
-      font-family: "Inter", system-ui, sans-serif;
+      font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      cursor: none;
     }
 
-    /* ── GRID BACKGROUND ── */
-    body::before {
-      content: "";
+    /* ── CUSTOM CURSOR ── */
+    .cursor-dot,
+    .cursor-ring {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+    }
+    .cursor-dot {
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cyan);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(0,240,255,0.5);
+      border-radius: 50%;
+      transition: width 0.25s ease, height 0.25s ease, border-color 0.25s, background 0.25s;
+    }
+    .cursor-ring.hover {
+      width: 60px; height: 60px;
+      border-color: var(--cyan);
+      background: rgba(0,240,255,0.06);
+    }
+    @media (hover: none), (max-width: 800px) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-ring { display: none; }
+    }
+
+    /* ── BACKGROUND LAYERS ── */
+    .bg-grid {
       position: fixed;
       inset: 0;
+      z-index: 0;
       background-image:
-        linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
+        linear-gradient(rgba(0,240,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,240,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+      animation: gridShift 60s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes gridShift {
+      to { background-position: 80px 80px; }
+    }
+
+    .bg-orb {
+      position: fixed;
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
       pointer-events: none;
       z-index: 0;
+      will-change: transform;
+    }
+    .bg-orb.a {
+      top: -200px; left: -200px;
+      background: var(--cyan);
+      animation: orbA 20s ease-in-out infinite;
+    }
+    .bg-orb.b {
+      bottom: -200px; right: -200px;
+      background: var(--purple);
+      animation: orbB 25s ease-in-out infinite;
+    }
+    @keyframes orbA {
+      0%,100% { transform: translate(0,0); }
+      50% { transform: translate(150px, 100px); }
+    }
+    @keyframes orbB {
+      0%,100% { transform: translate(0,0); }
+      50% { transform: translate(-150px, -120px); }
     }
 
-    /* ── SCANLINES ── */
-    body::after {
-      content: "";
+    .scanlines {
       position: fixed;
       inset: 0;
+      pointer-events: none;
+      z-index: 9997;
       background: repeating-linear-gradient(
         0deg,
-        transparent,
+        transparent 0px,
         transparent 2px,
-        rgba(0,0,0,0.12) 2px,
-        rgba(0,0,0,0.12) 4px
+        rgba(0,0,0,0.18) 3px,
+        transparent 4px
       );
+      mix-blend-mode: overlay;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 9998;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ── LOADER ── */
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 10001;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 24px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .loader.done {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-orb {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--cyan), var(--purple), var(--pink), var(--cyan));
+      box-shadow: 0 0 30px rgba(0,240,255,0.5);
+      animation: orbSpin 1.2s linear infinite;
+      position: relative;
+    }
+    .loader-orb::after {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      background: var(--bg);
+      border-radius: 50%;
+    }
+    @keyframes orbSpin {
+      to { transform: rotate(360deg); }
+    }
+    .loader-text {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+    .loader-bar {
+      width: 200px;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-bar::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 0%;
+      height: 100%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+      animation: loadFill 1.4s ease-out forwards;
+    }
+    @keyframes loadFill {
+      to { width: 100%; }
     }
 
     /* ── NAV ── */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       padding: 18px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.5);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0,240,255,0.08);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(0,0,0,0.85);
+      border-bottom-color: var(--border-bright);
     }
 
-    .nav-logo {
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      letter-spacing: 0.22em;
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-orb {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: conic-gradient(from 220deg, var(--cyan), var(--purple), var(--pink), var(--cyan));
+      box-shadow: 0 0 16px rgba(0,240,255,0.4), inset 0 0 12px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+      animation: logoSpin 8s linear infinite;
+    }
+    .logo-orb::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.45), transparent 55%);
+    }
+    @keyframes logoSpin {
+      to { transform: rotate(360deg); }
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .logo-name {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 0.92rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--white);
     }
-
-    .nav-logo span {
+    .logo-sub {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
       color: var(--cyan);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
     }
 
     .nav-links {
       display: flex;
-      gap: 32px;
+      gap: 26px;
       list-style: none;
     }
-
     .nav-links a {
-      color: var(--gray);
+      color: var(--t-2);
       text-decoration: none;
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       transition: color 0.2s;
       position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-
-    .nav-links a::after {
+    .nav-links a::before {
       content: "";
-      position: absolute;
-      left: 0; bottom: -4px;
-      width: 0; height: 1px;
+      width: 4px; height: 4px;
+      background: var(--t-3);
+      border-radius: 50%;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--cyan);
+    }
+    .nav-links a:hover::before {
       background: var(--cyan);
-      transition: width 0.25s ease;
+      box-shadow: 0 0 8px var(--cyan);
     }
 
-    .nav-links a:hover { color: var(--cyan); }
-    .nav-links a:hover::after { width: 100%; }
-
-    .nav-cta {
-      padding: 8px 20px;
-      border: 1px solid var(--cyan);
-      color: var(--cyan) !important;
-      border-radius: 2px;
-      font-size: 0.78rem !important;
-      letter-spacing: 0.18em !important;
-      transition: background 0.2s, color 0.2s !important;
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--t-3);
     }
-
-    .nav-cta:hover {
-      background: var(--cyan) !important;
-      color: var(--bg) !important;
+    .nav-status .dot {
+      width: 7px; height: 7px;
+      background: #00ff88;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ff88;
+      animation: pulse 1.6s ease-in-out infinite;
     }
-
-    .nav-cta::after { display: none !important; }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 120px 40px 80px;
+      padding: 130px 40px 80px;
       position: relative;
-      z-index: 1;
-      max-width: 1400px;
+      z-index: 2;
+      max-width: 1500px;
       margin: 0 auto;
-      gap: 60px;
+      gap: 80px;
     }
 
     .hero-left {
@@ -161,439 +366,570 @@
       position: relative;
     }
 
-    .hero-tag {
-      display: inline-flex;
+    .hero-meta-line {
+      display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
+      gap: 14px;
+      margin-bottom: 36px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
       color: var(--cyan);
-      margin-bottom: 28px;
-      border: 1px solid rgba(0,240,255,0.3);
-      padding: 6px 14px;
-      border-radius: 1px;
+      text-transform: uppercase;
     }
-
-    .hero-tag::before {
-      content: "";
-      width: 6px; height: 6px;
+    .hero-meta-line .ml {
+      width: 40px;
+      height: 1px;
       background: var(--cyan);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--cyan);
-      animation: blink 1.4s ease-in-out infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
     }
 
     .hero-name {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(5rem, 10vw, 10rem);
+      font-family: var(--display);
+      font-size: clamp(4.5rem, 11vw, 11rem);
       font-weight: 700;
-      line-height: 0.88;
+      line-height: 0.9;
       text-transform: uppercase;
-      letter-spacing: -0.02em;
-      position: relative;
+      letter-spacing: -0.03em;
     }
-
-    .hero-name .line1 {
+    .hero-name .line {
       display: block;
-      color: var(--white);
       position: relative;
+      overflow: hidden;
     }
-
-    .hero-name .line2 {
-      display: block;
-      -webkit-text-stroke: 2px var(--cyan);
+    .hero-name .line-inner {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: lineUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-name .line.l2 .line-inner {
+      animation-delay: 0.15s;
+      -webkit-text-stroke: 1.5px var(--cyan);
       color: transparent;
-      position: relative;
+    }
+    @keyframes lineUp {
+      to { transform: translateY(0); }
     }
 
-    /* Glitch effect */
-    .glitch {
-      position: relative;
-    }
-
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .glitch::before {
-      left: 3px;
-      -webkit-text-stroke: 2px var(--pink);
-      color: transparent;
-      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
-      animation: glitch1 4s infinite linear alternate-reverse;
-    }
-
-    .glitch::after {
-      left: -3px;
-      -webkit-text-stroke: 2px var(--cyan);
-      color: transparent;
-      clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
-      animation: glitch2 3.5s infinite linear alternate-reverse;
-    }
-
-    @keyframes glitch1 {
-      0%   { clip-path: polygon(0 5%, 100% 5%, 100% 15%, 0 15%);  transform: translateX(-3px); }
-      25%  { clip-path: polygon(0 40%, 100% 40%, 100% 55%, 0 55%); transform: translateX(3px); }
-      50%  { clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%); transform: translateX(-2px); }
-      75%  { clip-path: polygon(0 20%, 100% 20%, 100% 35%, 0 35%); transform: translateX(4px); }
-      100% { clip-path: polygon(0 85%, 100% 85%, 100% 95%, 0 95%); transform: translateX(-3px); }
-    }
-
-    @keyframes glitch2 {
-      0%   { clip-path: polygon(0 60%, 100% 60%, 100% 75%, 0 75%); transform: translateX(3px); }
-      33%  { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translateX(-3px); }
-      66%  { clip-path: polygon(0 45%, 100% 45%, 100% 60%, 0 60%); transform: translateX(2px); }
-      100% { clip-path: polygon(0 80%, 100% 80%, 100% 90%, 0 90%); transform: translateX(-4px); }
+    .scramble {
+      display: inline-block;
     }
 
     .hero-divider {
-      width: 60px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--cyan), var(--pink));
-      margin: 28px 0;
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+    .hero-divider .line-h {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+    .hero-divider .marker {
+      width: 8px; height: 8px;
+      border: 1px solid var(--cyan);
+      transform: rotate(45deg);
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .hero-roles {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--t-2);
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.7s forwards;
+    }
+    .hero-roles span {
       position: relative;
     }
-
-    .hero-divider::after {
-      content: "";
-      position: absolute;
-      right: -8px; top: -3px;
-      width: 8px; height: 8px;
-      border: 2px solid var(--pink);
-      border-radius: 50%;
-    }
-
-    .hero-subtitle {
-      font-size: 0.78rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-bottom: 24px;
+    .hero-roles span + span::before {
+      content: "/";
+      margin-right: 16px;
+      color: var(--cyan);
     }
 
     .hero-desc {
-      font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.55);
-      max-width: 480px;
-      margin-bottom: 40px;
-    }
-
-    .hero-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 40px;
-    }
-
-    .pill {
-      padding: 6px 14px;
-      border: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--gray);
-      border-radius: 1px;
-      background: rgba(255,255,255,0.02);
-      transition: border-color 0.2s, color 0.2s;
-    }
-
-    .pill:hover {
-      border-color: rgba(0,240,255,0.4);
-      color: var(--cyan);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--t-2);
+      max-width: 520px;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.85s forwards;
     }
 
     .hero-actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1s forwards;
     }
-
-    .btn-primary {
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      background: var(--cyan);
-      color: var(--bg);
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
-      font-size: 0.8rem;
-      letter-spacing: 0.22em;
+      gap: 12px;
+      padding: 16px 30px;
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       text-decoration: none;
+      border: 1px solid;
       border-radius: 2px;
-      transition: box-shadow 0.2s, transform 0.2s;
       position: relative;
       overflow: hidden;
+      transition: transform 0.25s ease;
     }
-
-    .btn-primary::before {
+    .btn::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      transition: transform 0.4s cubic-bezier(0.65,0,0.35,1);
     }
-
-    .btn-primary:hover {
-      box-shadow: 0 0 30px rgba(0,240,255,0.5), 0 0 60px rgba(0,240,255,0.2);
-      transform: translateY(-2px);
-    }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 13px 28px;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--white);
-      font-size: 0.8rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
-      background: transparent;
-    }
-
-    .btn-outline:hover {
+    .btn-primary {
+      background: var(--cyan);
+      color: var(--bg);
       border-color: var(--cyan);
-      color: var(--cyan);
-      box-shadow: 0 0 20px rgba(0,240,255,0.15);
-      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0,240,255,0.18);
     }
+    .btn-primary::after {
+      background: var(--white);
+      transform: translateY(101%);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 50px rgba(0,240,255,0.4);
+    }
+    .btn-primary:hover::after { transform: translateY(0); }
+    .btn-primary span, .btn-primary i { position: relative; z-index: 2; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border-color: var(--t-4);
+    }
+    .btn-ghost::after {
+      background: var(--cyan);
+      transform: translateY(101%);
+    }
+    .btn-ghost:hover {
+      color: var(--bg);
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+    }
+    .btn-ghost:hover::after { transform: translateY(0); }
+    .btn-ghost span, .btn-ghost i { position: relative; z-index: 2; }
 
     /* ── HERO PHOTO ── */
     .hero-right {
       flex-shrink: 0;
       position: relative;
+      perspective: 1000px;
     }
-
-    .photo-frame {
-      width: 320px;
-      height: 380px;
+    .photo-card {
+      width: 340px;
+      height: 420px;
       position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      animation: photoIn 1.2s ease 0.4s forwards;
     }
-
-    .photo-frame::before {
+    @keyframes photoIn {
+      to { opacity: 1; }
+    }
+    .photo-card::before {
       content: "";
       position: absolute;
-      inset: -2px;
-      background: linear-gradient(135deg, var(--cyan), var(--pink), var(--purple));
+      inset: -1px;
+      background: linear-gradient(135deg, var(--cyan), transparent 50%, var(--purple));
       border-radius: 2px;
       z-index: 0;
-      animation: borderRotate 4s linear infinite;
+      animation: borderGlow 4s ease-in-out infinite;
     }
-
-    @keyframes borderRotate {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
+    @keyframes borderGlow {
+      0%,100% { opacity: 0.8; }
+      50% { opacity: 0.4; }
     }
-
-    .photo-inner {
+    .photo-frame {
       position: absolute;
-      inset: 2px;
+      inset: 1px;
       overflow: hidden;
       border-radius: 1px;
-      z-index: 1;
-      background: #111;
+      background: #0a0a0a;
+      transform: translateZ(0);
     }
-
-    .photo-inner img {
+    .photo-frame img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center top;
-      display: block;
-      filter: contrast(1.05) saturate(0.9);
-      transition: transform 0.5s ease;
+      filter: contrast(1.06) saturate(0.92) brightness(0.95);
+      transform: scale(1.02);
+      transition: transform 0.6s ease;
     }
-
-    .photo-frame:hover .photo-inner img {
-      transform: scale(1.03);
+    .photo-card:hover .photo-frame img {
+      transform: scale(1.06);
     }
-
-    /* Photo overlay */
-    .photo-inner::after {
+    .photo-frame::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        0deg,
-        rgba(0,0,0,0.7) 0%,
-        transparent 50%
-      );
+      background:
+        linear-gradient(0deg, rgba(0,0,0,0.85) 0%, transparent 50%),
+        linear-gradient(135deg, transparent 60%, rgba(0,240,255,0.08) 100%);
+      pointer-events: none;
     }
+    .photo-corners .corner {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .photo-corners .corner::before,
+    .photo-corners .corner::after {
+      content: "";
+      position: absolute;
+      background: var(--cyan);
+      box-shadow: 0 0 6px var(--cyan);
+    }
+    .photo-corners .corner::before { width: 2px; height: 100%; }
+    .photo-corners .corner::after  { width: 100%; height: 2px; }
+    .photo-corners .tl { top: -8px; left: -8px; }
+    .photo-corners .tr { top: -8px; right: -8px; transform: scaleX(-1); }
+    .photo-corners .bl { bottom: -8px; left: -8px; transform: scaleY(-1); }
+    .photo-corners .br { bottom: -8px; right: -8px; transform: scale(-1); }
 
     .photo-badge {
       position: absolute;
-      bottom: 16px;
-      left: 50%;
+      bottom: 18px; left: 50%;
       transform: translateX(-50%);
-      z-index: 2;
+      z-index: 3;
       display: flex;
       align-items: center;
       gap: 8px;
-      padding: 7px 14px;
-      background: rgba(0,0,0,0.9);
-      border: 1px solid rgba(0,240,255,0.3);
-      font-size: 0.68rem;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-bright);
+      font-family: var(--mono);
+      font-size: 0.66rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--cyan);
       white-space: nowrap;
     }
-
-    .photo-badge-dot {
-      width: 5px; height: 5px;
+    .photo-badge .dot {
+      width: 6px; height: 6px;
       background: var(--cyan);
       border-radius: 50%;
-      box-shadow: 0 0 8px var(--cyan);
-      animation: blink 1.4s ease-in-out infinite;
+      box-shadow: 0 0 10px var(--cyan);
+      animation: pulse 1.6s ease-in-out infinite;
     }
 
-    /* Corner decorations */
-    .photo-frame .corner {
-      position: absolute;
-      width: 16px; height: 16px;
-      z-index: 3;
-    }
-
-    .photo-frame .corner::before,
-    .photo-frame .corner::after {
-      content: "";
-      position: absolute;
-      background: var(--cyan);
-    }
-
-    .photo-frame .corner::before { width: 2px; height: 100%; }
-    .photo-frame .corner::after  { width: 100%; height: 2px; }
-
-    .photo-frame .corner.tl { top: -6px; left: -6px; }
-    .photo-frame .corner.tr { top: -6px; right: -6px; transform: scaleX(-1); }
-    .photo-frame .corner.bl { bottom: -6px; left: -6px; transform: scaleY(-1); }
-    .photo-frame .corner.br { bottom: -6px; right: -6px; transform: scale(-1); }
-
-    /* Floating elements around photo */
     .float-stat {
       position: absolute;
-      background: rgba(0,0,0,0.95);
-      border: 1px solid rgba(0,240,255,0.2);
-      padding: 10px 14px;
+      background: rgba(0,0,0,0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      padding: 12px 18px;
       z-index: 4;
+      transform: translateZ(50px);
+      animation: floatY 5s ease-in-out infinite;
     }
-
-    .float-stat .stat-num {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 1.5rem;
+    .float-stat .num {
+      font-family: var(--display);
+      font-size: 1.7rem;
       font-weight: 700;
       color: var(--cyan);
       line-height: 1;
+      margin-bottom: 4px;
     }
-
-    .float-stat .stat-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
+    .float-stat .label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gray);
-      margin-top: 2px;
+      color: var(--t-3);
+    }
+    .float-stat.a {
+      top: 30px; right: -60px;
+      animation-delay: 0s;
+    }
+    .float-stat.b {
+      bottom: 80px; left: -70px;
+      animation-delay: -2.5s;
+    }
+    @keyframes floatY {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
     }
 
-    .float-stat.stat-a {
-      top: 24px;
-      right: -50px;
+    /* ── HUD elements around photo ── */
+    .hud {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .hud.top-right {
+      top: -28px; right: 0;
+    }
+    .hud.bottom-left {
+      bottom: -28px; left: 0;
     }
 
-    .float-stat.stat-b {
-      bottom: 70px;
-      left: -50px;
+    /* ── MARQUEE ── */
+    .marquee {
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-1);
+      padding: 22px 0;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 60px;
+      animation: scroll 40s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+    .marquee-item {
+      font-family: var(--display);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--t-3);
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+    .marquee-item .star {
+      color: var(--cyan);
+      font-size: 0.8rem;
+    }
+    .marquee-item.bright {
+      color: var(--white);
+    }
+    @keyframes scroll {
+      to { transform: translateX(-50%); }
     }
 
-    /* ── SECTION ── */
+    /* ── SECTION GENERAL ── */
     .section {
       position: relative;
-      z-index: 1;
-      max-width: 1400px;
+      z-index: 2;
+      max-width: 1500px;
       margin: 0 auto;
-      padding: 100px 40px;
+      padding: 120px 40px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      margin-bottom: 70px;
+      flex-wrap: wrap;
     }
 
     .section-label {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 60px;
+      gap: 14px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 20px;
     }
-
-    .section-label .label-line {
-      width: 40px;
-      height: 1px;
+    .section-label .ll {
+      width: 40px; height: 1px;
       background: var(--cyan);
     }
 
-    .section-label .label-num {
-      font-size: 0.68rem;
-      letter-spacing: 0.3em;
-      color: var(--cyan);
-      text-transform: uppercase;
-    }
-
-    .section-label .label-text {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gray);
-    }
-
     .section-title {
-      font-family: "Space Grotesk", sans-serif;
+      font-family: var(--display);
       font-size: clamp(2.5rem, 5vw, 4.5rem);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       line-height: 1;
-      margin-bottom: 16px;
+    }
+    .section-title .stroke {
+      -webkit-text-stroke: 1.5px var(--cyan);
+      color: transparent;
+    }
+    .section-title .em {
+      color: var(--cyan);
     }
 
-    .section-title .accent {
-      -webkit-text-stroke: 2px var(--cyan);
-      color: transparent;
+    .section-desc {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--t-2);
+      max-width: 440px;
+    }
+
+    /* ── ABOUT BLOCK ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .about-statement {
+      font-family: var(--display);
+      font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+      font-weight: 500;
+      line-height: 1.35;
+      color: var(--t-1);
+    }
+    .about-statement .hi {
+      color: var(--cyan);
+    }
+    .about-side {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .about-card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(255,255,255,0.02), transparent);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--cyan);
+      transition: width 0.5s ease;
+    }
+    .about-card:hover::before { width: 100%; }
+    .about-card .meta {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 10px;
+    }
+    .about-card .h {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .about-card .d {
+      font-size: 0.86rem;
+      line-height: 1.65;
+      color: var(--t-2);
+    }
+
+    /* ── SKILLS GRID ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .skill-cell {
+      background: var(--bg);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .skill-cell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(0,240,255,0.08), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .skill-cell:hover { background: var(--bg-2); }
+    .skill-cell:hover::before { opacity: 1; }
+    .skill-cell .num {
+      position: absolute;
+      top: 18px; right: 22px;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--t-3);
+      letter-spacing: 0.22em;
+    }
+    .skill-cell .ico {
+      font-size: 1.5rem;
+      color: var(--cyan);
+      margin-bottom: 18px;
+      opacity: 0.9;
+      transition: transform 0.3s ease;
+    }
+    .skill-cell:hover .ico {
+      transform: translateY(-3px) scale(1.05);
+    }
+    .skill-cell .t {
+      font-family: var(--display);
+      font-size: 1.02rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+    .skill-cell .d {
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--t-2);
     }
 
     /* ── PROJECTS ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 1px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.05);
+      background: var(--border);
+      border: 1px solid var(--border);
     }
-
     .project-card {
-      background: var(--card-bg);
-      padding: 28px;
+      background: var(--bg);
+      padding: 32px 30px;
       position: relative;
       overflow: hidden;
       transition: background 0.3s;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       text-decoration: none;
       color: inherit;
+      min-height: 240px;
     }
-
     .project-card::before {
       content: "";
       position: absolute;
@@ -601,823 +937,981 @@
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--cyan), transparent);
       transform: scaleX(0);
-      transition: transform 0.4s ease;
+      transition: transform 0.5s cubic-bezier(0.65,0,0.35,1);
     }
-
-    .project-card:hover {
-      background: #0d0d0d;
-    }
-
-    .project-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    /* Glow on hover */
     .project-card::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 0%, rgba(0,240,255,0.05), transparent 70%);
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(0,240,255,0.07), transparent 70%);
       opacity: 0;
-      transition: opacity 0.4s;
+      transition: opacity 0.3s;
       pointer-events: none;
     }
-
-    .project-card:hover::after {
-      opacity: 1;
-    }
+    .project-card:hover { background: var(--bg-2); }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover::after { opacity: 1; }
 
     .project-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
       gap: 12px;
+      position: relative;
+      z-index: 1;
     }
-
     .project-num {
-      font-size: 0.65rem;
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.22em;
       color: var(--cyan);
-      letter-spacing: 0.2em;
-      font-family: "Space Grotesk", sans-serif;
-      opacity: 0.6;
     }
-
     .project-status {
-      font-size: 0.62rem;
-      letter-spacing: 0.18em;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       padding: 4px 10px;
-      border-radius: 1px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       white-space: nowrap;
       flex-shrink: 0;
+      border-radius: 1px;
     }
-
-    .project-status.done {
-      border: 1px solid rgba(0,255,120,0.4);
-      color: #00ff78;
-      background: rgba(0,255,120,0.05);
+    .project-status.live {
+      border: 1px solid rgba(0,255,136,0.4);
+      color: #00ff88;
+      background: rgba(0,255,136,0.05);
     }
-
-    .project-status.wip {
-      border: 1px solid rgba(255,0,102,0.4);
-      color: var(--pink);
-      background: rgba(255,0,102,0.05);
-    }
-
-    .status-dot-sm {
+    .project-status .d {
       width: 5px; height: 5px;
-      border-radius: 50%;
       background: currentColor;
+      border-radius: 50%;
+      box-shadow: 0 0 6px currentColor;
     }
-
-    .wip .status-dot-sm {
-      animation: blink 1.2s infinite;
-    }
-
     .project-name {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 1.15rem;
+      font-family: var(--display);
+      font-size: 1.2rem;
       font-weight: 600;
       line-height: 1.25;
       color: var(--white);
+      position: relative;
+      z-index: 1;
     }
-
     .project-desc {
-      font-size: 0.84rem;
+      font-size: 0.86rem;
       line-height: 1.65;
-      color: rgba(255,255,255,0.4);
+      color: var(--t-2);
       flex: 1;
+      position: relative;
+      z-index: 1;
     }
-
-    .project-footer {
+    .project-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
     }
-
     .project-tags {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
-
     .tag {
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--gray);
-      padding: 3px 8px;
-      border: 1px solid rgba(255,255,255,0.07);
+      color: var(--t-3);
+      padding: 4px 10px;
+      border: 1px solid var(--border);
       border-radius: 1px;
     }
-
     .project-arrow {
-      width: 32px; height: 32px;
-      border: 1px solid rgba(255,255,255,0.1);
+      width: 36px; height: 36px;
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--gray);
-      font-size: 0.8rem;
+      color: var(--t-2);
+      font-size: 0.85rem;
       flex-shrink: 0;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
       border-radius: 1px;
+      transition: all 0.3s ease;
     }
-
     .project-card:hover .project-arrow {
       border-color: var(--cyan);
       color: var(--cyan);
-      background: rgba(0,240,255,0.07);
+      background: rgba(0,240,255,0.06);
+      box-shadow: 0 0 16px rgba(0,240,255,0.15);
+      transform: rotate(-45deg);
+    }
+    .project-card:hover .project-arrow i {
+      transform: rotate(45deg);
+    }
+    .project-arrow i {
+      transition: transform 0.3s ease;
     }
 
-    /* ── ABOUT/SKILLS STRIP ── */
-    .skills-strip {
+    /* ── CTA SECTION ── */
+    .cta {
       position: relative;
-      z-index: 1;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      overflow: hidden;
-    }
-
-    .skills-strip-inner {
-      max-width: 1400px;
+      z-index: 2;
+      max-width: 1500px;
       margin: 0 auto;
-      padding: 60px 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 1px;
-      background: rgba(255,255,255,0.05);
-    }
-
-    .skill-block {
-      background: #000;
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .skill-block::before {
-      content: "";
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,240,255,0.3), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .skill-block:hover::before {
-      opacity: 1;
-    }
-
-    .skill-icon {
-      font-size: 1.3rem;
-      color: var(--cyan);
-      margin-bottom: 14px;
-      opacity: 0.8;
-    }
-
-    .skill-title {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-
-    .skill-desc {
-      font-size: 0.78rem;
-      line-height: 1.6;
-      color: var(--gray);
-    }
-
-    /* ── CONTACT ── */
-    .contact-section {
-      position: relative;
-      z-index: 1;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 100px 40px;
+      padding: 120px 40px;
       text-align: center;
     }
-
-    .contact-title {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(3rem, 7vw, 7rem);
+    .cta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 32px;
+      padding: 8px 16px;
+      border: 1px solid var(--border-bright);
+      border-radius: 1px;
+    }
+    .cta-tag .dot {
+      width: 6px; height: 6px;
+      background: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    .cta-title {
+      font-family: var(--display);
+      font-size: clamp(3rem, 8vw, 8rem);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: -0.02em;
-      line-height: 0.9;
-      margin-bottom: 32px;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 40px;
     }
-
-    .contact-title .accent {
-      display: block;
-      -webkit-text-stroke: 2px var(--cyan);
+    .cta-title .stroke {
+      -webkit-text-stroke: 1.5px var(--cyan);
       color: transparent;
+      display: block;
     }
-
-    .contact-subtitle {
-      font-size: 0.9rem;
-      color: var(--gray);
-      letter-spacing: 0.1em;
-      max-width: 400px;
-      margin: 0 auto 40px;
+    .cta-desc {
+      font-size: 1rem;
       line-height: 1.7;
+      color: var(--t-2);
+      max-width: 480px;
+      margin: 0 auto 44px;
     }
-
-    .contact-email {
-      display: inline-block;
-      font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.4rem);
-      color: var(--cyan);
+    .cta-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--display);
+      font-size: clamp(1.1rem, 2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--white);
       text-decoration: none;
-      letter-spacing: 0.06em;
-      border-bottom: 1px solid rgba(0,240,255,0.3);
-      padding-bottom: 4px;
-      transition: border-color 0.2s, text-shadow 0.2s;
+      padding: 18px 32px;
+      border: 1px solid var(--cyan);
+      background: rgba(0,240,255,0.04);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-
-    .contact-email:hover {
-      text-shadow: 0 0 20px rgba(0,240,255,0.5);
-      border-color: var(--cyan);
+    .cta-email::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--cyan);
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.65,0,0.35,1);
+    }
+    .cta-email span, .cta-email i {
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
+    }
+    .cta-email:hover::before { transform: translateY(0); }
+    .cta-email:hover span, .cta-email:hover i { color: var(--bg); }
+    .cta-email:hover {
+      box-shadow: 0 0 40px rgba(0,240,255,0.4);
     }
 
     /* ── FOOTER ── */
     footer {
       position: relative;
-      z-index: 1;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 30px 40px;
+      z-index: 2;
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      background: var(--bg-1);
+    }
+    .footer-inner {
+      max-width: 1500px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 30px;
+      flex-wrap: wrap;
     }
-
-    .footer-logo {
-      font-family: "Space Grotesk", sans-serif;
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
+    .footer-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 0.82rem;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
+      color: var(--white);
     }
-
-    .footer-logo span { color: var(--cyan); }
-
+    .footer-brand span { color: var(--cyan); }
+    .footer-meta {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.18em;
+      color: var(--t-3);
+      text-transform: uppercase;
+    }
+    .footer-time {
+      color: var(--cyan);
+    }
     .footer-social {
       display: flex;
-      gap: 16px;
-      align-items: center;
+      gap: 10px;
     }
-
     .footer-social a {
-      width: 36px; height: 36px;
-      border: 1px solid rgba(255,255,255,0.1);
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--gray);
+      color: var(--t-2);
       text-decoration: none;
-      font-size: 0.85rem;
-      border-radius: 1px;
-      transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
     }
-
     .footer-social a:hover {
       border-color: var(--cyan);
       color: var(--cyan);
-      box-shadow: 0 0 14px rgba(0,240,255,0.2);
-    }
-
-    .footer-copy {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 0.1em;
+      background: rgba(0,240,255,0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,240,255,0.2);
     }
 
     /* ── SCROLL REVEAL ── */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     }
-
     .reveal.visible {
       opacity: 1;
       transform: translateY(0);
     }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-
-    /* ── NOISE OVERLAY ── */
-    .noise {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9998;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
+    .reveal-d-1 { transition-delay: 0.08s; }
+    .reveal-d-2 { transition-delay: 0.16s; }
+    .reveal-d-3 { transition-delay: 0.24s; }
+    .reveal-d-4 { transition-delay: 0.32s; }
+    .reveal-d-5 { transition-delay: 0.4s; }
+    .reveal-d-6 { transition-delay: 0.48s; }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { padding: 110px 30px 60px; gap: 60px; }
+      .photo-card { width: 300px; height: 380px; }
+      .about-grid { gap: 50px; }
+      .section { padding: 90px 30px; }
+    }
     @media (max-width: 900px) {
+      nav { padding: 14px 24px; }
+      .nav-status { display: none; }
+      .nav-links { gap: 18px; }
+
       .hero {
         flex-direction: column;
-        padding: 100px 24px 60px;
-        gap: 50px;
+        padding: 110px 24px 60px;
+        gap: 60px;
       }
+      .hero-right { width: 100%; display: flex; justify-content: center; }
+      .photo-card { width: 280px; height: 340px; }
+      .float-stat.a { right: -20px; }
+      .float-stat.b { left: -20px; }
+      .hud.top-right { top: -22px; }
+      .hud.bottom-left { bottom: -22px; }
 
-      .hero-right {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-      }
-
-      .photo-frame {
-        width: 260px;
-        height: 310px;
-      }
-
-      .float-stat.stat-a { right: -20px; }
-      .float-stat.stat-b { left: -20px; }
-
-      nav { padding: 16px 24px; }
-
-      .nav-links { gap: 20px; }
-
-      .section, .contact-section { padding: 70px 24px; }
-
-      .skills-strip-inner {
-        grid-template-columns: 1fr 1fr;
-        padding: 40px 24px;
-      }
-
-      footer { padding: 24px; flex-wrap: wrap; gap: 16px; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .section { padding: 80px 24px; }
+      .cta { padding: 80px 24px; }
+      .footer-inner { justify-content: center; text-align: center; }
     }
-
     @media (max-width: 600px) {
-      .nav-links { display: none; }
-      .hero-name { font-size: clamp(3.5rem, 18vw, 5.5rem); }
-      .hero-photo-wrap { justify-content: center; }
+      .nav-links li:not(:last-child) { display: none; }
       .projects-grid { grid-template-columns: 1fr; }
-      .skills-strip-inner { grid-template-columns: 1fr; }
-      .footer-logo, .footer-copy { font-size: 0.65rem; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .marquee-item { font-size: 1.1rem; gap: 36px; }
+      .marquee-track { gap: 36px; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .hero-name { font-size: clamp(3.5rem, 17vw, 6rem); }
     }
 
-    /* ── CURSOR GLOW ── */
-    .cursor-glow {
-      position: fixed;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,240,255,0.04) 0%, transparent 70%);
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      z-index: 0;
-      transition: opacity 0.3s;
+    /* ── Reduce motion ── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Noise + cursor glow -->
+  <!-- LOADER -->
+  <div class="loader" id="loader">
+    <div class="loader-orb"></div>
+    <div class="loader-text">Initializing System</div>
+    <div class="loader-bar"></div>
+  </div>
+
+  <!-- CURSOR -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- BACKGROUND -->
+  <div class="bg-grid"></div>
+  <div class="bg-orb a"></div>
+  <div class="bg-orb b"></div>
   <div class="noise"></div>
-  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="scanlines"></div>
 
   <!-- NAV -->
-  <nav>
-    <div class="nav-logo">Oliver <span>Libič</span></div>
-    <ul class="nav-links">
-      <li><a href="#projects">Projekty</a></li>
-      <li><a href="#contact" class="nav-cta">Kontakt</a></li>
-    </ul>
+  <nav id="nav">
+    <div class="logo-mark">
+      <div class="logo-orb"></div>
+      <div class="logo-text">
+        <span class="logo-name">Oliver Libič</span>
+        <span class="logo-sub">SYS · v2.0</span>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-status">
+        <span class="dot"></span>
+        <span>Available <span id="timeNow"></span></span>
+      </div>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero" id="top">
     <div class="hero-left">
-      <div class="hero-tag">Available for work</div>
-
-      <h1 class="hero-name">
-        <span class="line1 glitch" data-text="OLIVER">OLIVER</span>
-        <span class="line2 glitch" data-text="LIBIČ">LIBIČ</span>
-      </h1>
-
-      <div class="hero-divider"></div>
-
-      <p class="hero-subtitle">Web Developer · Designer · Creative Tech</p>
-
-      <p class="hero-desc">
-        Staviam rýchle, čisté a vizuálne silné digitálne projekty –
-        od event platforiem a e-shopov po custom webové aplikácie a automatizácie.
-      </p>
-
-      <div class="hero-pills">
-        <span class="pill">HTML · CSS · JS</span>
-        <span class="pill">WordPress · Webflow</span>
-        <span class="pill">Shoptet</span>
-        <span class="pill">AI workflows</span>
-        <span class="pill">Bratislava · Remote</span>
+      <div class="hero-meta-line">
+        <span class="ml"></span>
+        <span>// PORTFOLIO · 2026</span>
       </div>
 
+      <h1 class="hero-name">
+        <span class="line"><span class="line-inner scramble" data-text="OLIVER">OLIVER</span></span>
+        <span class="line l2"><span class="line-inner scramble" data-text="LIBIČ">LIBIČ</span></span>
+      </h1>
+
+      <div class="hero-divider">
+        <div class="line-h"></div>
+        <div class="marker"></div>
+      </div>
+
+      <div class="hero-roles">
+        <span>Web Developer</span>
+        <span>Designer</span>
+        <span>Creative Tech</span>
+      </div>
+
+      <p class="hero-desc">
+        Staviam rýchle, čisté a vizuálne silné digitálne systémy —
+        od event platforiem a e-shopov po custom webové aplikácie
+        a AI-driven automatizácie. Postavené na detaile.
+      </p>
+
       <div class="hero-actions">
-        <a href="#projects" class="btn-primary">
-          <span>Pozrieť projekty</span>
+        <a href="#projects" class="btn btn-primary">
+          <span>Pozri projekty</span>
           <i class="fa-solid fa-arrow-down"></i>
         </a>
-        <a href="mailto:libic.oliver@gmail.com" class="btn-outline">
+        <a href="mailto:libic.oliver@gmail.com" class="btn btn-ghost">
           <span>Napíš mi</span>
+          <i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="photo-frame">
-        <div class="corner tl"></div>
-        <div class="corner tr"></div>
-        <div class="corner bl"></div>
-        <div class="corner br"></div>
-        <div class="photo-inner">
+      <div class="hud top-right">// IDENTITY.LOAD</div>
+      <div class="hud bottom-left">// STATUS: ONLINE</div>
+
+      <div class="photo-card" id="photoCard">
+        <div class="photo-frame">
           <img src="oliver.jpeg" alt="Oliver Libič" />
         </div>
+        <div class="photo-corners">
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+        </div>
         <div class="photo-badge">
-          <span class="photo-badge-dot"></span>
+          <span class="dot"></span>
           Currently building
         </div>
 
-        <div class="float-stat stat-a">
-          <div class="stat-num">10+</div>
-          <div class="stat-label">Projektov</div>
+        <div class="float-stat a">
+          <div class="num" data-count="10">0</div>
+          <div class="label">Projektov</div>
         </div>
-
-        <div class="float-stat stat-b">
-          <div class="stat-num">3+</div>
-          <div class="stat-label">Roky</div>
+        <div class="float-stat b">
+          <div class="num" data-count="3">0</div>
+          <div class="label">Roky+</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS STRIP -->
-  <div class="skills-strip">
-    <div class="skills-strip-inner">
-      <div class="skill-block reveal">
-        <div class="skill-icon"><i class="fa-solid fa-code"></i></div>
-        <div class="skill-title">Frontend Dev</div>
-        <div class="skill-desc">HTML, CSS, JavaScript. Čisté, rýchle weby s dôrazom na detail a animácie.</div>
+  <!-- MARQUEE -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="marquee-item bright">Web Development</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">UX / UI Design</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">Brand Systems</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">Creative Code</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">AI · Automation</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">E-Commerce</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+
+      <div class="marquee-item bright">Web Development</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">UX / UI Design</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">Brand Systems</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">Creative Code</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">AI · Automation</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">E-Commerce</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="section-head">
+      <div>
+        <div class="section-label reveal"><span class="ll"></span><span>// 01 — Approach</span></div>
+        <h2 class="section-title reveal reveal-d-1">
+          Engineered for <span class="stroke">tomorrow.</span>
+        </h2>
       </div>
-      <div class="skill-block reveal reveal-delay-1">
-        <div class="skill-icon"><i class="fa-brands fa-wordpress"></i></div>
-        <div class="skill-title">CMS & Platforms</div>
-        <div class="skill-desc">WordPress, Webflow, Shoptet. Custom témy, integrácie a optimalizácia výkonu.</div>
+      <p class="section-desc reveal reveal-d-2">
+        Tvorím weby a systémy, ktoré nevyzerajú len pekne — fungujú, škálujú
+        a žijú dlhšie než trendy.
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-statement reveal">
+        Každý projekt je <span class="hi">vyladený</span> ako prístroj —
+        rýchly, prehľadný a jednoznačný v zámere. Žiadne plnivo,
+        žiadne kompromisy. <span class="hi">Iba čistý systém</span>,
+        ktorý hovorí tvojím jazykom a presviedča dáta.
       </div>
-      <div class="skill-block reveal reveal-delay-2">
-        <div class="skill-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-        <div class="skill-title">Design & UX</div>
-        <div class="skill-desc">Figma, vizuálne systémy a UX pre skutočných ľudí – nie len pre prezentácie.</div>
+
+      <div class="about-side">
+        <div class="about-card reveal reveal-d-2">
+          <div class="meta">// 001 / Philosophy</div>
+          <div class="h">Performance-first</div>
+          <div class="d">Každý milisekundový load má hodnotu. Optimalizujem od základov — žiadne knižnice navyše, žiadny mŕtvy kód.</div>
+        </div>
+        <div class="about-card reveal reveal-d-3">
+          <div class="meta">// 002 / Design</div>
+          <div class="h">Visual systems</div>
+          <div class="d">Dizajn nie je dekorácia — je to štruktúra. Stavám konzistentné systémy, ktoré škálujú s tvojím brandom.</div>
+        </div>
+        <div class="about-card reveal reveal-d-4">
+          <div class="meta">// 003 / Tech</div>
+          <div class="h">Future-proof stack</div>
+          <div class="d">Moderné nástroje, ale s rozumom. Vyberám tech, ktorý vydrží — nie ten, ktorý je práve trendy.</div>
+        </div>
       </div>
-      <div class="skill-block reveal reveal-delay-3">
-        <div class="skill-icon"><i class="fa-solid fa-robot"></i></div>
-        <div class="skill-title">AI & Automation</div>
-        <div class="skill-desc">Make, Zapier, AI workflows. Automatizujem veci, ktoré by trvali hodiny.</div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="section-head">
+      <div>
+        <div class="section-label reveal"><span class="ll"></span><span>// 02 — Capabilities</span></div>
+        <h2 class="section-title reveal reveal-d-1">
+          What I <span class="em">build.</span>
+        </h2>
       </div>
+      <p class="section-desc reveal reveal-d-2">
+        Od frontendu po automatizácie — celý stack v jednej hlave,
+        čo znamená rýchle rozhodnutia a žiadne handoff straty.
+      </p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-cell reveal">
+        <span class="num">// 01</span>
+        <div class="ico"><i class="fa-solid fa-code"></i></div>
+        <div class="t">Frontend Development</div>
+        <div class="d">HTML, CSS, JavaScript. Animácie, performance a accessibility ako default.</div>
+      </div>
+      <div class="skill-cell reveal reveal-d-1">
+        <span class="num">// 02</span>
+        <div class="ico"><i class="fa-brands fa-wordpress"></i></div>
+        <div class="t">CMS Platforms</div>
+        <div class="d">WordPress, Webflow, Shoptet. Custom témy, integrácie, výkonové ladenie.</div>
+      </div>
+      <div class="skill-cell reveal reveal-d-2">
+        <span class="num">// 03</span>
+        <div class="ico"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <div class="t">Design Systems</div>
+        <div class="d">Figma, vizuálne identity a UX pre skutočných ľudí — nie len pre prezentácie.</div>
+      </div>
+      <div class="skill-cell reveal reveal-d-3">
+        <span class="num">// 04</span>
+        <div class="ico"><i class="fa-solid fa-bolt"></i></div>
+        <div class="t">Web Performance</div>
+        <div class="d">Core Web Vitals, image optimizácia, Cloudflare edge. Žiadny render-block.</div>
+      </div>
+      <div class="skill-cell reveal reveal-d-4">
+        <span class="num">// 05</span>
+        <div class="ico"><i class="fa-solid fa-robot"></i></div>
+        <div class="t">AI & Automation</div>
+        <div class="d">Make, n8n, Claude API. Automatizujem procesy, ktoré by inak trvali hodiny.</div>
+      </div>
+      <div class="skill-cell reveal reveal-d-5">
+        <span class="num">// 06</span>
+        <div class="ico"><i class="fa-solid fa-shop"></i></div>
+        <div class="t">E-Commerce</div>
+        <div class="d">Shoptet, custom checkout flows, optimalizácia konverzií a produktových kariet.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE 2 -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <div class="marquee-item">Selected Work</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">2024 — 2026</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">Selected Work</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">2024 — 2026</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">Selected Work</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">2024 — 2026</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item">Selected Work</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
+      <div class="marquee-item bright">2024 — 2026</div>
+      <div class="marquee-item"><span class="star">✦</span></div>
     </div>
   </div>
 
   <!-- PROJECTS -->
   <section class="section" id="projects">
-    <div class="section-label reveal">
-      <div class="label-line"></div>
-      <span class="label-num">02</span>
-      <span class="label-text">Projekty</span>
+    <div class="section-head">
+      <div>
+        <div class="section-label reveal"><span class="ll"></span><span>// 03 — Work</span></div>
+        <h2 class="section-title reveal reveal-d-1">
+          Selected <span class="stroke">projects.</span>
+        </h2>
+      </div>
+      <p class="section-desc reveal reveal-d-2">
+        Reálne projekty, ktoré bežia v produkcii a slúžia klientom.
+        Od jednoduchých vizitiek po e-commerce a event platformy.
+      </p>
     </div>
-
-    <div class="section-title reveal">
-      Selected <span class="accent">Work</span>
-    </div>
-
-    <br><br>
 
     <div class="projects-grid">
 
-      <!-- VibeClub -->
       <a class="project-card reveal" href="https://www.vibeclub.sk" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">01</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 01</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
         <div class="project-name">VibeClub</div>
-        <div class="project-desc">
-          Moderná platforma a web pre komunitný klub s dôrazom na vizuálnu identitu a konverziu.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">Web</span>
-            <span class="tag">Design</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-desc">Moderná platforma pre komunitný klub s dôrazom na vizuálnu identitu a konverziu.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">Web</span><span class="tag">Design</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- Nedelka -->
-      <a class="project-card reveal reveal-delay-1" href="https://nedelka.pages.dev" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-1" href="https://nedelka.pages.dev" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">02</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 02</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
         <div class="project-name">Nedelka</div>
-        <div class="project-desc">
-          Čistý, rýchly web s kultivovaným dizajnom. Postavený na modernom stacku s dôrazom na výkon.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">Frontend</span>
-            <span class="tag">UX</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-desc">Čistý, rýchly web s kultivovaným dizajnom postavený na modernom stacku s dôrazom na výkon.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">Frontend</span><span class="tag">UX</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- Ghostlayer -->
-      <a class="project-card reveal reveal-delay-2" href="https://ghostlayer.uk" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-2" href="https://ghostlayer.uk" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">03</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 03</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
         <div class="project-name">Ghostlayer</div>
-        <div class="project-desc">
-          UK-based projekt s dark visual identitou a silným brandingom. Custom design a implementácia.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">Branding</span>
-            <span class="tag">Web</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-desc">UK-based projekt s dark visual identitou a silným brandingom. Custom design a implementácia.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">Branding</span><span class="tag">Web</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- POSH -->
-      <a class="project-card reveal" href="https://poshmarketingstudio.com" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-3" href="https://poshmarketingstudio.com" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">04</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 04</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
         <div class="project-name">POSH Marketing Studio</div>
-        <div class="project-desc">
-          High-end marketing studio web s custom animáciami, elegantnými typografickými rozhodnutiami a burgundy/cream paletou.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">WordPress</span>
-            <span class="tag">Custom CSS</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-desc">High-end marketing studio web s custom animáciami, elegantnými typografickými rozhodnutiami a burgundy/cream paletou.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">WordPress</span><span class="tag">Custom CSS</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- Bratislava Marathon -->
-      <a class="project-card reveal reveal-delay-1" href="https://bratislavamarathon.sk/" target="_blank" rel="noreferrer">
+      <a class="project-card reveal" href="https://bratislavamarathon.sk/" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">05</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 05</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
         <div class="project-name">Bratislava Marathon</div>
-        <div class="project-desc">
-          Centrálna event platforma pre tisíce bežcov – registrácie, partner branding, merchandise a jasná informačná architektúra.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">WordPress</span>
-            <span class="tag">UX</span>
-            <span class="tag">Integrations</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-desc">Event platforma pre tisíce bežcov — registrácie, partner branding, merchandise a jasná architektúra.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">WordPress</span><span class="tag">UX</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- BeCool -->
-      <a class="project-card reveal reveal-delay-2" href="https://shop.becool.sk/" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-1" href="https://shop.becool.sk/" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">06</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 06</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
-        <div class="project-name">BeCool – merchandise e-shop</div>
-        <div class="project-desc">
-          Výkonnostný e-shop pre športové eventy, dresy a doplnky so štruktúrou prispôsobenou bežcom a cyklistom.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">Shoptet</span>
-            <span class="tag">E-commerce</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-name">BeCool — Merchandise</div>
+        <div class="project-desc">Výkonný e-shop pre športové eventy, dresy a doplnky so štruktúrou prispôsobenou bežcom a cyklistom.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">Shoptet</span><span class="tag">E-comm</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- Loyal by Loy -->
-      <a class="project-card reveal" href="https://www.loyalbyloy.com/" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-2" href="https://www.loyalbyloy.com/" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">07</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 07</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
-        <div class="project-name">Loyal by Loy – fashion</div>
-        <div class="project-desc">
-          Čistý produktový store pre streetwear brand – prehľadné karty, info o veľkostiach a jednoduchý checkout pre mobilných užívateľov.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">Shoptet</span>
-            <span class="tag">Design system</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-name">Loyal by Loy</div>
+        <div class="project-desc">Čistý produktový store pre streetwear brand — prehľadné karty, sizing info a jednoduchý mobilný checkout.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">Shoptet</span><span class="tag">Fashion</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- PH Sport Horses -->
-      <a class="project-card reveal reveal-delay-1" href="https://www.phsporthorses.sk/language/en/home/" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-3" href="https://www.phsporthorses.sk/language/en/home/" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">08</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 08</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
         <div class="project-name">PH Sport Horses</div>
-        <div class="project-desc">
-          Minimálny, elegantný web pre stajňu, s dôrazom na vizuálnu prezentáciu a jasnú navigáciu medzi koňmi, výsledkami a službami.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">WordPress</span>
-            <span class="tag">Visual design</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-desc">Minimálny, elegantný web pre stajňu s dôrazom na vizuálnu prezentáciu a jasnú navigáciu.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">WordPress</span><span class="tag">Visual</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- Marek Radič -->
-      <a class="project-card reveal reveal-delay-2" href="https://marekradic.sk/" target="_blank" rel="noreferrer">
+      <a class="project-card reveal" href="https://marekradic.sk/" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">09</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 09</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
-        <div class="project-name">Marek Radič – Real Estate</div>
-        <div class="project-desc">
-          Personal brand web pre realitného agenta so silnými vizuálmi, storytellingom nehnuteľností a kontaktnými flowmi pre prémiových klientov.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">WordPress</span>
-            <span class="tag">Branding</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-name">Marek Radič — Real Estate</div>
+        <div class="project-desc">Personal brand web pre realitného agenta so silnými vizuálmi a storytellingom nehnuteľností.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">WordPress</span><span class="tag">Branding</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
-      <!-- Jump Studio -->
-      <a class="project-card reveal" href="https://jumpstudio.sk" target="_blank" rel="noreferrer">
+      <a class="project-card reveal reveal-d-1" href="https://jumpstudio.sk" target="_blank" rel="noreferrer">
         <div class="project-top">
-          <span class="project-num">10</span>
-          <span class="project-status done">
-            <span class="status-dot-sm"></span>Live
-          </span>
+          <span class="project-num">// 10</span>
+          <span class="project-status live"><span class="d"></span>Live</span>
         </div>
-        <div class="project-name">Jump Studio – online platform</div>
-        <div class="project-desc">
-          Online platforma pre detské pohybové štúdio – registrácie, rozvrhy a komunikácia s rodičmi v jednom rozhraní.
-        </div>
-        <div class="project-footer">
-          <div class="project-tags">
-            <span class="tag">Web app</span>
-            <span class="tag">UX</span>
-          </div>
-          <div class="project-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+        <div class="project-name">Jump Studio</div>
+        <div class="project-desc">Online platforma pre detské pohybové štúdio — registrácie, rozvrhy a komunikácia s rodičmi v jednom rozhraní.</div>
+        <div class="project-bottom">
+          <div class="project-tags"><span class="tag">Web App</span><span class="tag">UX</span></div>
+          <div class="project-arrow"><i class="fa-solid fa-arrow-right"></i></div>
         </div>
       </a>
 
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact-section" id="contact">
-    <div class="reveal">
-      <div class="contact-title">
-        Let's build
-        <span class="accent">something.</span>
-      </div>
-      <p class="contact-subtitle">
-        Hľadáš niekoho, kto tvoje nápady premení na skutočnosť?
-        Napíš mi.
-      </p>
-      <a href="mailto:libic.oliver@gmail.com" class="contact-email">
-        libic.oliver@gmail.com
-      </a>
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="cta-tag reveal">
+      <span class="dot"></span>
+      <span>// Available for new projects</span>
     </div>
+    <h2 class="cta-title reveal reveal-d-1">
+      Let's build
+      <span class="stroke">something real.</span>
+    </h2>
+    <p class="cta-desc reveal reveal-d-2">
+      Máš nápad, projekt alebo brand, ktorý si zaslúži viac?
+      Napíš mi — odpoviem do 24 hodín.
+    </p>
+    <a href="mailto:libic.oliver@gmail.com" class="cta-email reveal reveal-d-3">
+      <i class="fa-solid fa-envelope"></i>
+      <span>libic.oliver@gmail.com</span>
+    </a>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">Oliver <span>Libič</span></div>
-    <div class="footer-social">
-      <a href="mailto:libic.oliver@gmail.com" aria-label="Email">
-        <i class="fa-solid fa-envelope"></i>
-      </a>
-      <a href="https://www.instagram.com/oliver_libic_" target="_blank" rel="noreferrer" aria-label="Instagram">
-        <i class="fa-brands fa-instagram"></i>
-      </a>
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div class="footer-brand">Oliver <span>Libič</span></div>
+        <div class="footer-meta">
+          // © <span id="year"></span> · Built in Bratislava ·
+          <span class="footer-time" id="footerTime"></span>
+        </div>
+      </div>
+      <div class="footer-social">
+        <a href="mailto:libic.oliver@gmail.com" aria-label="Email" data-hover>
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+        <a href="https://www.instagram.com/oliver_libic_" target="_blank" rel="noreferrer" aria-label="Instagram" data-hover>
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
     </div>
-    <div class="footer-copy">© <span id="year"></span> Oliver Libič</div>
   </footer>
 
   <script>
-    // Year
+    /* ── LOADER ── */
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loader").classList.add("done");
+      }, 1100);
+    });
+
+    /* ── YEAR + LIVE TIME ── */
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Cursor glow
-    const glow = document.getElementById("cursorGlow");
+    function updateTime() {
+      const opts = { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Bratislava", hour12: false };
+      const t = new Date().toLocaleTimeString("sk-SK", opts);
+      const tn = document.getElementById("timeNow");
+      const ft = document.getElementById("footerTime");
+      if (tn) tn.textContent = "· " + t + " CET";
+      if (ft) ft.textContent = t + " CET";
+    }
+    updateTime();
+    setInterval(updateTime, 30000);
+
+    /* ── CUSTOM CURSOR ── */
+    const dot = document.getElementById("cursorDot");
+    const ring = document.getElementById("cursorRing");
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
     document.addEventListener("mousemove", (e) => {
-      glow.style.left = e.clientX + "px";
-      glow.style.top  = e.clientY + "px";
+      mx = e.clientX;
+      my = e.clientY;
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
     });
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll(".reveal");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    reveals.forEach((el) => observer.observe(el));
-
-    // Random glitch trigger
-    const glitchEls = document.querySelectorAll(".glitch");
-    function triggerGlitch() {
-      glitchEls.forEach((el) => {
-        el.style.animation = "none";
-        el.offsetHeight; // reflow
-        el.style.animation = "";
-      });
-      setTimeout(triggerGlitch, 3500 + Math.random() * 3000);
+    function loop() {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(loop);
     }
-    setTimeout(triggerGlitch, 2000);
+    loop();
 
-    // Typewriter effect for hero-tag
-    const tag = document.querySelector(".hero-tag");
-    if (tag) {
-      const text = tag.textContent.trim();
-      tag.textContent = "";
-      tag.style.opacity = "1";
-      let i = 0;
-      function type() {
-        if (i < text.length) {
-          tag.textContent += text[i++];
-          setTimeout(type, 60);
+    document.querySelectorAll("a, button, .project-card, .skill-cell, [data-hover]").forEach(el => {
+      el.addEventListener("mouseenter", () => ring.classList.add("hover"));
+      el.addEventListener("mouseleave", () => ring.classList.remove("hover"));
+    });
+
+    /* ── TEXT SCRAMBLE ── */
+    class Scramble {
+      constructor(el) {
+        this.el = el;
+        this.chars = "!<>-_\\/[]{}—=+*^?#";
+        this.update = this.update.bind(this);
+      }
+      setText(newText) {
+        const oldText = this.el.innerText;
+        const length = Math.max(oldText.length, newText.length);
+        const promise = new Promise(res => this.resolve = res);
+        this.queue = [];
+        for (let i = 0; i < length; i++) {
+          const from = oldText[i] || "";
+          const to = newText[i] || "";
+          const start = Math.floor(Math.random() * 30);
+          const end = start + Math.floor(Math.random() * 30);
+          this.queue.push({ from, to, start, end });
+        }
+        cancelAnimationFrame(this.frameRequest);
+        this.frame = 0;
+        this.update();
+        return promise;
+      }
+      update() {
+        let output = "";
+        let complete = 0;
+        for (let i = 0; i < this.queue.length; i++) {
+          let { from, to, start, end, char } = this.queue[i];
+          if (this.frame >= end) {
+            complete++;
+            output += to;
+          } else if (this.frame >= start) {
+            if (!char || Math.random() < 0.28) {
+              char = this.chars[Math.floor(Math.random() * this.chars.length)];
+              this.queue[i].char = char;
+            }
+            output += char;
+          } else {
+            output += from;
+          }
+        }
+        this.el.innerText = output;
+        if (complete === this.queue.length) {
+          this.resolve();
+        } else {
+          this.frameRequest = requestAnimationFrame(this.update);
+          this.frame++;
         }
       }
-      setTimeout(type, 600);
     }
 
-    // Nav background on scroll
-    const nav = document.querySelector("nav");
-    window.addEventListener("scroll", () => {
-      if (window.scrollY > 60) {
-        nav.style.borderBottomColor = "rgba(0,240,255,0.15)";
-      } else {
-        nav.style.borderBottomColor = "rgba(0,240,255,0.08)";
-      }
+    // Apply scramble on hero name after the line-up animation
+    setTimeout(() => {
+      document.querySelectorAll(".scramble").forEach(el => {
+        const target = el.getAttribute("data-text");
+        const s = new Scramble(el);
+        s.setText(target);
+      });
+    }, 1300);
+
+    /* ── PHOTO 3D TILT ── */
+    const photoCard = document.getElementById("photoCard");
+    if (photoCard) {
+      const tiltMax = 8;
+      photoCard.addEventListener("mousemove", (e) => {
+        const r = photoCard.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        photoCard.style.transform = `rotateY(${dx * tiltMax}deg) rotateX(${-dy * tiltMax}deg)`;
+      });
+      photoCard.addEventListener("mouseleave", () => {
+        photoCard.style.transform = "rotateY(0) rotateX(0)";
+      });
+    }
+
+    /* ── PROJECT/SKILL HOVER GRADIENT TRACKING ── */
+    document.querySelectorAll(".project-card, .skill-cell").forEach(card => {
+      card.addEventListener("mousemove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        card.style.setProperty("--mx", x + "%");
+        card.style.setProperty("--my", y + "%");
+      });
     });
+
+    /* ── SCROLL REVEAL ── */
+    const reveals = document.querySelectorAll(".reveal");
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.classList.add("visible");
+          obs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+    reveals.forEach(el => obs.observe(el));
+
+    /* ── COUNTER ── */
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.count, 10);
+      const duration = 1600;
+      const start = performance.now();
+      function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(eased * target);
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) {
+          animateCounter(en.target);
+          counterObs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll("[data-count]").forEach(el => counterObs.observe(el));
+
+    /* ── NAV SCROLL STATE ── */
+    const nav = document.getElementById("nav");
+    let lastY = 0;
+    window.addEventListener("scroll", () => {
+      const y = window.scrollY;
+      if (y > 50) nav.classList.add("scrolled");
+      else nav.classList.remove("scrolled");
+      lastY = y;
+    }, { passive: true });
   </script>
 </body>
 </html>

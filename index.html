@@ -839,9 +839,9 @@
 
     .photo-badge {
       position: absolute;
-      bottom: 18px; left: 50%;
+      top: 22px; left: 50%;
       transform: translateX(-50%);
-      z-index: 3;
+      z-index: 6;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -849,6 +849,7 @@
       background: rgba(0,0,0,0.85);
       backdrop-filter: blur(10px);
       border: 1px solid var(--border-bright);
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.14);
       font-family: var(--mono);
       font-size: 0.66rem;
       letter-spacing: 0.22em;
@@ -1460,6 +1461,12 @@
       .section-head { flex-direction: column; align-items: flex-start; }
       .stage-text { font-size: clamp(3.5rem, 19vw, 7rem); }
       .stage-photo { width: 210px; }
+      .photo-badge {
+        top: 14px;
+        padding: 7px 12px;
+        font-size: 0.58rem;
+        letter-spacing: 0.18em;
+      }
       .hero-top {
         width: 100%;
         gap: 7px;

@@ -351,88 +351,45 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 36px;
-      padding: 110px 40px 50px;
+      display: flex;
+      align-items: center;
+      padding: 130px 40px 80px;
       position: relative;
       z-index: 2;
-      max-width: 1600px;
+      max-width: 1500px;
       margin: 0 auto;
+      gap: 80px;
     }
 
-    /* TOP META STRIP */
-    .hero-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 30px;
-      align-items: center;
-      padding: 18px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    .hero-left {
+      flex: 1;
       position: relative;
     }
-    .hero-strip::before,
-    .hero-strip::after {
-      content: "";
-      position: absolute;
-      width: 6px; height: 6px;
-      border: 1px solid var(--cyan);
-      transform: rotate(45deg);
-      top: 50%;
-      margin-top: -3px;
-    }
-    .hero-strip::before { left: -3px; }
-    .hero-strip::after { right: -3px; }
 
-    .strip-cell {
+    .hero-meta-line {
       display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-    .strip-cell.right { align-items: flex-end; text-align: right; }
-    .strip-cell.center { align-items: center; text-align: center; }
-    .strip-meta {
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 36px;
       font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
       color: var(--cyan);
-    }
-    .strip-val {
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--t-1);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
-    .strip-val .live-dot {
-      width: 7px; height: 7px;
-      background: #00ff88;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #00ff88;
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-
-    /* MAIN BLOCK */
-    .hero-main {
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 60px;
-      align-items: center;
-      position: relative;
+    .hero-meta-line .ml {
+      width: 40px;
+      height: 1px;
+      background: var(--cyan);
     }
 
     .hero-name {
       font-family: var(--display);
-      font-size: clamp(4.5rem, 14.5vw, 15rem);
+      font-size: clamp(4.5rem, 11vw, 11rem);
       font-weight: 700;
-      line-height: 0.86;
+      line-height: 0.9;
       text-transform: uppercase;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
     }
     .hero-name .line {
       display: block;
@@ -457,72 +414,65 @@
       display: inline-block;
     }
 
+    .hero-divider {
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+    .hero-divider .line-h {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+    .hero-divider .marker {
+      width: 8px; height: 8px;
+      border: 1px solid var(--cyan);
+      transform: rotate(45deg);
+    }
     @keyframes fadeIn {
       to { opacity: 1; }
     }
 
-    /* BOTTOM HERO BAR */
-    .hero-bottom {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr auto;
-      gap: 50px;
-      align-items: end;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-      position: relative;
-      opacity: 0;
-      animation: fadeIn 0.9s ease 0.85s forwards;
-    }
-    .hero-bottom::before {
-      content: "";
-      position: absolute;
-      top: -3px; left: -3px;
-      width: 6px; height: 6px;
-      background: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan);
-    }
-
     .hero-roles {
       font-family: var(--mono);
-      font-size: 0.74rem;
-      letter-spacing: 0.22em;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 14px;
+      color: var(--t-2);
+      margin-bottom: 24px;
       display: flex;
-      gap: 14px;
+      gap: 16px;
       flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.7s forwards;
+    }
+    .hero-roles span {
+      position: relative;
     }
     .hero-roles span + span::before {
-      content: "·";
-      margin-right: 14px;
-      opacity: 0.5;
+      content: "/";
+      margin-right: 16px;
+      color: var(--cyan);
     }
 
     .hero-desc {
-      font-size: 1rem;
+      font-size: 1.02rem;
       line-height: 1.7;
       color: var(--t-2);
-      max-width: 540px;
-    }
-
-    .hero-tagline {
-      font-family: var(--display);
-      font-size: 1.05rem;
-      font-weight: 500;
-      line-height: 1.5;
-      color: var(--t-1);
-      max-width: 360px;
-    }
-    .hero-tagline em {
-      color: var(--cyan);
-      font-style: normal;
+      max-width: 520px;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.85s forwards;
     }
 
     .hero-actions {
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1s forwards;
     }
     .btn {
       display: inline-flex;
@@ -1276,12 +1226,9 @@
     .reveal-d-6 { transition-delay: 0.48s; }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 1200px) {
-      .hero { padding: 100px 30px 40px; gap: 28px; }
-      .hero-main { grid-template-columns: 1fr 300px; gap: 40px; }
+    @media (max-width: 1100px) {
+      .hero { padding: 110px 30px 60px; gap: 60px; }
       .photo-card { width: 300px; height: 380px; }
-      .hero-bottom { grid-template-columns: 1fr 1fr; gap: 40px; }
-      .hero-bottom .hero-actions { grid-column: 1 / -1; }
       .about-grid { gap: 50px; }
       .section { padding: 90px 30px; }
     }
@@ -1291,22 +1238,16 @@
       .nav-links { gap: 18px; }
 
       .hero {
-        padding: 100px 24px 50px;
-        gap: 24px;
+        flex-direction: column;
+        padding: 110px 24px 60px;
+        gap: 60px;
       }
-      .hero-strip { grid-template-columns: 1fr; gap: 12px; padding: 16px 0; }
-      .hero-strip .strip-cell.center, .hero-strip .strip-cell.right { align-items: flex-start; text-align: left; }
-
-      .hero-main { grid-template-columns: 1fr; gap: 50px; }
-      .hero-photo-col { display: flex; justify-content: center; }
+      .hero-right { width: 100%; display: flex; justify-content: center; }
       .photo-card { width: 280px; height: 340px; }
       .float-stat.a { right: -20px; }
       .float-stat.b { left: -20px; }
       .hud.top-right { top: -22px; }
       .hud.bottom-left { bottom: -22px; }
-
-      .hero-bottom { grid-template-columns: 1fr; gap: 28px; padding-top: 24px; }
-      .hero-tagline { max-width: none; }
 
       .about-grid { grid-template-columns: 1fr; gap: 40px; }
       .section { padding: 80px 24px; }
@@ -1320,9 +1261,7 @@
       .marquee-item { font-size: 1.1rem; }
       .marquee-track { gap: 36px; }
       .section-head { flex-direction: column; align-items: flex-start; }
-      .hero-name { font-size: clamp(3.5rem, 18vw, 6rem); }
-      .hero-actions { width: 100%; flex-direction: column; }
-      .hero-actions .btn { justify-content: center; width: 100%; }
+      .hero-name { font-size: clamp(3.5rem, 17vw, 6rem); }
     }
 
     /* ── Reduce motion ── */
@@ -1380,81 +1319,34 @@
 
   <!-- HERO -->
   <section class="hero" id="top">
-
-    <!-- TOP STRIP -->
-    <div class="hero-strip">
-      <div class="strip-cell">
-        <span class="strip-meta">// PORTFOLIO</span>
-        <span class="strip-val">EDITION 2026</span>
-      </div>
-      <div class="strip-cell center">
-        <span class="strip-meta">// LOCATION</span>
-        <span class="strip-val">Bratislava, SK</span>
-      </div>
-      <div class="strip-cell right">
-        <span class="strip-meta">// STATUS</span>
-        <span class="strip-val"><span class="live-dot"></span>Available for work</span>
-      </div>
-    </div>
-
-    <!-- MAIN ROW -->
-    <div class="hero-main">
-      <div class="hero-name-col">
-        <h1 class="hero-name">
-          <span class="line"><span class="line-inner scramble" data-text="OLIVER">OLIVER</span></span>
-          <span class="line l2"><span class="line-inner scramble" data-text="LIBIČ">LIBIČ</span></span>
-        </h1>
+    <div class="hero-left">
+      <div class="hero-meta-line">
+        <span class="ml"></span>
+        <span>// PORTFOLIO · 2026</span>
       </div>
 
-      <div class="hero-photo-col">
-        <div class="hud top-right">// IDENTITY.LOAD</div>
-        <div class="hud bottom-left">// SIGNAL: STRONG</div>
+      <h1 class="hero-name">
+        <span class="line"><span class="line-inner scramble" data-text="OLIVER">OLIVER</span></span>
+        <span class="line l2"><span class="line-inner scramble" data-text="LIBIČ">LIBIČ</span></span>
+      </h1>
 
-        <div class="photo-card" id="photoCard">
-          <div class="photo-frame">
-            <img src="oliver.jpeg" alt="Oliver Libič" />
-          </div>
-          <div class="photo-corners">
-            <div class="corner tl"></div>
-            <div class="corner tr"></div>
-            <div class="corner bl"></div>
-            <div class="corner br"></div>
-          </div>
-          <div class="photo-badge">
-            <span class="dot"></span>
-            Currently building
-          </div>
+      <div class="hero-divider">
+        <div class="line-h"></div>
+        <div class="marker"></div>
+      </div>
 
-          <div class="float-stat a">
-            <div class="num" data-count="10">0</div>
-            <div class="label">Projektov</div>
-          </div>
-          <div class="float-stat b">
-            <div class="num" data-count="3">0</div>
-            <div class="label">Roky+</div>
-          </div>
-        </div>
+      <div class="hero-roles">
+        <span>Web Developer</span>
+        <span>Designer</span>
+        <span>Creative Tech</span>
       </div>
-    </div>
 
-    <!-- BOTTOM STRIP -->
-    <div class="hero-bottom">
-      <div>
-        <div class="hero-roles">
-          <span>Web Developer</span>
-          <span>Designer</span>
-          <span>Brand Builder</span>
-        </div>
-        <p class="hero-desc">
-          Robím weby pre ľudí, ktorí chcú viac než šablónu —
-          od osobných stránok cez e-shopy po veľké event platformy.
-          Každý projekt riešim osobne, s dôrazom na detail a rýchlosť.
-        </p>
-      </div>
-      <div class="hero-tagline">
-        Postavené v <em>Bratislave</em>.<br>
-        Naživo po celom svete.
-      </div>
+      <p class="hero-desc">
+        Staviam rýchle, čisté a vizuálne silné digitálne systémy —
+        od event platforiem a e-shopov po custom webové aplikácie
+        a AI-driven automatizácie. Postavené na detaile.
+      </p>
+
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">
           <span>Pozri projekty</span>
@@ -1464,6 +1356,36 @@
           <span>Napíš mi</span>
           <i class="fa-solid fa-arrow-right"></i>
         </a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hud top-right">// IDENTITY.LOAD</div>
+      <div class="hud bottom-left">// STATUS: ONLINE</div>
+
+      <div class="photo-card" id="photoCard">
+        <div class="photo-frame">
+          <img src="oliver.jpeg" alt="Oliver Libič" />
+        </div>
+        <div class="photo-corners">
+          <div class="corner tl"></div>
+          <div class="corner tr"></div>
+          <div class="corner bl"></div>
+          <div class="corner br"></div>
+        </div>
+        <div class="photo-badge">
+          <span class="dot"></span>
+          Currently building
+        </div>
+
+        <div class="float-stat a">
+          <div class="num" data-count="10">0</div>
+          <div class="label">Projektov</div>
+        </div>
+        <div class="float-stat b">
+          <div class="num" data-count="3">0</div>
+          <div class="label">Roky+</div>
+        </div>
       </div>
     </div>
   </section>

@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oliver Libič — Digital Craftsman</title>
   <meta name="description" content="Oliver Libič — web developer and designer from Bratislava. I build websites people actually use." />
+  <meta name="theme-color" content="#0c0c0b" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Oliver Libič — Digital Craftsman" />
+  <meta property="og:description" content="Web developer and designer from Bratislava. I build websites people actually use." />
+  <meta property="og:image" content="https://oliverlibic.dev/oliver.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="1600" />
+  <meta property="og:url" content="https://oliverlibic.dev/" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Oliver Libič — Digital Craftsman" />
+  <meta name="twitter:description" content="Web developer and designer from Bratislava. I build websites people actually use." />
+  <meta name="twitter:image" content="https://oliverlibic.dev/oliver.jpeg" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,12 +35,12 @@
       --blue: #2e3dff;
       --blue-bright: #5b68ff;
       --fg-l: #101010;
-      --muted-l: rgba(16, 16, 16, 0.58);
+      --muted-l: rgba(16, 16, 16, 0.64);
       --faint-l: rgba(16, 16, 16, 0.34);
       --line-l: rgba(16, 16, 16, 0.14);
       --fg-d: #ece7dc;
       --muted-d: rgba(236, 231, 220, 0.6);
-      --faint-d: rgba(236, 231, 220, 0.36);
+      --faint-d: rgba(236, 231, 220, 0.54);
       --line-d: rgba(236, 231, 220, 0.12);
       --display: "Archivo Black", "Archivo", sans-serif;
       --sans: "Archivo", system-ui, sans-serif;
@@ -1075,15 +1089,34 @@
       renderedFrame = -1;
       drawHeroFrame(currentFrame);
     }
-    for (let i = 0; i < FRAME_COUNT; i++) {
-      const img = new Image();
-      img.onload = () => {
-        if (i === 0) { loaderFrameReady = true; sizeHeroCanvas(); }
-        else if (Math.abs(Math.round(currentFrame) - i) < 2) { renderedFrame = -1; drawHeroFrame(currentFrame); }
-      };
-      img.src = framePath(i);
-      frames[i] = img;
+    // Load frame 0 alone (high priority, blocks nothing) so the loader/first paint
+    // is never held up, then stream the rest in small concurrent batches instead
+    // of firing all 150 requests at once — keeps the network free for fonts/CSS.
+    const FRAME_BATCH_SIZE = 14;
+    function loadFrame(i) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.decoding = "async";
+        img.fetchPriority = i === 0 ? "high" : "low";
+        img.onload = img.onerror = () => {
+          if (i === 0) { loaderFrameReady = true; sizeHeroCanvas(); }
+          else if (Math.abs(Math.round(currentFrame) - i) < 2) { renderedFrame = -1; drawHeroFrame(currentFrame); }
+          resolve();
+        };
+        img.src = framePath(i);
+        frames[i] = img;
+      });
     }
+    async function loadFramesInBatches() {
+      await loadFrame(0);
+      for (let start = 1; start < FRAME_COUNT; start += FRAME_BATCH_SIZE) {
+        const end = Math.min(start + FRAME_BATCH_SIZE, FRAME_COUNT);
+        const batch = [];
+        for (let i = start; i < end; i++) batch.push(loadFrame(i));
+        await Promise.all(batch);
+      }
+    }
+    loadFramesInBatches();
     window.addEventListener("resize", sizeHeroCanvas);
     new ResizeObserver(sizeHeroCanvas).observe(heroCanvas.parentElement);
     sizeHeroCanvas();
@@ -1123,35 +1156,53 @@
       });
     }
 
-    /* ═══ HERO PIN + SCRUB ═══ */
-    ScrollTrigger.create({
-      trigger: ".hero-pin",
-      start: "top top",
-      end: "bottom bottom",
-      pin: ".hero-stage",
-      pinSpacing: false,
-      scrub: true,
-      onUpdate: (self) => {
-        const p = self.progress;
+    /* ═══ HERO PIN + SCRUB — skipped entirely under reduced motion ═══ */
+    const heroPinEl_rm = document.querySelector(".hero-pin");
+    const motionMM = gsap.matchMedia();
 
-        currentFrame = p * (FRAME_COUNT - 1);
-        drawHeroFrame(currentFrame);
+    motionMM.add("(prefers-reduced-motion: no-preference)", () => {
+      ScrollTrigger.create({
+        trigger: ".hero-pin",
+        start: "top top",
+        end: "bottom bottom",
+        pin: ".hero-stage",
+        pinSpacing: false,
+        scrub: true,
+        onUpdate: (self) => {
+          const p = self.progress;
 
-        revealLetters(oliverLetters, clamp01((p - 0.04) / 0.3));
+          currentFrame = p * (FRAME_COUNT - 1);
+          drawHeroFrame(currentFrame);
 
-        const sp = clamp01((p - 0.3) / 0.12);
-        hnSerif.style.opacity = sp;
-        hnSerif.style.transform = `translateY(${30 * (1 - sp)}px)`;
+          revealLetters(oliverLetters, clamp01((p - 0.04) / 0.3));
 
-        revealLetters(libicLetters, clamp01((p - 0.4) / 0.3));
+          const sp = clamp01((p - 0.3) / 0.12);
+          hnSerif.style.opacity = sp;
+          hnSerif.style.transform = `translateY(${30 * (1 - sp)}px)`;
 
-        const subP = clamp01((p - 0.72) / 0.14);
-        heroSub.style.opacity = subP;
-        if (p > 0.02) {
-          heroCue.style.animation = "none"; // CSS fill-mode would override the inline scrub
-          heroCue.style.opacity = Math.max(0, 1 - p / 0.12);
+          revealLetters(libicLetters, clamp01((p - 0.4) / 0.3));
+
+          const subP = clamp01((p - 0.72) / 0.14);
+          heroSub.style.opacity = subP;
+          if (p > 0.02) {
+            heroCue.style.animation = "none"; // CSS fill-mode would override the inline scrub
+            heroCue.style.opacity = Math.max(0, 1 - p / 0.12);
+          }
         }
-      }
+      });
+    });
+
+    motionMM.add("(prefers-reduced-motion: reduce)", () => {
+      // No pin, no scrub, no scroll-jacking: show the finished hero as a static frame.
+      heroPinEl_rm.style.height = "100vh";
+      currentFrame = FRAME_COUNT - 1;
+      drawHeroFrame(currentFrame);
+      revealLetters(oliverLetters, 1);
+      revealLetters(libicLetters, 1);
+      hnSerif.style.opacity = 1;
+      hnSerif.style.transform = "translateY(0)";
+      heroSub.style.opacity = 1;
+      heroCue.style.display = "none";
     });
 
     /* ═══ MANIFESTO WORD SCRUB ═══ */
@@ -1207,34 +1258,46 @@
     }, { threshold: 0.5 });
     document.querySelectorAll("[data-count]").forEach(el => counterObs.observe(el));
 
-    /* ═══ APPROACH PIN — list stepper ═══ */
+    /* ═══ APPROACH PIN — list stepper, skipped entirely under reduced motion ═══ */
     const approachVideo = document.getElementById("approachVideo");
     const apItems = [0, 1, 2].map(i => document.getElementById("apItem" + i));
     const apPanels = [0, 1, 2].map(i => document.getElementById("apPanel" + i));
     const apBars = [0, 1, 2].map(i => document.getElementById("apBar" + i));
+    const approachPinEl_rm = document.querySelector(".approach-pin");
 
-    ScrollTrigger.create({
-      trigger: ".approach-pin",
-      start: "top top",
-      end: "bottom bottom",
-      pin: ".approach-stage",
-      pinSpacing: false,
-      scrub: true,
-      onUpdate: (self) => {
-        const p = self.progress;
-        if (approachVideo.paused) approachVideo.play().catch(() => {});
-        const step = Math.min(Math.floor(p * 3), 2);
-        apItems.forEach((it, i) => it.classList.toggle("active", i === step));
-        apPanels.forEach((panel, i) => {
-          const active = i === step;
-          panel.style.opacity = active ? 1 : 0;
-          panel.style.transform = `translateY(${active ? 0 : 24}px)`;
-        });
-        apBars.forEach((bar, i) => {
-          bar.style.transform = `scaleX(${clamp01(p * 3 - i)})`;
-        });
-      }
+    motionMM.add("(prefers-reduced-motion: no-preference)", () => {
+      ScrollTrigger.create({
+        trigger: ".approach-pin",
+        start: "top top",
+        end: "bottom bottom",
+        pin: ".approach-stage",
+        pinSpacing: false,
+        scrub: true,
+        onUpdate: (self) => {
+          const p = self.progress;
+          if (approachVideo.paused) approachVideo.play().catch(() => {});
+          const step = Math.min(Math.floor(p * 3), 2);
+          apItems.forEach((it, i) => it.classList.toggle("active", i === step));
+          apPanels.forEach((panel, i) => {
+            const active = i === step;
+            panel.style.opacity = active ? 1 : 0;
+            panel.style.transform = `translateY(${active ? 0 : 24}px)`;
+          });
+          apBars.forEach((bar, i) => {
+            bar.style.transform = `scaleX(${clamp01(p * 3 - i)})`;
+          });
+        }
+      });
     });
+
+    motionMM.add("(prefers-reduced-motion: reduce)", () => {
+      // No pin, no scrub: collapse the runway and keep step 1 statically visible
+      // (already the default markup state — apItem0/apPanel0/apBar0 ship active).
+      approachPinEl_rm.style.height = "100vh";
+      apBars[0].style.transform = "scaleX(1)";
+    });
+
+    // Play/pause on visibility only — not a pin/scrub, safe to run regardless of motion preference.
     ScrollTrigger.create({
       trigger: ".approach-pin",
       start: "top bottom",

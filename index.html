@@ -537,18 +537,6 @@
     .work-row:hover .wr-name { transform: translateX(18px); }
     .work-row:hover > *, .work-row:hover .wr-num, .work-row:hover .wr-status { color: var(--paper); }
     .work-row:hover .wr-arrow { transform: translate(6px, -6px) rotate(-45deg); color: var(--paper); }
-    .work-chip {
-      position: fixed; z-index: 500; pointer-events: none;
-      padding: 10px 16px;
-      background: var(--ink); border: 1px solid var(--blue-bright);
-      font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
-      color: var(--paper);
-      opacity: 0; transform: translate(-50%, -140%) scale(0.9);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      white-space: nowrap;
-    }
-    .work-chip.on { opacity: 1; transform: translate(-50%, -140%) scale(1); }
-    .work-chip .em { color: var(--blue-bright); }
     .work-foot {
       margin-top: 34px; display: flex; justify-content: space-between; align-items: center;
       font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.24em;
@@ -696,7 +684,6 @@
       .hero-meta.bl { display: none; }
       .work-row { grid-template-columns: 56px minmax(0,1fr) 60px; gap: 14px; }
       .wr-tags, .wr-status { display: none; }
-      .work-chip { display: none; }
       .manifest-side { flex-direction: column; align-items: flex-start; }
     }
     @media (max-width: 540px) {
@@ -992,9 +979,6 @@
     <span class="finale-name" aria-hidden="true">Oliver Libič</span>
   </footer>
 
-  <!-- work hover chip -->
-  <div class="work-chip" id="workChip"><span class="em" id="workChipText"></span></div>
-
   <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -1042,7 +1026,7 @@
       cRing.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
       requestAnimationFrame(cursorLoop);
     })();
-    document.querySelectorAll("a, button").forEach(el => {
+    document.querySelectorAll("a:not(.work-row), button").forEach(el => {
       el.addEventListener("mouseenter", () => cRing.classList.add("hover"));
       el.addEventListener("mouseleave", () => cRing.classList.remove("hover"));
     });
@@ -1315,21 +1299,6 @@
         if (self.isActive) approachVideo.play().catch(() => {});
         else approachVideo.pause();
       }
-    });
-
-    /* ═══ WORK HOVER CHIP ═══ */
-    const workChip = document.getElementById("workChip");
-    const workChipText = document.getElementById("workChipText");
-    document.querySelectorAll(".work-row").forEach(row => {
-      row.addEventListener("mouseenter", () => {
-        workChipText.textContent = row.dataset.domain + " ↗";
-        workChip.classList.add("on");
-      });
-      row.addEventListener("mouseleave", () => workChip.classList.remove("on"));
-      row.addEventListener("mousemove", (e) => {
-        workChip.style.left = e.clientX + "px";
-        workChip.style.top = e.clientY + "px";
-      });
     });
 
     /* ═══ REFRESH AFTER FONTS/LOAD (avoid stale pin measurements) ═══ */

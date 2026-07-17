@@ -216,7 +216,7 @@
     .nav-drawer-meta { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint-d); }
 
     /* ═══ HERO — dark cinema ═══ */
-    .hero-pin { position: relative; height: 460vh; }
+    .hero-pin { position: relative; height: 340vh; }
     .hero-stage {
       position: relative; height: 100vh; overflow: hidden;
       background: var(--ink-2);
@@ -679,9 +679,11 @@
       .nav-links, .nav-status { display: none; }
       .burger { display: flex; }
       .nav-drawer { display: flex; }
-      .hero-pin { height: 380vh; }
+      .hero-pin { height: 300vh; }
       .hero-name { padding: 13vh 4vw 16vh; }
       .hero-meta.bl { display: none; }
+      .hero-meta.br { bottom: 3vh; }
+      .hero-sub { bottom: 10.5vh; }
       .work-row { grid-template-columns: 56px minmax(0,1fr) 60px; gap: 14px; }
       .wr-tags, .wr-status { display: none; }
       .manifest-side { flex-direction: column; align-items: flex-start; }
@@ -1051,7 +1053,10 @@
     }));
 
     /* ═══ HERO ORBIT FRAME SEQUENCE ═══ */
-    const FRAME_COUNT = 150;
+    // The strongest portrait lands on frame 24. Hold it while the typography
+    // finishes instead of continuing the orbit until Oliver turns away.
+    const FRAME_COUNT = 24;
+    const HERO_MOTION_END = 0.26;
     const framePath = (i) => `videos/hero-frames/frame_${String(i + 1).padStart(3, "0")}.jpg`;
     const frames = new Array(FRAME_COUNT);
     const heroCanvas = document.getElementById("heroCanvas");
@@ -1164,18 +1169,18 @@
         onUpdate: (self) => {
           const p = self.progress;
 
-          currentFrame = p * (FRAME_COUNT - 1);
+          currentFrame = clamp01(p / HERO_MOTION_END) * (FRAME_COUNT - 1);
           drawHeroFrame(currentFrame);
 
-          revealLetters(oliverLetters, clamp01((p - 0.04) / 0.3));
+          revealLetters(oliverLetters, clamp01((p - 0.04) / 0.24));
 
-          const sp = clamp01((p - 0.3) / 0.12);
+          const sp = clamp01((p - 0.27) / 0.1);
           hnSerif.style.opacity = sp;
           hnSerif.style.transform = `translateY(${30 * (1 - sp)}px)`;
 
-          revealLetters(libicLetters, clamp01((p - 0.4) / 0.3));
+          revealLetters(libicLetters, clamp01((p - 0.34) / 0.25));
 
-          const subP = clamp01((p - 0.72) / 0.14);
+          const subP = clamp01((p - 0.62) / 0.13);
           heroSub.style.opacity = subP;
           if (p > 0.02) {
             heroCue.style.animation = "none"; // CSS fill-mode would override the inline scrub

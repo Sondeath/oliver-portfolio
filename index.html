@@ -770,7 +770,7 @@
   <section class="hero-pin" id="top">
     <div class="hero-stage dark">
       <div class="hero-media" aria-hidden="true">
-        <video id="heroVideo" src="videos/hero%20v2.mp4" muted playsinline preload="auto"></video>
+        <video id="heroVideo" src="videos/hero%20v2.mp4" poster="videos/hero-poster.jpg" muted playsinline preload="auto"></video>
       </div>
       <div class="hero-vignette"></div>
 
@@ -1002,11 +1002,12 @@
     /* ═══ LOADER — counter gated on hero media ═══ */
     const loaderEl = document.getElementById("loader");
     const loaderCount = document.getElementById("loaderCount");
-    let loaderMediaReady = false, loaderHidden = false;
+    let loaderMediaReady = false, loaderHidden = false, loaderDownloadPct = 0;
     const loaderStart = performance.now();
     const loaderTimer = setInterval(() => {
       const el = (performance.now() - loaderStart) / 1500;
-      const val = Math.min(Math.floor(el * 100), loaderMediaReady ? 100 : 99);
+      const ramp = Math.floor(el * 100);
+      const val = Math.min(Math.max(ramp, loaderDownloadPct), loaderMediaReady ? 100 : 99);
       loaderCount.textContent = String(val).padStart(3, "0");
       if (val >= 100 && !loaderHidden) {
         loaderHidden = true;
@@ -1014,7 +1015,7 @@
         setTimeout(() => loaderEl.classList.add("done"), 250);
       }
     }, 40);
-    setTimeout(() => { loaderMediaReady = true; }, 5000); // safety net
+    setTimeout(() => { loaderMediaReady = true; }, 3000); // safety net
 
     /* ═══ TIME / YEAR ═══ */
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -1078,6 +1079,11 @@
       loaderMediaReady = true;
     }, { once: true });
     heroVideo.addEventListener("error", () => { loaderMediaReady = true; }, { once: true });
+    heroVideo.addEventListener("progress", () => {
+      if (!heroVideo.duration || !heroVideo.buffered.length) return;
+      const buffered = heroVideo.buffered.end(heroVideo.buffered.length - 1);
+      loaderDownloadPct = Math.floor(Math.min(buffered / heroVideo.duration, 1) * 99);
+    });
 
     /* ═══ LENIS + GSAP ═══ */
     gsap.registerPlugin(ScrollTrigger);

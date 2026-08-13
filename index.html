@@ -216,7 +216,7 @@
       position: absolute; inset: 0; z-index: 1; overflow: hidden;
       background: var(--ink-2);
     }
-    #heroVideo {
+    #heroVideo, #heroPoster {
       position: absolute; left: 50%; top: 50%;
       width: auto; height: 112%; max-width: none;
       transform: translate(-50%, -50%);
@@ -225,6 +225,12 @@
       -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
     }
+    /* The poster is a real element behind the video, not the video's own poster
+       attribute: iOS Safari refuses to paint a frame of a paused video, so the
+       reveal used to flash black. The video only fades in once it truly has a frame. */
+    #heroPoster { z-index: 0; }
+    #heroVideo { z-index: 1; opacity: 0; transition: opacity 0.5s ease; }
+    #heroVideo.ready { opacity: 1; }
     .hero-vignette {
       position: absolute; inset: 0; z-index: 2; pointer-events: none;
       background:
@@ -691,7 +697,7 @@
       .nav-drawer { display: flex; }
       .hero-pin { height: 300vh; }
       .hero-name { padding: 13vh 4vw 16vh; }
-      #heroVideo {
+      #heroVideo, #heroPoster {
         width: 100%; height: 100%; object-fit: cover;
         -webkit-mask-image: none; mask-image: none;
       }
@@ -770,7 +776,8 @@
   <section class="hero-pin" id="top">
     <div class="hero-stage dark">
       <div class="hero-media" aria-hidden="true">
-        <video id="heroVideo" src="videos/hero%20v2.mp4" poster="videos/hero-poster.jpg" muted playsinline preload="auto"></video>
+        <img id="heroPoster" src="videos/hero-poster.jpg" alt="" fetchpriority="high" decoding="async" />
+        <video id="heroVideo" src="videos/hero%20v2.mp4" muted playsinline preload="auto"></video>
       </div>
       <div class="hero-vignette"></div>
 
@@ -999,23 +1006,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
-    /* ═══ LOADER — counter gated on hero media ═══ */
+    /* ═══ LOADER — gated on the 31 KB poster, not the 2.4 MB video ═══
+       The video keeps streaming behind the loader; what the visitor actually sees
+       first is the poster, so that is all the intro has to wait for. */
     const loaderEl = document.getElementById("loader");
     const loaderCount = document.getElementById("loaderCount");
-    let loaderMediaReady = false, loaderHidden = false, loaderDownloadPct = 0;
+    const loaderPoster = document.getElementById("heroPoster");
+    let loaderMediaReady = false, loaderHidden = false;
     const loaderStart = performance.now();
+    const markMediaReady = () => { loaderMediaReady = true; };
+
+    // The CDN <script> tags above this one are render-blocking, so on a cold cache
+    // they can finish *after* the same-origin poster/video have already fired their
+    // load events. Checking the current state covers that race; the listeners cover
+    // the normal case. Relying on the events alone is what pinned the counter at 99.
+    if (loaderPoster.complete && loaderPoster.naturalWidth > 0) markMediaReady();
+    loaderPoster.addEventListener("load", markMediaReady, { once: true });
+    loaderPoster.addEventListener("error", markMediaReady, { once: true });
+
     const loaderTimer = setInterval(() => {
-      const el = (performance.now() - loaderStart) / 1500;
-      const ramp = Math.floor(el * 100);
-      const val = Math.min(Math.max(ramp, loaderDownloadPct), loaderMediaReady ? 100 : 99);
+      const ramp = Math.floor(((performance.now() - loaderStart) / 900) * 100);
+      const val = Math.min(ramp, loaderMediaReady ? 100 : 96);
       loaderCount.textContent = String(val).padStart(3, "0");
       if (val >= 100 && !loaderHidden) {
         loaderHidden = true;
         clearInterval(loaderTimer);
-        setTimeout(() => loaderEl.classList.add("done"), 250);
+        setTimeout(() => loaderEl.classList.add("done"), 120);
       }
     }, 40);
-    setTimeout(() => { loaderMediaReady = true; }, 3000); // safety net
+    setTimeout(markMediaReady, 2500); // safety net
 
     /* ═══ TIME / YEAR ═══ */
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -1071,19 +1090,13 @@
     const heroVideo = document.getElementById("heroVideo");
     let heroPlaybackStarted = false;
 
-    heroVideo.addEventListener("loadedmetadata", () => {
-      heroVideo.pause();
-      heroVideo.currentTime = 0;
-    }, { once: true });
-    heroVideo.addEventListener("loadeddata", () => {
-      loaderMediaReady = true;
-    }, { once: true });
-    heroVideo.addEventListener("error", () => { loaderMediaReady = true; }, { once: true });
-    heroVideo.addEventListener("progress", () => {
-      if (!heroVideo.duration || !heroVideo.buffered.length) return;
-      const buffered = heroVideo.buffered.end(heroVideo.buffered.length - 1);
-      loaderDownloadPct = Math.floor(Math.min(buffered / heroVideo.duration, 1) * 99);
-    });
+    // Only fade the video in once it genuinely holds a decoded frame, so the
+    // poster underneath stays visible instead of a black gap. Same cold-cache race
+    // as the loader: readyState covers an event that already fired.
+    const markVideoReady = () => heroVideo.classList.add("ready");
+    if (heroVideo.readyState >= 2) markVideoReady();
+    heroVideo.addEventListener("loadeddata", markVideoReady, { once: true });
+    heroVideo.addEventListener("canplay", markVideoReady, { once: true });
 
     /* ═══ LENIS + GSAP ═══ */
     gsap.registerPlugin(ScrollTrigger);

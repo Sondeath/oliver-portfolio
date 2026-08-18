@@ -5,3 +5,10 @@ gh_2.92.0_macOS_amd64/
 
 examples/
 .claude/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

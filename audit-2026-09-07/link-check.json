@@ -1,0 +1,68 @@
+[
+  {
+    "url": "https://www.becool.sk",
+    "status": 200,
+    "final": "https://www.becool.sk",
+    "title": "BeCool Sport"
+  },
+  {
+    "url": "https://www.becoolcatering.sk",
+    "status": 200,
+    "final": "https://becoolcatering.sk/",
+    "title": "becoolcatering.sk &#8211; Toto je catering, BeCool catering"
+  },
+  {
+    "url": "https://zakopanenightrun.com",
+    "status": 200,
+    "final": "https://zakopanenightrun.com",
+    "title": "Night Run Zakopane 2026"
+  },
+  {
+    "url": "https://www.vibeclub.sk",
+    "error": "HTTP Error 466: "
+  },
+  {
+    "url": "https://nedelka.pages.dev",
+    "status": 200,
+    "final": "https://nedelka.pages.dev",
+    "title": "Nedelka — komunitné eventy"
+  },
+  {
+    "url": "https://ghostlayer.uk",
+    "status": 200,
+    "final": "https://ghostlayer.uk",
+    "title": "GhostLayer — Private Identity Firewall"
+  },
+  {
+    "url": "https://poshmarketingstudio.com",
+    "error": "HTTP Error 466: "
+  },
+  {
+    "url": "https://bratislavamarathon.sk/",
+    "status": 200,
+    "final": "https://bratislavamarathon.sk/",
+    "title": "BAM &#8211; Bratislava Maraton"
+  },
+  {
+    "url": "https://shop.becool.sk/",
+    "status": 200,
+    "final": "https://shop.becool.sk/",
+    "title": "BeCool"
+  },
+  {
+    "url": "https://www.loyalbyloy.com/",
+    "error": "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  },
+  {
+    "url": "https://www.phsporthorses.sk/language/en/home/",
+    "error": "HTTP Error 466: "
+  },
+  {
+    "url": "https://marekradic.sk/",
+    "error": "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  },
+  {
+    "url": "https://jumpstudio.sk",
+    "error": "HTTP Error 466: "
+  }
+]

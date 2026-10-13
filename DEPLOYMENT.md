@@ -45,8 +45,9 @@ No personal request content is intentionally logged by this code.
 
 ## Deploying
 
-Run the build, then deploy the Worker using the root wrangler.jsonc through the
-account's normal Cloudflare process. Do not use the old branch's assets directory
+The root wrangler.jsonc runs npm run build automatically before Wrangler bundles
+the Worker, including in a clean Git checkout. Deploy through the account's normal
+Cloudflare process. Do not use the old branch's assets directory
 of the entire repository: it can publish source files, reviews and private setup.
 Review existing namespace IDs in the account before using 731029 for rate limiting.
 If the project is hosted as Cloudflare Pages rather than Workers, adapt the API

@@ -61,6 +61,7 @@ Automated:
 - npm test: 9 passed, 0 failed. Includes contact validation, hidden stale data, impossible dates, URI encoding, server origin/body restrictions, captcha hostname/action, rate limiting, provider failure and retry idempotency.
 - npm run build: explicit public file list created successfully.
 - Wrangler 4.150.0 deploy --dry-run: bundled successfully with ASSETS and rate-limit bindings.
+- Clean-checkout deployment check: the first archive of the pushed commit reproduced a missing dist error without a manual build. Added build.command to wrangler.jsonc, then reran deploy --dry-run in the same clean archive with no prebuilt assets. Wrangler ran npm run build and bundled successfully. This confirms the standalone clean-checkout fix; the separate Cloudflare build log still requires account access to establish its precise failure cause.
 - git diff --check: passed.
 
 ## Production limits

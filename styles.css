@@ -1191,6 +1191,15 @@ details[open] > summary > .icon {
     margin-top: 0;
   }
 }
+@media (min-width: 1101px) and (max-height: 1100px) {
+  .intro { padding-block: 24px; }
+  .offer { padding-top: 32px; padding-bottom: 32px; }
+  .offer-visual img {
+    height: clamp(220px, calc(100svh - 650px), 340px);
+    aspect-ratio: auto;
+    object-fit: contain;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

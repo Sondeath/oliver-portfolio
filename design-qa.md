@@ -10,11 +10,12 @@ It does not certify production launch or live email delivery.
 - Visual truth: design-review-2026-10-13/navrh-2.png, the second displayed ImageGen result selected by the user.
 - Source pixels: 1229 × 1280.
 - CSS viewport for primary comparison: 1229 × 1280, devicePixelRatio approximately 1.
-- Browser capture: qa-digital-merch/14-desktop-native.png; final handoff capture: qa-digital-merch/19-desktop-handoff.png.
+- Browser capture: qa-digital-merch/14-desktop-native.png; final handoff capture: qa-digital-merch/22-desktop-verified.png.
 - Capture pixels: 1214 × 1264. The screenshot backend returns a slightly smaller raster than the requested CSS frame. The source was resized to the same raster dimensions for comparison, without cropping or changing either original.
 - State: page top, default unfilled form, email-draft mode, advanced request details closed.
 - Full comparison: qa-digital-merch/comparison-final.jpg. Left is selected visual, right is browser implementation.
 - Focused comparisons: comparison-typography.jpg, comparison-offers.jpg, comparison-form.jpg in the same folder.
+- Short-desktop evidence: 21-desktop-wide-fixed.png (1440 × 1024 CSS).
 - Responsive evidence: 18-mobile-final.png (390 × 844 CSS), 10-mobile-320.png and 11-mobile-merch.png (320 × 844 CSS), 17-tablet-final.png (768 × 1024 CSS).
 - Browser: Codex in-app browser. All screenshots were opened and inspected.
 
@@ -36,7 +37,8 @@ No actionable P0/P1/P2 findings remain in the local frontend.
 1. Initial capture 01-desktop.png exposed excessive image heights from intrinsic HTML height attributes. This was a P1 layout issue. Explicit CSS height:auto fixed both generated and project images.
 2. Source versus 02-desktop-fixed.png, recorded together in comparison-initial.jpg, showed a P2 contact-density issue: the main action fell below the comparison frame. The desktop form was changed to three columns, with labels aligned to the top and advanced fields collapsed.
 3. Tablet capture 12-tablet.png showed a P2 alignment issue: a forced description line break made the left image and CTA sit lower than the right. Forced line breaks were removed at tablet widths and offer visuals use flexible top spacing. Post-fix evidence is 17-tablet-final.png; measured image and CTA baselines match.
-4. Source versus 14-desktop-native.png, recorded together in comparison-final.jpg and focused comparisons, confirms the fixes. Screenshot 19-desktop-handoff.png is the final default state. There are no remaining actionable P0/P1/P2 differences.
+4. Source versus 14-desktop-native.png, recorded together in comparison-final.jpg and focused comparisons, confirms the fixes. Screenshot 22-desktop-verified.png is the final default state and is pixel-identical to the primary comparison capture. There are no remaining actionable P0/P1/P2 differences.
+5. The final 1440 × 1024 check in 20-desktop-wide.png exposed partly cut-off primary CTAs at that viewport height (P2). A height-based desktop media query now reduces the image stage for shorter screens. Post-fix evidence is 21-desktop-wide-fixed.png: both CTA bottoms are at 912 CSS pixels, within the 1024-pixel frame. The source-comparison viewport remains unchanged, confirmed by 22-desktop-verified.png.
 
 ## Functional verification
 

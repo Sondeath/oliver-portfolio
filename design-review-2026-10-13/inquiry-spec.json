@@ -1,0 +1,133 @@
+{
+  "purpose": "Implementačný podklad pre návrh 2. Lokálne je overený e-mailový dopyt; pripravený Worker na priame odoslanie potrebuje produkčné nastavenia.",
+  "pendingDecisions": [
+    "Rozsah reklamných služieb: návrh a podklady alebo aj zabezpečenie výroby a dodania.",
+    "Doručovacia služba a dostupné produkčné nastavenia; nevymýšľať účet, API kľúč ani funkčné odosielanie."
+  ],
+  "serviceIds": [
+    "website",
+    "textile",
+    "promotional",
+    "automation",
+    "advice"
+  ],
+  "fields": {
+    "services": {
+      "type": "array",
+      "required": true,
+      "minimumItems": 1,
+      "allowedValues": [
+        "website",
+        "textile",
+        "promotional",
+        "automation",
+        "advice"
+      ]
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "maxLength": 254,
+      "validation": "Platný formát e-mailu; vstupy nekonkaténovať do e-mailových hlavičiek."
+    },
+    "description": {
+      "type": "string",
+      "required": true,
+      "maxLength": 5000
+    },
+    "company": {
+      "type": "string",
+      "required": false,
+      "maxLength": 160
+    },
+    "phone": {
+      "type": "string",
+      "required": false,
+      "maxLength": 40
+    },
+    "quantity": {
+      "type": "integer",
+      "required": false,
+      "minimum": 1,
+      "showWhen": "textile alebo promotional"
+    },
+    "deadline": {
+      "type": "date",
+      "required": false,
+      "meaning": "Želaný termín, nie potvrdený záväzok dodania."
+    },
+    "budget": {
+      "type": "string",
+      "required": false,
+      "maxLength": 160
+    },
+    "requestId": {
+      "type": "string",
+      "source": "Vygenerovaný pre tento dopyt, pri opakovaní neistého odoslania zostáva rovnaký."
+    }
+  },
+  "states": [
+    "idle",
+    "invalid",
+    "submitting",
+    "accepted",
+    "uncertain",
+    "error",
+    "rate_limited"
+  ],
+  "behavior": [
+    "Tlačidlo pri službe vyberie jej typ a presunie návštevníka na formulár bez vymazania jeho rozpracovaných údajov.",
+    "Výber viacerých služieb je povolený. Neznáme zadanie môže použiť advice.",
+    "Textil alebo predmety odkryjú nepovinné doplňujúce polia, bez zablokovania klienta, ktorý presné množstvo ešte nevie.",
+    "Pri chybe sa zachovajú všetky údaje. Chybová hláška je priradená ku konkrétnemu poľu; fokus prejde na prvú chybu.",
+    "Počas odosielania sa zabráni opakovanému kliknutiu a oznámi sa stav asistívnym technológiám.",
+    "accepted znamená potvrdené trvalé prijatie alebo úspešné prijatie doručovacím poskytovateľom, podľa skutočnej implementácie; neznamená záruku doručenia do inboxu.",
+    "Pri časovom limite sa nehlási úspech. Opakovanie používa rovnaký requestId a server rieši duplicity.",
+    "Rozpracované osobné údaje sa automaticky neukladajú do localStorage ani URL.",
+    "Náhradný priamy e-mail je dostupný aj bez JavaScriptu a pri výpadku služby."
+  ],
+  "serverRequirements": [
+    "Validácia povolených polí, typov, dĺžok a celkovej veľkosti požiadavky na serveri.",
+    "API tajomstvá iba v serverových premenných prostredia.",
+    "Overená adresa odosielateľa, klientsky e-mail iba v bezpečne nastavenej reply-to hlavičke.",
+    "Ochrana proti spamu s limitom frekvencie a zvoleným overením požiadavky; samotný skrytý input nie je kompletná ochrana.",
+    "Obmedziť a zdokumentovať ukladanie a logovanie osobných údajov podľa zvolenej prevádzky.",
+    "Pri probléme doručovania vrátiť bezpečnú chybu bez prezradenia tajomstiev poskytovateľa.",
+    "Produkčné doručovanie overiť kontrolovaným testom až po autorizácii odoslania na konkrétny cieľ."
+  ],
+  "acceptanceScenarios": [
+    {
+      "action": "Vybrať reklamný textil pri službe",
+      "expected": "Zvolený textile a viditeľný formulár s možnosťou uviesť množstvo."
+    },
+    {
+      "action": "Pridať web k textilu",
+      "expected": "Obe služby zostanú zvolené, existujúce zadanie sa zachová."
+    },
+    {
+      "action": "Odoslať prázdny alebo nesprávny formulár",
+      "expected": "Bez sieťového odoslania, zrozumiteľné chyby a fokus na prvej chybe."
+    },
+    {
+      "action": "Odoslať platné zadanie",
+      "expected": "Potvrdenie až po prijatí; cieľ dostane správne údaje bez nesúvisiacich polí."
+    },
+    {
+      "action": "Prerušiť pripojenie alebo simulovať chybu servera",
+      "expected": "Žiadny falošný úspech, zadanie zostane, k dispozícii opakovanie a e-mail."
+    },
+    {
+      "action": "Opakovať požiadavku po neistom výsledku",
+      "expected": "Server identifikuje rovnaký requestId a nezaloží duplicitný dopyt."
+    },
+    {
+      "action": "Ovládať formulár iba klávesnicou a na mobile",
+      "expected": "Viditeľný focus, dostupné popisy a stavové hlášky, bez vodorovného posúvania."
+    }
+  ]
+}

@@ -1,105 +1,88 @@
-# Dark studio redesign — design QA, 2026-09-07
+# Design QA — selected direction 2
 
 final result: passed
 
-## Target and evidence
+This result covers the local frontend and the implemented email-draft journey.
+It does not certify production launch or live email delivery.
 
-Selected target: option 1, continuous dark studio.
-Source visual: `design-directions/selected-dark-studio.png` (921 × 1708 pixels).
-Local implementation: http://127.0.0.1:8765/
-Final comparison capture: `qa-dark-studio/12-final-comparison.png` (921 × 2087 pixels).
-State: top of page, dark theme, archive and biography collapsed.
+## Source and capture
 
-Comparison used both source and implementation images together in the same tool input.
-The final browser viewport was 936 × 1708 CSS pixels; the screenshot backend produced
-a 921-pixel-wide content image. Comparison is aligned by the actual 921-pixel raster width.
-The longer document is deliberate: the live page retains an expandable project archive,
-biography, real email and copy control absent from the image mock. No claim of pixel equality.
-The screenshot backend controls output density; no assumed deviceScaleFactor override.
+- Visual truth: design-review-2026-10-13/navrh-2.png, the second displayed ImageGen result selected by the user.
+- Source pixels: 1229 × 1280.
+- CSS viewport for primary comparison: 1229 × 1280, devicePixelRatio approximately 1.
+- Browser capture: qa-digital-merch/14-desktop-native.png; final handoff capture: qa-digital-merch/19-desktop-handoff.png.
+- Capture pixels: 1214 × 1264. The screenshot backend returns a slightly smaller raster than the requested CSS frame. The source was resized to the same raster dimensions for comparison, without cropping or changing either original.
+- State: page top, default unfilled form, email-draft mode, advanced request details closed.
+- Full comparison: qa-digital-merch/comparison-final.jpg. Left is selected visual, right is browser implementation.
+- Focused comparisons: comparison-typography.jpg, comparison-offers.jpg, comparison-form.jpg in the same folder.
+- Responsive evidence: 18-mobile-final.png (390 × 844 CSS), 10-mobile-320.png and 11-mobile-merch.png (320 × 844 CSS), 17-tablet-final.png (768 × 1024 CSS).
+- Browser: Codex in-app browser. All screenshots were opened and inspected.
 
-Additional desktop evidence:
-- `qa-dark-studio/08-desktop-1440.png` — 1440 × 900 CSS viewport; output 1425 × 891.
-- `qa-dark-studio/10-desktop-services.png` — focused services/contact inspection.
-- `qa-dark-studio/09-archive-open.png` — archive expanded.
-Mobile evidence:
-- `qa-dark-studio/03-mobile-hero.png` — 390 × 844 CSS; output 375 × 812.
-- `qa-dark-studio/04-mobile-menu.png` — modal navigation.
-- `qa-dark-studio/05-mobile-about.png` — biography opened by navigation.
-- `qa-dark-studio/06-mobile-contact.png` — contact and copy feedback.
-- `qa-dark-studio/07-mobile-320.png` — narrow 320 × 740 CSS viewport.
-The source has no mobile composition: mobile is a responsive adaptation.
-Hero, project names and body copy are readable in the full comparison; a separate source
-crop was unnecessary. The services capture additionally checks details at normal desktop size.
+## Findings and accepted differences
 
-## Findings and iteration history
+No actionable P0/P1/P2 findings remain in the local frontend.
 
-1. Initial comparison: `01-initial-desktop.png`.
-   - P2: Wide website screenshots cropped project headings and branding in square cards.
-     Fixed by capturing actual sites at a suitable near-square viewport.
-   - P2: Portrait was too large inside its crop and cut off the torso.
-     Fixed image scale, top offset and placement.
-   - P2: Fixed description heights and accumulated gaps weakened section rhythm.
-     Removed fixed text heights, aligned service links with flex layout, tightened transitions.
-2. Second comparison: `02-desktop-refined.png`.
-   - P1: BeCool capture had a browser capture/reflow failure and appeared white.
-     Recaptured using the verified screenshot surface, inspected it, recompressed and reloaded.
-3. Final visual comparisons: `11-final-desktop.png`, then `12-final-comparison.png`.
-   - Project images loaded correctly with legible branding and no clipped main titles.
-   - Original portrait is integrated into the continuous background.
-   - No remaining actionable P0/P1/P2 layout or image findings.
-4. Interaction check found two simultaneous current navigation labels at a section boundary.
-   Replaced independent observer flags with one current-section calculation.
-   Retested at 1440 × 900: Services is the only current item after Services navigation.
-   The final comparison was captured after this change.
+- Typography: self-hosted Inter regular and medium preserve the selected sans-serif hierarchy. Large headline, single-line desktop offer headings, modest mono category labels and readable supporting text are present. Both offer headings wrap naturally on mobile.
+- Spacing: equal offer columns, matched image baselines and CTA baselines, restrained gutters and compact inquiry layout reproduce the selected hierarchy. The two desktop image tops and CTA tops were measured equal; the same is true at the tablet width.
+- Colors: charcoal left surface, warm-white right surface, cobalt CTA and headline accent follow the selected design. Pale focus outlines, visible field borders and plain error text support interaction states.
+- Images: dedicated generated laptop and merchandise raster assets match the selected subjects and palette. Production uses compressed WebP files; original PNGs and exact generation prompts remain under assets/offer. Existing real project captures remain in the portfolio. Merchandise is explicitly captioned as an illustrative concept.
+- Copy: Slovak navigation, offer, portfolio, process and contact text. No invented prices, production guarantees, clients or turnaround claims. The first call to action is “Chcem web”; the second is “Chcem reklamné predmety”.
+- Form: visible labels and an advanced details disclosure intentionally extend the mock's minimal contact band. Service selection, optional quantity/date and explicit transport information are necessary to make a useful inquiry. Default primary action says “Pripraviť dopyt”, since no production email credentials are configured.
+- Preserved scope: the mock placed a footer directly after contact. The implementation retains real projects, the archive, personal introduction and automation service below contact so the portfolio is not lost.
+- Mobile adaptation: stacked offers with top shortcuts to both categories. There is no source mobile mock; these are responsive adaptations of the chosen desktop design.
 
-## Required fidelity surfaces
+## Comparison history
 
-- Typography: self-hosted Inter regular/medium closely follows the selected sans-serif design.
-  Two-line headline, understated section labels and clear project hierarchy preserved.
-  Body copy is intentionally slightly larger than the image mock at smaller desktop widths.
-  Native system monospace is used only for small labels.
-- Layout: one continuous canvas, left copy/right portrait, two equal project cards,
-  three aligned service columns and restrained contact section. Consistent container/gutters.
-  Added archive/biography are compact disclosures rather than new full-size sections.
-- Colors: near-black #101111, off-white text, cobalt #2554ff and lighter blue for small links.
-  Hairlines and subtle project radii retained. No alternating cream/dark panels.
-- Images: original portrait and actual browser captures, not generated identity or website art.
-  BeCool includes its real white product area and Nedelka includes event details; these are
-  intentional differences from the generator's rearranged website previews.
-  Existing Lucide icons plus matching official monitor/cart/zap SVG assets are used.
-- Content: name and real email preserved. Corrected the mock's invented WordPress/WooCommerce
-  attribution to the existing Shoptet project information. Footer uses 2026.
-  All 13 portfolio destinations remain available: 2 featured + 11 in the archive.
+1. Initial capture 01-desktop.png exposed excessive image heights from intrinsic HTML height attributes. This was a P1 layout issue. Explicit CSS height:auto fixed both generated and project images.
+2. Source versus 02-desktop-fixed.png, recorded together in comparison-initial.jpg, showed a P2 contact-density issue: the main action fell below the comparison frame. The desktop form was changed to three columns, with labels aligned to the top and advanced fields collapsed.
+3. Tablet capture 12-tablet.png showed a P2 alignment issue: a forced description line break made the left image and CTA sit lower than the right. Forced line breaks were removed at tablet widths and offer visuals use flexible top spacing. Post-fix evidence is 17-tablet-final.png; measured image and CTA baselines match.
+4. Source versus 14-desktop-native.png, recorded together in comparison-final.jpg and focused comparisons, confirms the fixes. Screenshot 19-desktop-handoff.png is the final default state. There are no remaining actionable P0/P1/P2 differences.
 
-## Functional and responsive validation
+## Functional verification
 
-- 320, 390, 921 and 1440 CSS widths checked; no horizontal overflow at tested sizes.
-- Desktop CTA and Work/Services anchors navigate to real sections.
-- Mobile navigation opens as a native modal; close receives focus.
-- Escape closes menu, restores toggle focus, resets aria-expanded and unlocks scrolling.
-- Mobile About closes the menu, expands biography and focuses the destination.
-- Archive expands and collapses; 11 real links are present.
-- Copy button resolves the Clipboard API write and displays its success state.
-  The browser automation clipboard read returned empty; OS clipboard contents were not
-  independently verified. The mailto link remains directly available.
-- Mailto destinations and subjects verified in DOM; no email was sent.
-- All local images loaded; Inter font loaded.
-- Browser console: no warnings/errors returned for the portfolio tab.
-- HTML integrity: unique IDs, all internal anchor targets and referenced local assets exist.
-- `node --check app.js` and `git diff --check` passed.
-- Reduced-motion CSS inspected: smooth scrolling and transitions disabled in that preference.
-  OS preference switching, cross-browser and screen-reader testing were not performed.
+Browser checked:
+- Main service CTA selects the correct service and focuses the name field.
+- Multiple services can be selected together without losing the brief.
+- Product choices reveal optional quantity and requested date.
+- Automation-only inquiry disables product fields.
+- Missing name, email and description receive inline errors; focus moves to first error.
+- A valid combined request produces the correct summary, encoded mailto destination and subject/body.
+- Copy-summary action copies the request; dialog opens/closes, Escape works and focus returns.
+- Privacy information opens/closes and accurately describes the active email-draft mode.
+- Mobile menu opens/closes and contact navigation closes it.
+- All nine archived project links remain; archive and automation disclosure expand.
+- No horizontal overflow at 320, 390, 768, 1229 and 1440 CSS widths.
+- All inspected image resources load, including the portrait after scrolling into view.
+- No error or warning console entries in the final preview.
+
+Automated:
+- npm test: 9 passed, 0 failed. Includes contact validation, hidden stale data, impossible dates, URI encoding, server origin/body restrictions, captcha hostname/action, rate limiting, provider failure and retry idempotency.
+- npm run build: explicit public file list created successfully.
+- Wrangler 4.150.0 deploy --dry-run: bundled successfully with ASSETS and rate-limit bindings.
+- git diff --check: passed.
+
+## Production limits
+
+- Live email sending has not been tested. Provider calls in unit tests are mocked.
+- The optional direct-send Worker requires verified sender, Resend key and Turnstile keys.
+- The current local preview always uses email-draft mode and cannot send external email.
+- Cloudflare CLI reports no authenticated account. No deployment was attempted.
+- Actual product range and whether Oliver supplies production and delivery still need confirmation.
+- Privacy information must be completed for the chosen production operation.
+- No broad WCAG conformance claim or exhaustive assistive-technology certification is made.
 
 ## Follow-up polish
 
-- P3: Font rendering and the precise portrait silhouette differ slightly from the generated mock.
-- P3: Real project captures naturally contain more detail than its illustrative previews.
+P3 only: the generated laptop camera angle and merchandise framing differ slightly from the selected image. Both keep the subjects, visual balance and palette. The mock's decorative grain is omitted for a clean lightweight surface.
 
 ## Implementation checklist
 
-- [x] Implement selected dark design in the existing static portfolio.
-- [x] Preserve actual project/contact data and all portfolio destinations.
-- [x] Correct screenshot cropping, portrait proportions and layout rhythm.
-- [x] Test desktop/mobile navigation and disclosure interactions.
-- [x] Compare final browser rendering with selected visual.
-- [x] Keep the local server available for review.
+- [x] Selected second visual implemented.
+- [x] Real assets placed and compressed.
+- [x] Main inquiry journey and mobile navigation verified.
+- [x] Portfolio and existing service retained.
+- [x] Browser screenshots compared to source together.
+- [x] P1/P2 fixes recaptured and checked.
+- [x] Tests, build and deployment dry-run passed.
+- [ ] Configure and verify production delivery before claiming live receipt.
+- [ ] Publish only after account access and final offer details are settled.

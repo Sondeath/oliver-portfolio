@@ -61,7 +61,7 @@ Automated:
 - npm test: 9 passed, 0 failed. Includes contact validation, hidden stale data, impossible dates, URI encoding, server origin/body restrictions, captcha hostname/action, rate limiting, provider failure and retry idempotency.
 - npm run build: explicit public file list created successfully.
 - Wrangler 4.150.0 deploy --dry-run: bundled successfully with ASSETS and rate-limit bindings.
-- Clean-checkout deployment check: the first archive of the pushed commit reproduced a missing dist error without a manual build. Added build.command to wrangler.jsonc, then reran deploy --dry-run in the same clean archive with no prebuilt assets. Wrangler ran npm run build and bundled successfully. This confirms the standalone clean-checkout fix; the separate Cloudflare build log still requires account access to establish its precise failure cause.
+- Clean-checkout deployment check: the first archive of the pushed commit reproduced a missing dist error without a manual build. Added build.command to wrangler.jsonc, then reran deploy --dry-run in the same clean archive with no prebuilt assets. Wrangler ran npm run build and bundled successfully. This confirms the standalone clean-checkout fix; the authenticated Cloudflare log subsequently confirmed the same missing /opt/buildhome/repo/dist error. Build 076ffacd-7fc7-452e-8151-aa83207c6684 for commit 9ff8f80 then passed and published the branch preview.
 - git diff --check: passed.
 
 ## Production limits
@@ -69,7 +69,7 @@ Automated:
 - Live email sending has not been tested. Provider calls in unit tests are mocked.
 - The optional direct-send Worker requires verified sender, Resend key and Turnstile keys.
 - The current local preview always uses email-draft mode and cannot send external email.
-- Cloudflare CLI reports no authenticated account. No deployment was attempted.
+- Cloudflare browser access is authenticated. The successful GitHub-connected build published a branch preview; no manual production deployment or main-domain switch was performed.
 - Actual product range and whether Oliver supplies production and delivery still need confirmation.
 - Privacy information must be completed for the chosen production operation.
 - No broad WCAG conformance claim or exhaustive assistive-technology certification is made.
@@ -89,3 +89,17 @@ P3 only: the generated laptop camera angle and merchandise framing differ slight
 - [x] Tests, build and deployment dry-run passed.
 - [ ] Configure and verify production delivery before claiming live receipt.
 - [ ] Publish only after account access and final offer details are settled.
+
+## Public preview verification
+
+- URL: https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/
+- Cloudflare version: 6811e80d-e99b-4425-8974-798db9054a9f, built from 9ff8f80.
+- GitHub Workers Builds check: success.
+- Browser evidence: qa-digital-merch/23-public-preview.png and 24-public-inquiry.png.
+- Side-by-side hosted comparison: qa-digital-merch/comparison-public.jpg, selected source on the left and public browser capture on the right. Inspected together; no new P0/P1/P2 frontend regressions found. The intentional contact-mode and preserved-content differences remain as documented above.
+- Verified on the hosted preview: assets and Slovak offer load, product CTA selects the service, optional quantity appears, validation and request summary work, and the email URL contains the correct recipient and request details. No real message was sent.
+- Browser console: no errors or warnings in this verification.
+- API configuration returns HTTP 200 with mode=email. Direct sending is not configured.
+- Worker source, QA report and local-secret-file routes return 404 on the public host.
+- Public desktop capture retains the selected layout; the hosted form intentionally uses the explicit email-draft flow until delivery is configured.
+- Cloudflare native Email Sending is not enabled in this account. No plan upgrade was performed.

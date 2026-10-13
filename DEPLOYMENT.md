@@ -56,7 +56,7 @@ to Pages Functions or migrate configuration before enabling direct submission.
 Before launch, confirm the actual product offer, complete the privacy information
 for the chosen operation, verify the sending domain and widget hostname, and test
 one real request end to end with authorization. Unit tests mock provider responses;
-they do not prove inbox delivery. No deployment or real email was performed here.
+they do not prove inbox delivery. The GitHub branch preview is available at https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/ and its email-draft flow was browser-tested. The main domain was not switched and no real email was sent.
 
 References:
 [Worker static assets](https://developers.cloudflare.com/workers/static-assets/binding/),

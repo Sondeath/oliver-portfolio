@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-13",
+  "status": "awaiting visual direction selection; existing implementation unchanged",
+  "feedback": "Current design lacks uniqueness, considered narrative, continuity and award-level motion craft.",
+  "goal": "Slovak personal portfolio: businesses discover websites/e-commerce and promotional textile/products, inspect real work, then request a quote.",
+  "narrative": ["A brand travels from screen to physical object", "Real selected work", "Concrete service scope and process", "Personal introduction and inquiry"],
+  "displayOrder": [
+    {"option": 1, "name": "Odtlačok", "image": "navrh-1-odtlacok.png", "motion": "Oversized O imprint travels from kinetic hero type onto textile, then becomes a crop into selected work. Print registration accents respond subtly to pointer.", "caution": "Generated BeCool presentation is conceptual and inaccurate. Implementation must replace it with actual captured project visuals; do not present synthetic client work as real."},
+    {"option": 2, "name": "Prenos", "image": "navrh-2-prenos.png", "motion": "Browser plane becomes the entry point to a textile composition. Scroll carries the same plane into the first real project, connecting digital and physical chapters."},
+    {"option": 3, "name": "Autorský pracovný stôl", "image": "navrh-3-autorsky-stol.png", "motion": "A continuous vermilion line follows authored objects. Carefully staggered object arrangements transition from introduction into the real project, with restrained perspective response.", "caution": "Generated quote is draft copy, not an approved personal quotation; handwritten labels and additional fonts should be removed or reconciled with two-family limit."}
+  ],
+  "motionRequirements": ["Explain offer and continuity; avoid arbitrary reveals", "Native scrolling and immediate usable navigation", "Touch and keyboard equivalents", "Reduced-motion composition with all content visible", "Avoid heavy 3D dependencies unless visual benefit is proven"],
+  "constraints": ["No paid email service; Resend signup deferred by user", "No production switch or PR merge", "No invented client outcomes, testimonials or awards", "Product images are illustrative concepts", "Keep actual project links and automation offer"],
+  "audit": [
+    {"step": 1, "screenshot": "01-current-hero.png", "finding": "Clear offer categories, but generic equal columns obscure the authorial proposition and relationship between services. Main actions fall below the captured initial viewport."},
+    {"step": 2, "screenshot": "02-current-contact.png", "finding": "Inquiry comes before proof of work, weakening narrative and trust. The explicit email-draft disclosure is accurate and should remain until direct delivery is configured."}
+  ],
+  "auditLimits": "Scoped visual review of desktop opening and contact transition; no new accessibility conformance or full functional audit claimed. Generated stills do not demonstrate working animations."
+}

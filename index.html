@@ -3,39 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Oliver Libič — Weby a reklamné predmety</title>
+    <title>Oliver Libič — Zanechajte odtlačok.</title>
     <meta
       name="description"
-      content="Weby, e-shopy, reklamný textil a predmety pre vašu firmu. Oliver Libič, Bratislava."
+      content="Na webe. Na textile. V pamäti. Oliver Libič — tvorba webov, e-shopov a reklamných predmetov pre vašu firmu."
     />
-    <meta name="theme-color" content="#101111" />
-
+    <meta name="theme-color" content="#0B090F" />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:title"
-      content="Oliver Libič — Weby a reklamné predmety"
-    />
+    <meta property="og:title" content="Oliver Libič — Zanechajte odtlačok." />
     <meta
       property="og:description"
-      content="Weby, e-shopy a reklamné predmety pre vašu firmu."
+      content="Weby, e-shopy, textil a reklamné predmety. Z digitálneho nápadu do reálneho sveta."
     />
-    <meta property="og:image" content="https://oliverlibic.dev/oliver.jpeg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="1600" />
-    <meta property="og:url" content="https://oliverlibic.dev/" />
-
-    <meta name="twitter:card" content="summary_large_image" />
     <meta
-      name="twitter:title"
-      content="Oliver Libič — Weby a reklamné predmety"
+      property="og:image"
+      content="https://oliverlibic.dev/assets/hero-purple/social-preview.jpg"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Oliver Libič — Zanechajte odtlačok. Čierny monitor a tričko s fialovým odtlačkom."
+    />
+    <meta property="og:url" content="https://oliverlibic.dev/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Oliver Libič — Zanechajte odtlačok." />
     <meta
       name="twitter:description"
-      content="Weby, e-shopy a reklamné predmety pre vašu firmu."
+      content="Na webe. Na textile. V pamäti. Weby, e-shopy a reklamné predmety."
     />
-    <meta name="twitter:image" content="https://oliverlibic.dev/oliver.jpeg" />
-
+    <meta
+      name="twitter:image"
+      content="https://oliverlibic.dev/assets/hero-purple/social-preview.jpg"
+    />
+    <link rel="canonical" href="https://oliverlibic.dev/" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      rel="preload"
+      href="assets/fonts/anton-regular.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin
+    />
     <link
       rel="preload"
       href="assets/fonts/inter-regular.ttf"
@@ -43,7 +52,8 @@
       type="font/ttf"
       crossorigin
     />
-    <link rel="canonical" href="https://oliverlibic.dev/" />
+    <link rel="preload" href="assets/hero-purple/monitor.webp" as="image" />
+    <link rel="preload" href="assets/hero-purple/shirt.webp" as="image" />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" type="module"></script>
   </head>
@@ -51,15 +61,17 @@
     <a class="skip-link" href="#main">Preskočiť na obsah</a>
     <header class="site-header">
       <a class="wordmark" href="#top" aria-label="Oliver Libič — na začiatok"
-        >Oliver Libič</a
+        >Oliver Libič<span class="wordmark-dot">.</span></a
       >
       <nav class="desktop-nav" aria-label="Hlavné menu">
-        <a href="#services">Ponuka</a><a href="#work">Realizácie</a
-        ><a href="#about">O mne</a>
+        <a href="#work">Práce</a><a href="#services">Čo robím</a
+        ><a href="#contact">Kontakt</a>
       </nav>
-      <a class="nav-contact text-link" href="#contact"
-        >Nezáväzný dopyt
-        <img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
+      <a class="button header-cta" href="mailto:libic.oliver@gmail.com"
+        >Napíšte mi<img
+          class="icon"
+          src="assets/icons/arrow-up-right.svg"
+          alt=""
       /></a>
       <button
         class="menu-toggle"
@@ -71,331 +83,129 @@
       >
         <img class="icon" src="assets/icons/menu.svg" alt="" />
       </button>
+      <div class="page-progress" aria-hidden="true"></div>
     </header>
-    <dialog class="mobile-menu" id="mobile-menu" aria-label="Navigácia">
+    <dialog class="mobile-menu" id="mobile-menu" aria-label="Hlavné menu">
       <div class="menu-top">
-        <span class="wordmark">Oliver Libič</span
+        <span class="wordmark">Oliver Libič.</span
         ><button class="menu-close" type="button" aria-label="Zavrieť menu">
           <img class="icon" src="assets/icons/x.svg" alt="" />
         </button>
       </div>
       <nav aria-label="Mobilné menu">
-        <a href="#services">Ponuka</a><a href="#work">Realizácie</a
-        ><a href="#about">O mne</a><a href="#contact">Nezáväzný dopyt</a>
+        <a href="#work">Práce</a><a href="#services">Čo robím</a
+        ><a href="#contact">Kontakt</a>
       </nav>
-      <p class="eyebrow">
-        Weby, e-shopy a reklamné predmety<br />Bratislava, Slovensko
-      </p>
-    </dialog>
-    <main id="main">
-      <section class="intro" id="top" aria-labelledby="hero-title">
-        <h1 id="hero-title">Čo potrebuje <span>vaša firma?</span></h1>
-        <p>Web, ktorý vás predstaví. Predmety, ktoré vás pripomenú.</p>
-        <nav class="mobile-offer-links" aria-label="Rýchly výber služby">
-          <a href="#digital">Weby a e-shopy</a
-          ><a href="#merch">Reklamné predmety</a>
-        </nav>
-      </section>
-      <section class="offers" id="services" aria-label="Ponuka služieb">
-        <article class="offer offer-digital" id="digital">
-          <p class="eyebrow">Digitál</p>
-          <h2>Weby a e-shopy</h2>
-          <p class="offer-description">
-            Moderné a funkčné weby, ktoré pomáhajú<br class="desktop-break" />
-            vašej firme rásť.
-          </p>
-          <figure class="offer-visual">
-            <img
-              src="assets/offer/web-studio.webp"
-              alt="Prezentácia e-shopu BeCool Shop na notebooku"
-              width="1448"
-              height="1086"
-              fetchpriority="high"
-            />
-          </figure>
-          <a
-            class="button button-primary"
-            href="#contact"
-            data-service="website"
-            >Chcem web
-            <img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-          /></a>
-        </article>
-        <article class="offer offer-merch" id="merch">
-          <p class="eyebrow">Merch</p>
-          <h2>Textil a reklamné predmety</h2>
-          <p class="offer-description">
-            Produkty s vašou značkou,<br class="desktop-break" />
-            ktoré zanechajú dojem.
-          </p>
-          <figure class="offer-visual">
-            <img
-              src="assets/offer/merch-studio.webp"
-              alt="Ukážková vizualizácia trička, tašky a fľaše s nápisom Vaša značka"
-              width="1448"
-              height="1086"
-              fetchpriority="high"
-            />
-            <figcaption>Ukážkový koncept</figcaption>
-          </figure>
-          <a
-            class="button button-dark"
-            href="#contact"
-            data-service="promotional"
-            >Chcem reklamné predmety
-            <img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-          /></a>
-        </article>
-      </section>
-      <section
-        class="contact-section"
-        id="contact"
-        aria-labelledby="contact-title"
+      <a class="menu-email" href="mailto:libic.oliver@gmail.com"
+        >libic.oliver@gmail.com</a
       >
-        <div class="contact-layout container">
-          <div class="contact-copy">
-            <p class="eyebrow">Nezáväzný dopyt</p>
-            <h2 id="contact-title">Máte v hlave niečo konkrétne?</h2>
-            <p>Opíšte mi zadanie. Cenu a termín dohodneme podľa rozsahu.</p>
-            <a class="contact-email" href="mailto:libic.oliver@gmail.com"
-              ><img
-                class="icon"
-                src="assets/icons/arrow-up-right.svg"
+      <p class="micro">Nezávislá tvorba / Bratislava, SK</p>
+    </dialog>
+    <main id="main" tabindex="-1">
+      <section class="hero" id="top" tabindex="-1" aria-labelledby="hero-title">
+        <div class="hero-viewport">
+          <div class="hero-copy">
+            <p class="eyebrow hero-eyebrow">
+              Weby, e-shopy, textil a reklamné predmety
+            </p>
+            <h1 class="hero-title" id="hero-title">
+              <span class="hero-line">ZANECHAJTE</span
+              ><span class="hero-line">ODTLAČOK.</span>
+            </h1>
+            <h2 class="hero-subtitle">
+              <span>Na webe.</span> <span>Na textile.</span>
+              <span>V pamäti.</span>
+            </h2>
+            <p class="hero-description">
+              Tvorím weby a e-shopy. Vašu značku<br class="desktop-break" />
+              prenesiem aj na textil a reklamné predmety.
+            </p>
+            <div class="hero-actions">
+              <a class="button magnetic" href="mailto:libic.oliver@gmail.com"
+                >Napíšte mi<img
+                  class="icon"
+                  src="assets/icons/arrow-up-right.svg"
+                  alt="" /></a
+              ><a class="text-link" href="#work"
+                >Pozrieť práce<img
+                  class="icon"
+                  src="assets/icons/arrow-down.svg"
+                  alt=""
+              /></a>
+            </div>
+          </div>
+          <figure
+            class="hero-scene"
+            aria-label="Ukážkový koncept: čierne tričko s fialovým odtlačkom vystupuje z monitora"
+          >
+            <div class="scene-depth">
+              <img
+                class="scene-monitor"
+                src="assets/hero-purple/monitor.webp"
                 alt=""
-              />libic.oliver@gmail.com</a
+                width="1159"
+                height="1358"
+                fetchpriority="high"
+              />
+              <div class="shirt-reveal">
+                <img
+                  class="scene-shirt"
+                  src="assets/hero-purple/shirt.webp"
+                  alt=""
+                  width="1254"
+                  height="1254"
+                  fetchpriority="high"
+                />
+              </div>
+            </div>
+            <figcaption class="scene-caption micro">
+              Ukážkový<br />koncept
+            </figcaption>
+          </figure>
+          <div class="hero-meta micro">
+            <span
+              >© <span data-year>2026</span> Oliver Libič<br />Bratislava,
+              SK</span
+            ><a class="scroll-cue" href="#work"
+              ><span>Posuňte nápad ďalej</span
+              ><img class="icon" src="assets/icons/arrow-down.svg" alt="" /></a
+            ><span class="hero-manifesto"
+              >Digitálne nápady.<br />Reálny dopad.</span
             >
           </div>
-          <form class="inquiry-form" id="inquiry-form" hidden novalidate>
-            <div class="field">
-              <label for="name">Meno</label
-              ><input
-                id="name"
-                name="name"
-                autocomplete="name"
-                maxlength="120"
-                required
-                placeholder="Vaše meno"
-                aria-describedby="name-error"
-              />
-              <p class="field-error" id="name-error" hidden></p>
-            </div>
-            <div class="field">
-              <label for="email">E-mail</label
-              ><input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                maxlength="254"
-                required
-                placeholder="vas@email.sk"
-                aria-describedby="email-error"
-              />
-              <p class="field-error" id="email-error" hidden></p>
-            </div>
-            <div class="field field-full">
-              <label for="description">Čo potrebujete?</label
-              ><textarea
-                id="description"
-                name="description"
-                rows="2"
-                maxlength="5000"
-                required
-                placeholder="Stručne opíšte svoju predstavu…"
-                aria-describedby="description-error"
-              ></textarea>
-              <p class="field-error" id="description-error" hidden></p>
-            </div>
-            <details class="request-options" id="request-options">
-              <summary>
-                <span id="selection-label"
-                  >Vybrať službu a doplniť podrobnosti</span
-                ><img class="icon" src="assets/icons/plus.svg" alt="" />
-              </summary>
-              <fieldset>
-                <legend>O čo máte záujem? Môžete vybrať viac možností.</legend>
-                <div class="service-choices">
-                  <label class="service-choice"
-                    ><input
-                      type="checkbox"
-                      name="services"
-                      value="website"
-                    />Web alebo e-shop</label
-                  >
-                  <label class="service-choice"
-                    ><input
-                      type="checkbox"
-                      name="services"
-                      value="textile"
-                    />Reklamný textil</label
-                  >
-                  <label class="service-choice"
-                    ><input
-                      type="checkbox"
-                      name="services"
-                      value="promotional"
-                    />Reklamné predmety</label
-                  >
-                  <label class="service-choice"
-                    ><input
-                      type="checkbox"
-                      name="services"
-                      value="automation"
-                    />Automatizácia</label
-                  >
-                  <label class="service-choice"
-                    ><input
-                      type="checkbox"
-                      name="services"
-                      value="advice"
-                    />Potrebujem poradiť</label
-                  >
-                </div>
-              </fieldset>
-              <div class="extra-fields" id="product-fields" hidden>
-                <div class="field">
-                  <label for="quantity">Počet kusov — ak ho poznáte</label
-                  ><input
-                    id="quantity"
-                    name="quantity"
-                    type="number"
-                    inputmode="numeric"
-                    min="1"
-                    step="1"
-                    max="1000000"
-                    disabled
-                    aria-describedby="quantity-error"
-                  />
-                  <p class="field-error" id="quantity-error" hidden></p>
-                </div>
-                <div class="field">
-                  <label for="deadline">Želaný termín — voliteľné</label
-                  ><input
-                    id="deadline"
-                    name="deadline"
-                    type="date"
-                    disabled
-                    aria-describedby="deadline-error"
-                  />
-                  <p class="field-error" id="deadline-error" hidden></p>
-                </div>
-              </div>
-              <div class="extra-fields">
-                <div class="field">
-                  <label for="company">Firma — voliteľné</label
-                  ><input
-                    id="company"
-                    name="company"
-                    autocomplete="organization"
-                    maxlength="160"
-                  />
-                </div>
-                <div class="field">
-                  <label for="budget">Predstava o rozpočte — voliteľné</label
-                  ><input
-                    id="budget"
-                    name="budget"
-                    maxlength="160"
-                    placeholder="Napríklad do 1 000 €"
-                  />
-                </div>
-              </div>
-            </details>
-            <div id="turnstile-container" class="field-full" hidden></div>
-            <div class="form-bottom">
-              <p class="form-note">
-                <span id="delivery-note"
-                  >Pripravíte si zhrnutie, ktoré odošlete zo svojho
-                  e-mailu.</span
-                >
-                <button type="button" id="privacy-open">
-                  Ako pracujem s údajmi
-                </button>
-              </p>
-              <button
-                class="button button-primary"
-                id="inquiry-submit"
-                type="submit"
-              >
-                <span>Pripraviť dopyt</span
-                ><img
-                  class="icon"
-                  src="assets/icons/arrow-up-right.svg"
-                  alt=""
-                />
-              </button>
-            </div>
-            <p
-              class="form-status"
-              id="form-status"
-              role="status"
-              aria-live="polite"
-            ></p>
-          </form>
-          <noscript
-            ><p class="contact-noscript">
-              Napíšte mi na
-              <a class="text-link" href="mailto:libic.oliver@gmail.com"
-                >libic.oliver@gmail.com</a
-              >. Uveďte službu, svoju predstavu a pri reklamných predmetoch aj
-              približný počet kusov.
-            </p></noscript
-          >
+          <div class="hero-chapter micro" aria-hidden="true">
+            <span class="chapter-digital">01 / Na obrazovke</span
+            ><span class="chapter-physical">02 / V reálnom svete</span>
+          </div>
         </div>
       </section>
       <section
-        class="work-section container"
+        class="work-section section-pad"
         id="work"
+        tabindex="-1"
         aria-labelledby="work-title"
       >
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Z nápadu do praxe</p>
-            <h2 id="work-title">Vybrané realizácie</h2>
-          </div>
-          <p>
-            Konkrétne projekty, premyslené riešenia. Pozrite si ukážky mojej
-            práce.
-          </p>
+        <div class="section-top reveal">
+          <p class="eyebrow">Vybrané práce</p>
+          <span class="micro">01 — 02</span>
         </div>
-        <div class="featured-grid">
-          <article class="project">
-            <a
-              class="project-image"
-              href="https://www.becool.sk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Pozrieť BeCool.sk — otvorí sa v novom okne"
-              ><img
-                src="assets/projects/becool-square.jpg"
-                alt="Úvodná stránka BeCool s výberom športových podujatí a cateringu"
-                width="1000"
-                height="960"
-                loading="lazy"
+        <div class="work-layout">
+          <div class="work-intro reveal">
+            <h2 class="section-title" id="work-title">
+              Z nápadu<br />do reality<span class="accent">.</span>
+            </h2>
+            <p>
+              Od firemnej prezentácie po nákupný košík. Dva projekty, dva rôzne
+              ciele. Rovnaká pozornosť k detailu.
+            </p>
+            <a class="text-link" href="#archive"
+              >Ďalšie projekty<img
+                class="icon"
+                src="assets/icons/arrow-down.svg"
+                alt=""
             /></a>
-            <div class="project-copy">
-              <h3>BeCool.sk</h3>
-              <p class="project-type">Webový dizajn a realizácia</p>
-              <p class="project-description">
-                Dve oblasti jednej agentúry na jednom mieste. Úvodná stránka
-                pomáha návštevníkom vybrať si medzi športovými podujatiami a
-                cateringom.
-              </p>
-              <a
-                class="text-link"
-                href="https://www.becool.sk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Pozrieť projekt
-                <img
-                  class="icon"
-                  src="assets/icons/arrow-up-right.svg"
-                  alt=""
-                /><span class="sr-only"> — otvorí sa v novom okne</span></a
-              >
-            </div>
-          </article>
-          <article class="project">
+          </div>
+          <article class="project reveal">
             <a
               class="project-image"
               href="https://shop.becool.sk/"
@@ -404,36 +214,67 @@
               aria-label="Pozrieť BeCool Shop — otvorí sa v novom okne"
               ><img
                 src="assets/projects/becool-shop-square.jpg"
-                alt="BeCool Shop so športovým vybavením a merchom podujatí"
+                alt="Skutočná úvodná stránka BeCool Shop so športovým vybavením a kategóriami"
                 width="985"
                 height="946"
-                loading="lazy"
-            /></a>
-            <div class="project-copy">
-              <h3>BeCool Shop</h3>
-              <p class="project-type">E-shop na Shoptete</p>
-              <p class="project-description">
-                Športové vybavenie a merch podujatí v jednom e-shope. Prehľadné
-                kategórie pomáhajú návštevníkom nájsť požadovaný produkt.
-              </p>
+                loading="lazy" /><span class="project-visit"
+                >Pozrieť projekt<img
+                  class="icon"
+                  src="assets/icons/arrow-up-right.svg"
+                  alt="" /></span
+            ></a>
+            <div class="project-caption">
+              <div>
+                <h3>BeCool Shop</h3>
+                <p>E-shop na Shoptete</p>
+              </div>
               <a
-                class="text-link"
+                class="project-arrow"
                 href="https://shop.becool.sk/"
                 target="_blank"
                 rel="noopener noreferrer"
-                >Pozrieť projekt
-                <img
+                aria-label="Otvoriť BeCool Shop v novom okne"
+                ><img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
+              /></a>
+            </div>
+          </article>
+          <article class="project reveal">
+            <a
+              class="project-image"
+              href="https://www.becool.sk/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Pozrieť BeCool.sk — otvorí sa v novom okne"
+              ><img
+                src="assets/projects/becool-square.jpg"
+                alt="Skutočná úvodná stránka BeCool s prezentáciou športových podujatí a cateringu"
+                width="1000"
+                height="960"
+                loading="lazy" /><span class="project-visit"
+                >Pozrieť projekt<img
                   class="icon"
                   src="assets/icons/arrow-up-right.svg"
-                  alt=""
-                /><span class="sr-only"> — otvorí sa v novom okne</span></a
-              >
+                  alt="" /></span
+            ></a>
+            <div class="project-caption">
+              <div>
+                <h3>BeCool.sk</h3>
+                <p>Webová prezentácia</p>
+              </div>
+              <a
+                class="project-arrow"
+                href="https://www.becool.sk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Otvoriť BeCool.sk v novom okne"
+                ><img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
+              /></a>
             </div>
           </article>
         </div>
         <details class="archive-details" id="archive">
           <summary>
-            Ďalších 9 realizácií
+            Ďalšie projekty (9)
             <img class="icon" src="assets/icons/plus.svg" alt="" />
           </summary>
           <div class="archive-list">
@@ -558,202 +399,130 @@
         </details>
       </section>
       <section
-        class="process-section"
-        id="process"
-        aria-labelledby="process-title"
+        class="services-section section-pad"
+        id="services"
+        tabindex="-1"
+        aria-labelledby="services-title"
       >
-        <div class="container">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">Jasne od prvého kontaktu</p>
-              <h2 id="process-title">Ako spolupracujeme</h2>
-            </div>
-            <p>
-              Nemusíte mať hotové zadanie. Stačí vedieť, čo chcete pre svoju
-              firmu pripraviť.
-            </p>
-          </div>
-          <div class="process-grid">
-            <article class="process-step">
-              <p class="eyebrow">01 / Zadanie</p>
-              <h3>Povieme si, čo potrebujete.</h3>
-              <p>
-                Prejdeme vašu predstavu, účel a podklady. Pri textile a
-                predmetoch aj množstvo a požadovaný termín.
-              </p>
-            </article>
-            <article class="process-step">
-              <p class="eyebrow">02 / Ponuka a návrh</p>
-              <h3>Dohodneme rozsah a cenu.</h3>
-              <p>
-                Pripravím ponuku a návrh riešenia. Pred realizáciou si
-                odsúhlasíme obsah, podklady aj podstatné detaily.
-              </p>
-            </article>
-            <article class="process-step">
-              <p class="eyebrow">03 / Realizácia</p>
-              <h3>Dotiahneme zadanie do výsledku.</h3>
-              <p>
-                Pokračujeme podľa dohodnutého rozsahu. Termín a spôsob
-                odovzdania alebo dodania si potvrdíme v ponuke.
-              </p>
-            </article>
-          </div>
+        <div class="section-top reveal">
+          <p class="eyebrow">Čo môžeme vytvoriť</p>
+          <span class="micro">Od obrazovky po reálny svet</span>
         </div>
-      </section>
-      <section
-        class="about-section container"
-        id="about"
-        aria-labelledby="about-title"
-      >
-        <figure class="about-portrait">
-          <img
-            src="videos/hero-poster.jpg"
-            alt="Oliver Libič"
-            width="720"
-            height="1280"
-            loading="lazy"
-          />
-        </figure>
-        <div>
-          <p class="eyebrow">Človek za projektom</p>
-          <h2 id="about-title">Som Oliver.<br />Váš priamy kontakt.</h2>
-        </div>
-        <div class="about-description">
+        <div class="services-heading reveal">
+          <h2 class="section-title" id="services-title">
+            Vaša značka.<br />Viac možností<span class="accent">.</span>
+          </h2>
           <p>
-            Pôsobím v Bratislave a prepájam dizajn s tvorbou webov. Zadanie aj
-            priebeh práce riešite priamo so mnou. Pýtam sa, navrhujem možnosti a
-            dbám na detaily.
+            Začnime tým, čo práve potrebujete.<br />Jednotlivé služby môžeme
+            prepojiť.
           </p>
-          <a class="text-link" href="#contact"
-            >Preberme váš projekt
-            <img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-          /></a>
         </div>
-      </section>
-      <div class="container">
-        <details class="automation-details">
-          <summary>
-            Potrebujete aj automatizáciu?
-            <img class="icon" src="assets/icons/plus.svg" alt="" />
-          </summary>
-          <div class="automation-content">
-            <p>
-              Opakujete každý deň rovnaké kroky? Pozrieme sa, ktoré nástroje sa
-              dajú prepojiť a kde vám Make, n8n alebo iné riešenie môže ušetriť
-              manuálnu prácu.
-            </p>
-            <a class="text-link" href="#contact" data-service="automation"
-              >Chcem prebrať automatizáciu
-              <img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-            /></a>
-          </div>
-        </details>
-      </div>
-      <section class="final-cta container" aria-label="Začnime spolupracovať">
-        <div>
-          <h2>Máte nápad? Poďme ho prebrať.</h2>
-          <p>Web, textil aj reklamné predmety môžete dopytovať spoločne.</p>
-        </div>
-        <a class="button button-primary" href="#contact"
-          >Nezáväzný dopyt
-          <img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-        /></a>
-      </section>
-    </main>
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <span>© <span id="year">2026</span> Oliver Libič</span
-        ><span>Bratislava, Slovensko · Osobne od nápadu po výsledok.</span
-        ><a
-          href="https://www.instagram.com/oliver_libic_"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Instagram
+        <a
+          class="service-row reveal"
+          href="mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20web%20alebo%20e-shop"
+          ><span class="micro">01</span>
+          <h3>Weby a e-shopy</h3>
+          <p>
+            Firemné weby, portfóliá a e-shopy.<br />Od návrhu po funkčné
+            riešenie.
+          </p>
           <img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /><span
             class="sr-only"
           >
-            — otvorí sa v novom okne</span
+            — napísať e-mail</span
           ></a
         >
-      </div>
-    </footer>
-    <dialog
-      class="inquiry-preview"
-      id="inquiry-preview"
-      aria-labelledby="preview-title"
-    >
-      <div class="dialog-top">
-        <h2 id="preview-title">Váš dopyt je pripravený.</h2>
-        <button
-          class="menu-close"
-          type="button"
-          data-close-dialog
-          aria-label="Zavrieť zhrnutie"
-        >
-          <img class="icon" src="assets/icons/x.svg" alt="" />
-        </button>
-      </div>
-      <p class="dialog-description">
-        Skontrolujte zhrnutie a otvorte ho vo svojom e-maile. Správu odošlete až
-        tam. Dopyt zatiaľ nebol odoslaný.
-      </p>
-      <pre
-        class="inquiry-summary"
-        id="inquiry-summary"
-        tabindex="0"
-        aria-label="Zhrnutie dopytu"
-      ></pre>
-      <div class="dialog-actions">
         <a
-          class="button button-primary"
-          id="email-draft"
-          href="mailto:libic.oliver@gmail.com"
-          >Otvoriť e-mail s dopytom
-          <img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /></a
-        ><button class="button button-outline" type="button" id="copy-inquiry">
-          Skopírovať zhrnutie
-          <img class="icon" src="assets/icons/copy.svg" alt="" />
-        </button>
-      </div>
-      <p
-        class="dialog-status"
-        id="preview-status"
-        role="status"
-        aria-live="polite"
-      ></p>
-    </dialog>
-    <dialog
-      class="inquiry-preview"
-      id="privacy-dialog"
-      aria-labelledby="privacy-title"
-    >
-      <div class="dialog-top">
-        <h2 id="privacy-title">Ako pracujem s údajmi</h2>
-        <button
-          class="menu-close"
-          type="button"
-          data-close-dialog
-          aria-label="Zavrieť informácie"
+          class="service-row reveal"
+          href="mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20textil%20a%20reklamn%C3%A9%20predmety"
+          ><span class="micro">02</span>
+          <h3>Textil a predmety</h3>
+          <p>
+            Tričká, tašky a reklamné predmety.<br />Konkrétne produkty a
+            možnosti dohodneme.
+          </p>
+          <img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /><span
+            class="sr-only"
+          >
+            — napísať e-mail</span
+          ></a
         >
-          <img class="icon" src="assets/icons/x.svg" alt="" />
-        </button>
-      </div>
-      <div class="privacy-content">
-        <p>
-          Kontaktné údaje a zadanie používam na komunikáciu o vašom dopyte a
-          prípravu ponuky. Kontakt: Oliver Libič, libic.oliver@gmail.com.
-        </p>
-        <p id="privacy-transport">
-          Vyplnené údaje sa spracujú iba v tejto stránke. Až keď otvoríte a
-          odošlete pripravený e-mail, dostanem ich na svoju e-mailovú adresu.
-          Rozpracovaný formulár sa automaticky neukladá do vášho prehliadača.
-        </p>
-        <p>
-          Do zadania nevkladajte heslá ani iné citlivé údaje. Logo a ďalšie
-          podklady môžeme dohodnúť následne.
-        </p>
-      </div>
-    </dialog>
+        <details class="automation-details reveal">
+          <summary>
+            <span class="micro">03</span>
+            <h3>Aj menej rutiny.</h3>
+            <span class="service-detail"
+              >Automatizácia a prepojenie nástrojov</span
+            ><img class="icon" src="assets/icons/plus.svg" alt="" />
+          </summary>
+          <div class="automation-content">
+            <p>
+              Opakujete každý deň rovnaké kroky? Pozrieme sa, kde vám Make, n8n
+              alebo prepojenie nástrojov môže ušetriť manuálnu prácu.
+            </p>
+            <a
+              class="text-link"
+              href="mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20automatiz%C3%A1cia"
+              >Preberme možnosti<img
+                class="icon"
+                src="assets/icons/arrow-up-right.svg"
+                alt=""
+            /></a>
+          </div>
+        </details>
+      </section>
+      <section
+        class="contact-section section-pad"
+        id="contact"
+        tabindex="-1"
+        aria-labelledby="contact-title"
+      >
+        <div class="section-top reveal">
+          <p class="eyebrow">Ďalší odtlačok môže byť váš</p>
+          <span class="micro">Priamo so mnou. Od začiatku.</span>
+        </div>
+        <div class="contact-heading reveal">
+          <h2 class="contact-title" id="contact-title">
+            MÁTE NÁPAD?<br /><span class="accent">POĎME NA TO.</span>
+          </h2>
+          <img
+            class="contact-arrow icon"
+            src="assets/icons/arrow-up-right.svg"
+            alt=""
+          />
+        </div>
+        <div class="contact-bottom reveal">
+          <p>
+            Som Oliver. Dizajn a realizáciu riešite priamo so mnou.<br />Napíšte
+            mi svoju predstavu a nájdeme spôsob, ako ju dotiahnuť.
+          </p>
+          <a class="contact-email" href="mailto:libic.oliver@gmail.com"
+            >libic.oliver@gmail.com<img
+              class="icon"
+              src="assets/icons/arrow-up-right.svg"
+              alt=""
+          /></a>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer section-pad">
+      <span>© <span data-year>2026</span> Oliver Libič</span
+      ><span class="footer-location">Nezávislá tvorba / Bratislava, SK</span
+      ><a
+        href="https://www.instagram.com/oliver_libic_"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Instagram<img
+          class="icon"
+          src="assets/icons/arrow-up-right.svg"
+          alt=""
+        /><span class="sr-only"> — otvorí sa v novom okne</span></a
+      ><a href="#top"
+        >Na začiatok<img
+          class="icon"
+          src="assets/icons/arrow-up-right.svg"
+          alt=""
+      /></a>
+    </footer>
   </body>
 </html>

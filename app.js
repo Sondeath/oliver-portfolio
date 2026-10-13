@@ -1,295 +1,183 @@
-import {
-  SERVICE_LABELS,
-  readInquiry,
-  validateInquiry,
-  formatInquiry,
-  draftUrl,
-} from "./inquiry.js";
+import { clamp, scrollProgress, approach } from "./motion.js";
 
-document.documentElement.classList.add("js");
-document.getElementById("year").textContent = new Date().getFullYear();
+const root = document.documentElement;
+const hero = document.querySelector(".hero");
+const viewport = document.querySelector(".hero-viewport");
+const scene = document.querySelector(".scene-depth");
+const header = document.querySelector(".site-header");
+const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+const forcedStill =
+  new URLSearchParams(window.location.search).get("motion") === "off";
+const motionDisabled = () => reduced.matches || forcedStill;
+const pointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+root.classList.add("js");
+root.classList.toggle("motion-ready", !motionDisabled());
+root.dataset.motion = motionDisabled() ? "off" : "on";
+document.querySelectorAll("[data-year]").forEach((el) => {
+  el.textContent = new Date().getFullYear();
+});
+
+// Native dialog keeps keyboard focus inside the mobile navigation.
 const menu = document.getElementById("mobile-menu");
-const menuToggle = document.querySelector(".menu-toggle");
-const canDialog = typeof menu.showModal === "function";
-function openDialog(dialog) {
-  if (canDialog) {
-    dialog.showModal();
-    document.body.classList.add("modal-open");
-  } else {
-    dialog.setAttribute("open", "");
-    dialog.scrollIntoView({ block: "center" });
-  }
-}
-function closeDialog(dialog) {
-  if (canDialog) dialog.close();
-  else dialog.removeAttribute("open");
-}
-document.querySelectorAll("dialog").forEach((dialog) => {
-  dialog.addEventListener("close", () => {
-    document.body.classList.remove("modal-open");
-    if (dialog === menu) menuToggle.setAttribute("aria-expanded", "false");
-  });
-  dialog
-    .querySelectorAll("[data-close-dialog]")
-    .forEach((button) =>
-      button.addEventListener("click", () => closeDialog(dialog)),
-    );
-});
-if (canDialog) {
-  menuToggle.hidden = false;
-  menuToggle.addEventListener("click", () => {
-    openDialog(menu);
-    menuToggle.setAttribute("aria-expanded", "true");
-    menu.querySelector(".menu-close").focus();
-  });
-  menu
-    .querySelector(".menu-close")
-    .addEventListener("click", () => closeDialog(menu));
-  menu.querySelectorAll("a").forEach((link) =>
-    link.addEventListener("click", () => {
-      closeDialog(menu);
-      const target = document.querySelector(link.hash);
-      if (target) {
-        target.setAttribute("tabindex", "-1");
-        requestAnimationFrame(() => target.focus({ preventScroll: true }));
-      }
-    }),
-  );
-  matchMedia("(min-width:761px)").addEventListener("change", (event) => {
-    if (event.matches && menu.open) closeDialog(menu);
-  });
-} else document.documentElement.classList.remove("js");
-
-const form = document.getElementById("inquiry-form");
-const options = document.getElementById("request-options");
-const productFields = document.getElementById("product-fields");
-const selectionLabel = document.getElementById("selection-label");
-const formStatus = document.getElementById("form-status");
-const preview = document.getElementById("inquiry-preview");
-const previewSummary = document.getElementById("inquiry-summary");
-const previewStatus = document.getElementById("preview-status");
-const draft = document.getElementById("email-draft");
-const submit = document.getElementById("inquiry-submit");
-let transport = null,
-  widgetId = null,
-  widgetToken = "";
-let requestId = crypto.randomUUID(),
-  submittedFingerprint = "";
-form.hidden = false;
-function clearError(name) {
-  form.elements[name]?.removeAttribute("aria-invalid");
-  const error = document.getElementById(name + "-error");
-  if (error) {
-    error.textContent = "";
-    error.hidden = true;
-  }
-}
-function updateSelection() {
-  const selected = [...form.querySelectorAll('[name="services"]:checked')].map(
-    (input) => input.value,
-  );
-  selectionLabel.textContent = selected.length
-    ? selected.map((key) => SERVICE_LABELS[key]).join(" · ")
-    : "Vybrať službu a doplniť podrobnosti";
-  const product =
-    selected.includes("textile") || selected.includes("promotional");
-  productFields.hidden = !product;
-  productFields.querySelectorAll("input").forEach((input) => {
-    input.disabled = !product;
-  });
-  if (!product) {
-    clearError("quantity");
-    clearError("deadline");
-  }
-}
-form
-  .querySelectorAll('[name="services"]')
-  .forEach((input) => input.addEventListener("change", updateSelection));
-document.querySelectorAll("[data-service]").forEach((link) =>
-  link.addEventListener("click", () => {
-    const input = form.querySelector(
-      '[name="services"][value="' + link.dataset.service + '"]',
-    );
-    if (input) input.checked = true;
-    options.open = true;
-    updateSelection();
-    formStatus.textContent = "";
-    requestAnimationFrame(() => form.elements.name.focus({ preventScroll: true }));
-  }),
-);
-["name", "email", "description", "quantity", "deadline"].forEach((name) =>
-  form.elements[name].addEventListener("input", () => clearError(name)),
-);
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  if (submit.disabled) return;
-  formStatus.textContent = "";
-  ["name", "email", "description", "quantity", "deadline"].forEach(clearError);
-  const value = readInquiry(new FormData(form)),
-    errors = validateInquiry(value);
-  for (const [name, message] of Object.entries(errors)) {
-    form.elements[name].setAttribute("aria-invalid", "true");
-    const error = document.getElementById(name + "-error");
-    error.textContent = message;
-    error.hidden = false;
-    if (name === "quantity" || name === "deadline") options.open = true;
-  }
-  if (Object.keys(errors).length) {
-    formStatus.textContent = "Skontrolujte označené polia.";
-    form.elements[Object.keys(errors)[0]].focus();
-    return;
-  }
-  if (!transport) {
-    previewSummary.textContent = formatInquiry(value);
-    previewStatus.textContent = "";
-    const url = draftUrl(value);
-    draft.hidden = url.length > 6500;
-    if (!draft.hidden) draft.href = url;
-    else
-      previewStatus.textContent =
-        "Zadanie je príliš dlhé pre niektoré e-mailové aplikácie. Skopírujte zhrnutie do správy pre libic.oliver@gmail.com.";
-    openDialog(preview);
-    return;
-  }
-  if (!widgetToken) {
-    formStatus.textContent =
-      "Dokončite overenie proti spamu, alebo mi napíšte priamo e-mail.";
-    return;
-  }
-  const fingerprint = JSON.stringify(value);
-  if (submittedFingerprint && submittedFingerprint !== fingerprint)
-    requestId = crypto.randomUUID();
-  submittedFingerprint = fingerprint;
-  submit.disabled = true;
-  submit.querySelector("span").textContent = "Odosielam…";
-  try {
-    const response = await fetch("/api/inquiry", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...value, requestId, token: widgetToken }),
-      signal: AbortSignal.timeout(18000),
-    });
-    const result = await response.json();
-    if (!response.ok || result.accepted !== true)
-      formStatus.textContent =
-        response.status === 429
-          ? "Formulár bol odoslaný príliš často. Skúste to o chvíľu alebo použite e-mail."
-          : "Dopyt sa nepodarilo odoslať. Údaje zostávajú vyplnené. Skúste to znova alebo napíšte na libic.oliver@gmail.com.";
-    else {
-      formStatus.textContent =
-        "Ďakujem, váš dopyt bol prijatý na odoslanie. Ďalší postup dohodneme e-mailom.";
-      form.reset();
-      requestId = crypto.randomUUID();
-      submittedFingerprint = "";
-      updateSelection();
-    }
-  } catch {
-    formStatus.textContent =
-      "Prijatie dopytu sa nepodarilo potvrdiť. Údaje zostávajú vyplnené. Skúste to znova alebo napíšte na libic.oliver@gmail.com.";
-  } finally {
-    submit.disabled = false;
-    submit.querySelector("span").textContent = "Poslať nezáväzný dopyt";
-    widgetToken = "";
-    if (window.turnstile && widgetId !== null) window.turnstile.reset(widgetId);
-  }
-});
-document.getElementById("copy-inquiry").addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(previewSummary.textContent);
-    previewStatus.textContent =
-      "Zhrnutie je skopírované. Vložte ho do správy pre libic.oliver@gmail.com.";
-  } catch {
-    const selection = window.getSelection(),
-      range = document.createRange();
-    range.selectNodeContents(previewSummary);
-    selection.removeAllRanges();
-    selection.addRange(range);
-    previewStatus.textContent =
-      "Text je označený. Skopírujte ho a vložte do svojho e-mailu.";
-  }
-});
-draft.addEventListener("click", () => {
-  previewStatus.textContent =
-    "Ak sa e-mailová aplikácia neotvorila, skopírujte zhrnutie a pošlite ho na libic.oliver@gmail.com. Správu odošlite vo svojej aplikácii.";
+const toggle = document.querySelector(".menu-toggle");
+toggle.hidden = false;
+toggle.addEventListener("click", () => {
+  menu.showModal();
+  toggle.setAttribute("aria-expanded", "true");
+  document.body.classList.add("menu-open");
 });
 document
-  .getElementById("privacy-open")
-  .addEventListener("click", () =>
-    openDialog(document.getElementById("privacy-dialog")),
-  );
+  .querySelector(".menu-close")
+  .addEventListener("click", () => menu.close());
+menu.addEventListener("close", () => {
+  toggle.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("menu-open");
+  toggle.focus({ preventScroll: true });
+});
+menu.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => {
+    menu.close();
+    const target = link.hash && document.getElementById(link.hash.slice(1));
+    if (target)
+      requestAnimationFrame(() => target.focus({ preventScroll: true }));
+  });
+});
+window.matchMedia("(min-width: 561px)").addEventListener("change", (event) => {
+  if (event.matches && menu.open) menu.close();
+});
 
-// No success simulation: a static host keeps the honest email-draft flow.
-async function configureDelivery() {
-  try {
-    const response = await fetch("/api/inquiry-config", {
-      signal: AbortSignal.timeout(4000),
+document.querySelectorAll('a[href="#archive"]').forEach((link) => {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    const archive = document.getElementById("archive");
+    archive.open = true;
+    archive.querySelector("summary").focus({ preventScroll: true });
+    archive.scrollIntoView({
+      behavior: motionDisabled() ? "instant" : "smooth",
+      block: "start",
     });
-    if (
-      !response.ok ||
-      !(response.headers.get("content-type") || "").includes("application/json")
-    )
-      return;
-    const config = await response.json();
-    if (config.mode !== "direct" || !config.siteKey) return;
-    const script = document.createElement("script");
-    script.src =
-      "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    script.async = true;
-    script.onload = () => {
-      const container = document.getElementById("turnstile-container");
-      container.hidden = false;
-      widgetId = window.turnstile.render(container, {
-        sitekey: config.siteKey,
-        action: "inquiry",
-        theme: "dark",
-        callback: (token) => {
-          widgetToken = token;
-        },
-        "expired-callback": () => {
-          widgetToken = "";
-        },
-        "error-callback": () => {
-          widgetToken = "";
-          formStatus.textContent =
-            "Overenie sa nenačítalo. Môžete mi napísať priamo e-mail.";
-        },
-      });
-      transport = config;
-      submit.querySelector("span").textContent = "Poslať nezáväzný dopyt";
-      document.getElementById("delivery-note").textContent =
-        "Dopyt je nezáväzný. Podklady a cenu dohodneme následne.";
-      document.getElementById("privacy-transport").textContent =
-        "Odoslaný dopyt spracujú Cloudflare a e-mailová služba Resend a odošle sa na libic.oliver@gmail.com. Overenie proti spamu zabezpečuje Cloudflare Turnstile. Rozpracované údaje sa automaticky neukladajú do vášho prehliadača.";
-    };
-    document.head.append(script);
-  } catch {
-    /* The direct contact and email-draft flow stay available. */
+    history.pushState(null, "", "#archive");
+  });
+});
+
+const reveals = [...document.querySelectorAll(".reveal")];
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { rootMargin: "0px 0px -30px 0px", threshold: 0.06 },
+);
+reveals.forEach((element) => observer.observe(element));
+
+let start = 0,
+  sectionHeight = 0,
+  viewportHeight = 0;
+let progress = 0,
+  target = 0,
+  tiltX = 0,
+  tiltY = 0,
+  targetX = 0,
+  targetY = 0;
+let frame = 0,
+  lastTime = 0;
+const nav = [...document.querySelectorAll(".desktop-nav a")];
+function measure() {
+  start = hero.offsetTop;
+  sectionHeight = hero.offsetHeight;
+  viewportHeight = viewport.offsetHeight;
+  update();
+}
+function render(now) {
+  const elapsed = lastTime ? Math.min(now - lastTime, 64) : 16;
+  lastTime = now;
+  progress = motionDisabled() ? 0 : approach(progress, target, elapsed);
+  tiltX = approach(tiltX, targetX, elapsed);
+  tiltY = approach(tiltY, targetY, elapsed);
+  root.style.setProperty("--hero-progress", progress.toFixed(5));
+  const stage =
+    progress < 0.05 ? "0" : progress < 0.35 ? "1" : progress < 0.72 ? "2" : "3";
+  if (root.dataset.stage !== stage) root.dataset.stage = stage;
+  scene.style.setProperty("--scene-tilt-x", tiltX.toFixed(3) + "deg");
+  scene.style.setProperty("--scene-tilt-y", tiltY.toFixed(3) + "deg");
+  if (progress !== target || tiltX !== targetX || tiltY !== targetY) {
+    frame = requestAnimationFrame(render);
+  } else {
+    frame = 0;
+    lastTime = 0;
   }
 }
-configureDelivery();
-const navLinks = [...document.querySelectorAll(".desktop-nav a")];
-let scheduled = false;
-function updateNavigation() {
-  let current = 0;
-  navLinks.forEach((link, index) => {
-    const section = document.querySelector(link.hash);
-    if (section && section.getBoundingClientRect().top <= 200) current = index;
+function schedule() {
+  if (!frame) frame = requestAnimationFrame(render);
+}
+function update() {
+  target = motionDisabled()
+    ? 0
+    : scrollProgress(window.scrollY, start, sectionHeight, viewportHeight);
+  header.classList.toggle("is-scrolled", window.scrollY > 80);
+  const length = root.scrollHeight - window.innerHeight;
+  root.style.setProperty(
+    "--page-progress",
+    length > 0 ? clamp(window.scrollY / length).toFixed(5) : "0",
+  );
+  let active = "";
+  nav.forEach((link) => {
+    if (document.querySelector(link.hash).getBoundingClientRect().top <= 190)
+      active = link.hash;
   });
-  navLinks.forEach((link, index) => {
-    if (index === current) link.setAttribute("aria-current", "location");
+  if (window.scrollY + window.innerHeight >= root.scrollHeight - 3)
+    active = "#contact";
+  nav.forEach((link) => {
+    if (link.hash === active) link.setAttribute("aria-current", "location");
     else link.removeAttribute("aria-current");
   });
-  scheduled = false;
+  schedule();
 }
-window.addEventListener(
-  "scroll",
-  () => {
-    if (!scheduled) {
-      scheduled = true;
-      requestAnimationFrame(updateNavigation);
-    }
-  },
-  { passive: true },
-);
-updateSelection();
-updateNavigation();
+hero.addEventListener("pointermove", (event) => {
+  if (motionDisabled() || !pointer.matches || event.pointerType !== "mouse")
+    return;
+  const rect = hero.getBoundingClientRect();
+  targetY = clamp((event.clientX / window.innerWidth - 0.5) * 4, -2, 2);
+  targetX =
+    clamp((event.clientY - rect.top) / viewportHeight - 0.5, -0.5, 0.5) * -1.5;
+  schedule();
+});
+hero.addEventListener("pointerleave", () => {
+  targetX = targetY = 0;
+  schedule();
+});
+reduced.addEventListener("change", () => {
+  root.classList.toggle("motion-ready", !motionDisabled());
+  root.dataset.motion = motionDisabled() ? "off" : "on";
+  targetX = targetY = 0;
+  measure();
+});
+window.addEventListener("scroll", update, { passive: true });
+window.addEventListener("resize", measure, { passive: true });
+new ResizeObserver(measure).observe(hero);
+document.fonts.ready.then(measure);
+measure();
+
+// Small pointer responses belong to the object being explored, never the cursor.
+document.querySelectorAll(".magnetic, .project-image").forEach((element) => {
+  element.addEventListener("pointermove", (event) => {
+    if (motionDisabled() || !pointer.matches || event.pointerType !== "mouse")
+      return;
+    const rect = element.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    element.style.transform = element.classList.contains("magnetic")
+      ? `translate3d(${(x * 7).toFixed(2)}px, ${(y * 7).toFixed(2)}px, 0)`
+      : `perspective(1000px) rotateX(${(-y * 3).toFixed(2)}deg) rotateY(${(x * 3).toFixed(2)}deg)`;
+  });
+  element.addEventListener("pointerleave", () => {
+    element.style.transform = "";
+  });
+  reduced.addEventListener("change", () => {
+    element.style.transform = "";
+  });
+});

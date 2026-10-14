@@ -13,3 +13,5 @@ The actual public page was reloaded in the in-app browser. New typography,
 real marathon preview, project links and nine-project archive are present.
 Browser motion, screenshot and console evidence is saved alongside this report.
 The production domain is not switched by this branch preview update.
+
+Final layout fix: ebde043; Cloudflare build 038ad737-b2f2-4f02-91c0-56016246d8f5 succeeded. Latest public work.css matches local SHA256 and contains the narrow-screen link placement. Final public screenshot: 15-public-final.png; current render reports webgl-texture / flowing, zero forms and no console errors. 14-narrow-fixed.png was recaptured at 1042 × 1200 CSS pixels.

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "contact.css",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "app.js",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "services.css",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "flow.css",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "liquid-aura.js",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "contact_stylesheet": true,
+    "email_invitation": true,
+    "contact_renderer": true
+  }
+]

@@ -27,4 +27,3 @@ Zadanie (skrátený záznam): Isolate/recreate only the large distressed purple 
 Výstup: `assets/odtlacok-o.png`. Pôvodný súbor: `exec-1577697a-67f0-459c-8d4f-a63714b76db5.png`.
 
 Screenshoty projektov pochádzajú z existujúceho repozitára. Generované obrázky projektov v statickom návrhu slúžia iba ako koncept; pohybová štúdia a neskoršia integrácia používajú skutočné JPG screenshoty.
-

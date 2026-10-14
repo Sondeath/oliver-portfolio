@@ -48,3 +48,5 @@ Initial 01-desktop.png captured an in-flight anchor/viewport adjustment and 02-i
 System reduced-motion changes, unavailable WebGL and context-loss fallback are implemented and reviewed in source; GPU loss and OS-level reduced-motion emulation were not forced in the browser. No additional backend or paid service is involved. Existing optional inquiry backend remains unused. No main-domain switch is included: the established branch preview is the publication target for this update.
 
 Earlier hero QA is preserved in qa-purple-motion/design-qa-before-liquid.md. Public deployment verification will be recorded in qa-work-liquid/PUBLIC.md after the build completes.
+
+Public verification completed: Cloudflare build 17851dfb-24a0-4dd7-b9c3-e7b9e51ce0bd succeeded for implementation commit 519addd. All six new/changed client modules and media checked over HTTP match local SHA256. The public browser reports webgl-texture / flowing; pause changes to still and resumes correctly, zero forms/broken images/console errors. See qa-work-liquid/PUBLIC.md and 13-public-final.png. Wrangler 4.150.0 dry-run also passed.

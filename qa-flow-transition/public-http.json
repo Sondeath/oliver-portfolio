@@ -1,0 +1,31 @@
+[
+  {
+    "file": "flow.css",
+    "http": 200,
+    "sha256_match": true
+  },
+  {
+    "file": "app.js",
+    "http": 200,
+    "sha256_match": true
+  },
+  {
+    "file": "motion.js",
+    "http": 200,
+    "sha256_match": true
+  },
+  {
+    "file": "liquid-aura.js",
+    "http": 200,
+    "sha256_match": true
+  },
+  {
+    "file": "work.css",
+    "http": 200,
+    "sha256_match": true
+  },
+  {
+    "html_flow_css": true,
+    "removed_strip": true
+  }
+]

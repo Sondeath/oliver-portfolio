@@ -62,6 +62,11 @@ artwork and shares pause preference with the exhibition. Illustrations have
 subtle reversible scroll displacement. ResizeObserver remeasures services
 after archive or automation expansion, and motion=off keeps a static layout.
 
+contact.css closes the page with the approved raster imprint, a large
+email invitation and the existing footer links. Its lazy liquid field shares
+the same pause preference; contact entry uses the bounded workArrival helper.
+The native email address remains visible, with no form or additional provider.
+
 prefers-reduced-motion disables the scroll timeline, pointer movement, looping
 cue and reveal animations, and presents the complete static composition.
 For a reproducible still preview, append ?motion=off to the URL. This is also

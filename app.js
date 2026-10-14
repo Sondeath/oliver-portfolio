@@ -7,6 +7,7 @@ const viewport = document.querySelector(".hero-viewport");
 const scene = document.querySelector(".scene-depth");
 const work = document.querySelector("#work");
 const services = document.querySelector("#services");
+const contact = document.querySelector("#contact");
 const header = document.querySelector(".site-header");
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 const forcedStill =
@@ -86,13 +87,16 @@ let progress = 0,
   arrivalTarget = 0,
   servicesProgress = 0,
   servicesTarget = 0,
+  contactProgress = 0,
+  contactTarget = 0,
   tiltX = 0,
   tiltY = 0,
   targetX = 0,
   targetY = 0;
 let frame = 0,
   lastTime = 0;
-let workStart = 0, servicesStart = 0, servicesHeight = 0, liquidEffect, servicesEffect;
+let workStart = 0, servicesStart = 0, servicesHeight = 0, contactStart = 0;
+let liquidEffect, servicesEffect, contactEffect;
 const nav = [...document.querySelectorAll(".desktop-nav a")];
 function measure() {
   start = hero.getBoundingClientRect().top + window.scrollY;
@@ -101,6 +105,7 @@ function measure() {
   workStart = work.getBoundingClientRect().top + window.scrollY;
   servicesStart = services.getBoundingClientRect().top + window.scrollY;
   servicesHeight = services.offsetHeight;
+  contactStart = contact.getBoundingClientRect().top + window.scrollY;
   update();
 }
 function render(now) {
@@ -109,21 +114,24 @@ function render(now) {
   progress = motionDisabled() ? 0 : approach(progress, target, elapsed);
   arrival = motionDisabled() ? 1 : approach(arrival, arrivalTarget, elapsed);
   servicesProgress = motionDisabled() ? 0 : approach(servicesProgress, servicesTarget, elapsed);
+  contactProgress = motionDisabled() ? 1 : approach(contactProgress, contactTarget, elapsed);
   tiltX = approach(tiltX, targetX, elapsed);
   tiltY = approach(tiltY, targetY, elapsed);
   root.style.setProperty("--hero-progress", progress.toFixed(5));
   root.style.setProperty("--work-arrival", arrival.toFixed(5));
   root.style.setProperty("--services-progress", servicesProgress.toFixed(5));
+  root.style.setProperty("--contact-progress", contactProgress.toFixed(5));
   const heroHidden = !motionDisabled() && arrival >= 0.2;
   if (heroCopy.inert !== heroHidden) heroCopy.inert = heroHidden;
   liquidEffect?.setScrollProgress(arrival);
   servicesEffect?.setScrollProgress(servicesProgress);
+  contactEffect?.setScrollProgress(contactProgress);
   const stage =
     progress < 0.05 ? "0" : progress < 0.35 ? "1" : progress < 0.72 ? "2" : "3";
   if (root.dataset.stage !== stage) root.dataset.stage = stage;
   scene.style.setProperty("--scene-tilt-x", tiltX.toFixed(3) + "deg");
   scene.style.setProperty("--scene-tilt-y", tiltY.toFixed(3) + "deg");
-  if (progress !== target || arrival !== arrivalTarget || servicesProgress !== servicesTarget || tiltX !== targetX || tiltY !== targetY) {
+  if (progress !== target || arrival !== arrivalTarget || servicesProgress !== servicesTarget || contactProgress !== contactTarget || tiltX !== targetX || tiltY !== targetY) {
     frame = requestAnimationFrame(render);
   } else {
     frame = 0;
@@ -139,6 +147,7 @@ function update() {
     : scrollProgress(window.scrollY, start, sectionHeight, viewportHeight);
   arrivalTarget = motionDisabled() ? 1 : workArrival(window.scrollY, workStart, Math.min(window.innerHeight, viewportHeight));
   servicesTarget = motionDisabled() ? 0 : scrollProgress(window.scrollY, servicesStart - window.innerHeight, servicesHeight + window.innerHeight * 2, window.innerHeight);
+  contactTarget = motionDisabled() ? 1 : workArrival(window.scrollY, contactStart, Math.min(window.innerHeight, viewportHeight));
   header.classList.toggle("is-scrolled", window.scrollY > 80);
   const length = root.scrollHeight - window.innerHeight;
   root.style.setProperty(
@@ -184,15 +193,17 @@ new ResizeObserver(measure).observe(hero);
 const contentResize = new ResizeObserver(measure);
 contentResize.observe(work);
 contentResize.observe(services);
+contentResize.observe(contact);
 document.fonts.ready.then(measure);
 measure();
 
-// Both sections share the same material and pause preference, loaded near view.
+// The page shares one material and pause preference, loaded near each section.
 const effects = [];
 let liquidPaused = false;
 for (const config of [
   { scene: document.querySelector(".work-scene"), control: document.querySelector(".work-motion-toggle"), fallback: ".work-aura-fallback", kind: "work" },
   { scene: document.querySelector(".services-flow"), control: document.querySelector(".services-motion-toggle"), fallback: ".services-aura-fallback", kind: "services" },
+  { scene: document.querySelector(".contact-flow"), control: document.querySelector(".contact-motion-toggle"), fallback: ".contact-aura-fallback", kind: "contact" },
 ]) {
   const { scene: liquidScene, control } = config;
   const loader = new IntersectionObserver((entries) => {
@@ -202,9 +213,10 @@ for (const config of [
       const effect = createLiquidAura(liquidScene.querySelector("canvas"), liquidScene.querySelector(config.fallback), { disabled: forcedStill });
       effects.push(effect);
       if (config.kind === "work") liquidEffect = effect;
-      else servicesEffect = effect;
+      else if (config.kind === "services") servicesEffect = effect;
+      else contactEffect = effect;
       effect.setPlaying(!liquidPaused);
-      effect.setScrollProgress(config.kind === "work" ? arrival : servicesProgress);
+      effect.setScrollProgress(config.kind === "work" ? arrival : config.kind === "services" ? servicesProgress : contactProgress);
       const syncControl = () => {
         control.hidden = !effect.ready || motionDisabled();
         control.setAttribute("aria-pressed", String(Boolean(effect.playing)));
@@ -216,6 +228,7 @@ for (const config of [
         effects.forEach((item) => item.setPlaying(!liquidPaused));
         liquidEffect?.setScrollProgress(arrival);
         servicesEffect?.setScrollProgress(servicesProgress);
+        contactEffect?.setScrollProgress(contactProgress);
       });
       syncControl();
       window.addEventListener("pagehide", (event) => { if (!event.persisted) effect.destroy(); });

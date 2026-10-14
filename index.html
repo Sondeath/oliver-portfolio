@@ -58,6 +58,7 @@
     <link rel="stylesheet" href="work.css" />
     <link rel="stylesheet" href="flow.css" />
     <link rel="stylesheet" href="services.css" />
+    <link rel="stylesheet" href="contact.css" />
     <script src="app.js" type="module"></script>
   </head>
   <body>
@@ -412,31 +413,37 @@
         tabindex="-1"
         aria-labelledby="contact-title"
       >
-        <div class="section-top reveal">
-          <p class="eyebrow">Ďalší odtlačok môže byť váš</p>
-          <span class="micro">Priamo so mnou. Od začiatku.</span>
+        <div class="contact-flow" aria-hidden="true">
+          <img class="contact-aura contact-aura-fallback" src="assets/work-liquid/liquid-aura.webp" alt="" width="1490" height="1056" loading="lazy" />
+          <canvas class="contact-aura" hidden></canvas>
         </div>
-        <div class="contact-heading reveal">
+        <img class="contact-mark" src="assets/work-liquid/odtlacok-o.webp" alt="" width="1254" height="1254" loading="lazy" />
+        <div class="section-top contact-top">
+          <p class="eyebrow">Ďalší odtlačok môže byť váš</p>
+          <button class="contact-motion-toggle" type="button" aria-pressed="true" hidden>Pozastaviť pohyb</button>
+        </div>
+        <p class="contact-kicker">Máte nápad?</p>
+        <a class="contact-invitation" href="mailto:libic.oliver@gmail.com" aria-label="Poďme na to — napísať Oliverovi e-mail">
           <h2 class="contact-title" id="contact-title">
-            MÁTE NÁPAD?<br /><span class="accent">POĎME NA TO.</span>
+            POĎME<br />NA TO<span class="accent">.</span>
           </h2>
           <img
             class="contact-arrow icon"
             src="assets/icons/arrow-up-right.svg"
             alt=""
           />
-        </div>
-        <div class="contact-bottom reveal">
-          <p>
-            Som Oliver. Dizajn a realizáciu riešite priamo so mnou.<br />Napíšte
-            mi svoju predstavu a nájdeme spôsob, ako ju dotiahnuť.
-          </p>
+        </a>
+        <div class="contact-bottom">
+          <div class="contact-note"><p class="micro">Priamo so mnou. Od začiatku.</p><p>
+            Som Oliver. Od prvého nápadu po hotový výsledok sa rozprávate priamo so mnou.
+          </p></div>
+          <div class="contact-address"><p>Napíšte mi svoju predstavu</p>
           <a class="contact-email" href="mailto:libic.oliver@gmail.com"
             >libic.oliver@gmail.com<img
               class="icon"
               src="assets/icons/arrow-up-right.svg"
               alt=""
-          /></a>
+          /></a></div>
         </div>
       </section>
     </main>

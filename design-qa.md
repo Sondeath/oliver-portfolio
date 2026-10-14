@@ -1,41 +1,36 @@
-# Design QA — services in the approved liquid visual system
+# Design QA — closing imprint and contact invitation
 
 final result: passed
 
-## Scope and visual sources
+## Scope and references
 
-Completed 2026-10-15. User asked to make “Čo robím” match the approved portfolio and flow from projects. This is a scoped extension of that selected design and existing service content. Source style: approved hero assets and qa-flow-transition/14-gallery-final.png. Content/layout baseline: qa-services-flow/01-before.png, captured from the public site. Local implementation: http://127.0.0.1:8787/#services. Previous QA preserved in qa-services-flow/design-qa-before-services.md.
+2026-10-15. User requested rethinking the bottom “Poďme na to” section. This continues the selected black/violet type and raster material system. Baseline: qa-contact-finale/01-before.jpg, public contact/footer. Visual vocabulary: approved Anton/Inter, liquid-aura.webp and odtlacok-o.webp already used in projects. Implementation: http://127.0.0.1:8795/#contact; stable preview port 8787 was restarted with the updated 35-file allowlist. Earlier QA preserved in qa-contact-finale/design-qa-before-contact.md.
 
-## Comparison and fidelity surfaces
+## Visual comparison
 
-Combined comparison-services.jpg and comparison-type.jpg inspected: baseline left, final implementation right. Both 1440 × 1100 CSS viewport, 1425 × 1089 raster, section top 110px, closed automation/archive. Same density, no stretching. Focused title comparison uses identical x=0–780, y=150–535 crops. The increased section height, typography and image inclusion are intentional changes requested by the user, not fidelity failures against the old layout.
+Inspected comparison-finale.jpg (baseline left, revised right) and comparison-contact-region.jpg. Both source/full implementation use 1042 × 1292 CSS viewports, equal 1027 × 1273 raster captures at the contact anchor, clamped to the bottom of the document. Footer top is 1212.18px in both. Contact begins at 625.13px before and 406.46px after because the deliberate finale is taller. No stretching. Focused comparison crops each section at its actual boundary using raster/viewport scale and top-aligns them on a neutral canvas; source 1027 × 578, implementation 1027 × 794. Extra space beneath the shorter source is comparison padding, not UI.
 
-comparison-approved-vocabulary.jpg compares the selected work section with the new services, using equal 660 × 390 crops at original density. This checks continuity rather than exact geometry: services deliberately use a smaller display scale. 16-projects-to-services.jpg shows the actual shared boundary with the unchanged archive between them.
+The new contact replaces the opaque purple band with continuous actual liquid artwork and the approved O imprint. The entire two-line invitation now links to email; address remains separately readable below. Oversized type is intentional. On short desktop windows, the invitation is visible immediately and the address/footer follow through native scrolling.
 
-- Typography: existing self-hosted Anton now carries the services heading and two main offering titles, matching the selected work design. Inter remains for descriptions, controls, email actions and secondary automation. Two-line main titles remain readable down to 320px; complete text remains in the accessibility tree.
-- Spacing/layout: open three-column service rows, fine separators, transparent artwork and stable text. At 700px and below, title/art share a row and supporting text follows. The continuation layer extends 360px upward (240px mobile), with a compositing mask; no opaque section seam or new artwork substitute. The archive remains in front of decoration and functional.
-- Colors/tokens: existing #0B090F, #291440, #A879FF, #F2EEF5 retained. Supporting copy uses #BFB1D0. Violet opacity is lower than the exhibition so descriptions remain readable.
-- Image quality: actual approved monitor.webp, shirt.webp and liquid-aura.webp reused without new downloads. Their proportions, transparency and focus remain intact; full raster assets, no hand-drawn replacements. Existing licensed SVG icons retained.
-- Copy/content: same web/e-shop, textil/promotional-object and automation offers. Added concise email action labels; all three mailto links preserve recipient and relevant encoded subject. Zero forms, prices, invented projects or paid service dependencies.
+Required surfaces:
+- Typography: existing Anton regular for the giant two-line invitation, Inter for kicker, description, labels and address. Explicit line break and narrow-screen scaling preserve readable text. No font substitutions or truncated content.
+- Layout: stable foreground text, large O behind the invitation, subtle reversible O departure/arrival, liquid extending 320px upward (220 mobile). Footer separates with one thin rule. At mobile widths, address and personal copy stack.
+- Tokens: approved ink, violet, accent and off-white retained. Supporting text #BFB1D0. Hover turns the invitation violet only for fine hover pointers; focus has a visible outline. No generated gradient substitutes for imagery; CSS gradients are compositing masks only.
+- Asset fidelity: the existing transparent raster O and liquid texture are reused at their natural ratios. Existing arrow icon retained. No new media payload or imitation SVG artwork. Foreground text stays sharp and stable.
+- Content: concise personal invitation, explicit email address, no form or provider signup. Both main invitation and address use mailto:libic.oliver@gmail.com. Footer copyright, location, Instagram and return-to-top links retained.
 
-## Findings fixed
+## Fixes and accepted states
 
-- P2: inherited mobile display:block collapsed the intended heading-to-description gap (06-mobile-services.png). Set the section heading explicitly to flex. Final 08-mobile-fixed.png shows a 24px gap.
-- P2: the mobile textile title orphaned “a” onto a separate line (07-mobile-merch.png). Adjusted responsive title scale and prevented implicit wrapping inside its explicit two lines. Final 10-mobile-merch-fixed.png and 12-mobile-320.png confirm clean text/asset separation.
-- Tablet automation inherited obsolete summary grid positions. Reset explicit description/icon placement for desktop and mobile; 11-tablet-automation.png confirms the open state without collision.
+P2: at 320px, the title plus arrow/gap exceeded the invitation row by about 5px. Reduced the narrowest scale from 27vw to 26vw. Final title 209.61px + arrow 36px + gap 12px fits inside 260.67px. No horizontal overflow or hidden controls remain.
 
-No actionable P0/P1/P2 findings remain. Early 02/05 captures show in-flight anchor/viewport positions and are contextual only. Final desktop acceptance: 15-final-desktop.jpg. Mobile acceptance: 08, 10 and 12; tablet: 09 and 11.
+04-mobile.jpg and 05-mobile-320.jpg include the fine-pointer hover color while testing responsive viewports. This is an intentional interaction state, not the neutral mobile appearance. 06-mobile-320-final.jpg and 08-mobile-neutral.jpg are the accepted neutral final captures. Initial 02-desktop.jpg uses the normal 1280 × 720 browser viewport; 03-desktop-matched.jpg is the normalized comparison source. 07-static.jpg is the settled reduced-motion-equivalent preview.
 
-## Behavior and validation
+## Behavior and verification
 
-- Real scroll and reverse scroll move the illustrations subtly and update the liquid phase; text stays stable. Progress moves from 0.41061 at services top 110px to 0.24194 when reversed to top 516.69px.
-- Both liquid controls share pause/resume. Browser verified both canvases and aria-pressed switch to still/false, then resume to true. Lazy-created effects inherit the shared pause variable; that specific creation-after-pause timing path was reviewed in code, not separately forced.
-- 320, 390, 768, 1024 and 1440px reviewed with no horizontal overflow. Mobile navigation opens, reaches services and closes. Tablet/open automation and its email action verified.
-- Archive opens/closes with nine links. With archive open, services document start changes to 3011.58px and measured scroll progress matches expected 0. ResizeObserver tracks both content sections so expanding details does not leave stale geometry.
-- ?motion=off: both canvases still, both controls hidden, service progress 0, hero not inert, no overflow. 13-still.jpg inspected.
-- Browser console on desktop and narrow test: no warnings/errors. No broken loaded images; zero forms. Mailto recipient/subjects inspected without launching an email client.
-- Existing 14 tests pass. Build emits 34 public allowlisted files. JS syntax and staged whitespace checks pass. No new library or media payload; the already cached artwork is reused. Both renderers retain the existing capped 30fps and offscreen/visibility pause behavior.
+- 320, 390, 1042 and 1280px reviewed with no document horizontal overflow. Static 1440px also reviewed. Native mobile menu reaches contact and closes. Footer return-to-top restores scroll 0, work arrival 0 and accessible hero controls.
+- Shared pause switches all three initialized liquid canvases to still and all three buttons to aria-pressed false; resuming restores motion. New field retains the existing lazy loader, capped 30fps, offscreen/visibility pause and static fallback.
+- ?motion=off: contact progress 1, controls hidden; initialized service/contact canvases still. Work canvas may stay uninitialized while offscreen, as intended. Static content, contact links and footer remain available.
+- Correct email URLs inspected without launching a mail client. Browser console on desktop/mobile has no errors or warnings. No forms and no broken loaded images.
+- Existing 14 tests pass, including the same reversible bounded workArrival helper now driving contact entry. Production build emits 35 public files. JS syntax and staged whitespace checks pass.
 
-## Limits and publication
-
-OS-level reduced-motion switching, GPU context loss and the non-WebGL fallback were reviewed in source but not forced in this pass. The fallback continues to use the same static asset. Main-domain switching remains outside this update: publication is the existing branch preview. Live verification is recorded in qa-services-flow/PUBLIC.md after the build.
+No actionable P0/P1/P2 findings remain. Physical touch input, OS preference switching and GPU-loss fallback were not forced; their behavior is handled in CSS/source and inherited from the tested renderer. Public branch preview remains the publication target, with verification in qa-contact-finale/PUBLIC.md.

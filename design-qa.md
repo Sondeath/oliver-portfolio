@@ -30,6 +30,8 @@ Required surfaces:
 
 P2-1: At 768px, the desktop stagger put the BeCool.sk caption underneath the larger shop display (08-tablet.png). Changed the stacking breakpoint from 700 to 900px. Re-captured 10-tablet-fixed.png and 11-tablet-lower-fixed.png: projects and captions now stack without collisions. Desktop composition is unchanged. No actionable P0/P1/P2 findings remain.
 
+P2-2: Final public review at 1042px showed the shop caption arrow meeting the upper edge of the lower display. For widths 901–1100px, moved this arrow beside its caption and reserved horizontal space for it. The large desktop and stacked layouts remain unchanged. Narrow desktop evidence: 14-narrow-fixed.png.
+
 Initial 01-desktop.png captured an in-flight anchor/viewport adjustment and 02-integrated-scene.png was an invalid clipped capture. These are diagnostic captures, excluded from the accepted comparison. 03-main-viewport.png and its main-scene.png crop are the settled accepted evidence.
 
 ## Interaction and responsive verification

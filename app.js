@@ -1,9 +1,11 @@
-import { clamp, scrollProgress, approach } from "./motion.js";
+import { clamp, scrollProgress, approach, workArrival } from "./motion.js";
 
 const root = document.documentElement;
 const hero = document.querySelector(".hero");
+const heroCopy = document.querySelector(".hero-copy");
 const viewport = document.querySelector(".hero-viewport");
 const scene = document.querySelector(".scene-depth");
+const work = document.querySelector("#work");
 const header = document.querySelector(".site-header");
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 const forcedStill =
@@ -79,32 +81,41 @@ let start = 0,
   viewportHeight = 0;
 let progress = 0,
   target = 0,
+  arrival = 0,
+  arrivalTarget = 0,
   tiltX = 0,
   tiltY = 0,
   targetX = 0,
   targetY = 0;
 let frame = 0,
   lastTime = 0;
+let workStart = 0, liquidEffect;
 const nav = [...document.querySelectorAll(".desktop-nav a")];
 function measure() {
-  start = hero.offsetTop;
+  start = hero.getBoundingClientRect().top + window.scrollY;
   sectionHeight = hero.offsetHeight;
   viewportHeight = viewport.offsetHeight;
+  workStart = work.getBoundingClientRect().top + window.scrollY;
   update();
 }
 function render(now) {
   const elapsed = lastTime ? Math.min(now - lastTime, 64) : 16;
   lastTime = now;
   progress = motionDisabled() ? 0 : approach(progress, target, elapsed);
+  arrival = motionDisabled() ? 1 : approach(arrival, arrivalTarget, elapsed);
   tiltX = approach(tiltX, targetX, elapsed);
   tiltY = approach(tiltY, targetY, elapsed);
   root.style.setProperty("--hero-progress", progress.toFixed(5));
+  root.style.setProperty("--work-arrival", arrival.toFixed(5));
+  const heroHidden = !motionDisabled() && arrival >= 0.2;
+  if (heroCopy.inert !== heroHidden) heroCopy.inert = heroHidden;
+  liquidEffect?.setScrollProgress(arrival);
   const stage =
     progress < 0.05 ? "0" : progress < 0.35 ? "1" : progress < 0.72 ? "2" : "3";
   if (root.dataset.stage !== stage) root.dataset.stage = stage;
   scene.style.setProperty("--scene-tilt-x", tiltX.toFixed(3) + "deg");
   scene.style.setProperty("--scene-tilt-y", tiltY.toFixed(3) + "deg");
-  if (progress !== target || tiltX !== targetX || tiltY !== targetY) {
+  if (progress !== target || arrival !== arrivalTarget || tiltX !== targetX || tiltY !== targetY) {
     frame = requestAnimationFrame(render);
   } else {
     frame = 0;
@@ -118,6 +129,7 @@ function update() {
   target = motionDisabled()
     ? 0
     : scrollProgress(window.scrollY, start, sectionHeight, viewportHeight);
+  arrivalTarget = motionDisabled() ? 1 : workArrival(window.scrollY, workStart, Math.min(window.innerHeight, viewportHeight));
   header.classList.toggle("is-scrolled", window.scrollY > 80);
   const length = root.scrollHeight - window.innerHeight;
   root.style.setProperty(
@@ -171,13 +183,18 @@ const workLoader = new IntersectionObserver((entries) => {
   import("./liquid-aura.js").then(({ createLiquidAura }) => {
     const canvas = workScene.querySelector("canvas");
     const effect = createLiquidAura(canvas, workScene.querySelector(".work-aura-fallback"), { disabled: forcedStill });
+    liquidEffect = effect;
+    effect.setScrollProgress(arrival);
     const syncControl = () => {
       workMotion.hidden = !effect.ready || motionDisabled();
       workMotion.setAttribute("aria-pressed", String(Boolean(effect.playing)));
       workMotion.textContent = effect.playing ? "Pozastaviť pohyb" : "Spustiť pohyb";
     };
     workScene.addEventListener("liquidstatechange", syncControl);
-    workMotion.addEventListener("click", () => effect.setPlaying(!effect.playing));
+    workMotion.addEventListener("click", () => {
+      effect.setPlaying(!effect.playing);
+      effect.setScrollProgress(arrival);
+    });
     syncControl();
     window.addEventListener("pagehide", (event) => { if (!event.persisted) effect.destroy(); });
   }).catch(() => { workMotion.hidden = true; });

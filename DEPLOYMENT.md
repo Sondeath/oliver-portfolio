@@ -44,6 +44,17 @@ the system reduced-motion preference and ?motion=off, and retains a static
 image when WebGL is unavailable. Tablet and mobile layouts stack the projects.
 The left display shows the approved real ČSOB Bratislava Marathon page capture.
 
+flow.css bounds the desktop hero stage to 940px rather than stretching its
+empty tail in tall windows. The exhibition overlaps the hero by 140–200px;
+the same liquid artwork extends upward with a transparent compositing mask.
+workArrival in motion.js derives a reversible handoff from actual section
+geometry and the smaller of window/stage height. That progress drives the
+hero text/garment departure, project arrival and liquid texture phase. Faded
+hero controls become inert until reverse scrolling brings them back.
+The removed copyright/location/scroll-cue/manifesto strip stays absent; footer
+copyright, primary CTA and archived projects are preserved. Reduced motion
+uses separate static layouts with no overlap or hidden hero content.
+
 prefers-reduced-motion disables the scroll timeline, pointer movement, looping
 cue and reveal animations, and presents the complete static composition.
 For a reproducible still preview, append ?motion=off to the URL. This is also

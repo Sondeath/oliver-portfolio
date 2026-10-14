@@ -4,16 +4,16 @@ export function createLiquidAura(canvas, fallback, { disabled = false } = {}) {
   const section = canvas.parentElement;
   let gl;
   try { gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: false, depth: false }); } catch {}
-  if (!gl) return { supported: false, setPlaying() {}, destroy() {} };
+  if (!gl) return { supported: false, setPlaying() {}, setScrollProgress() {}, destroy() {} };
 
   const vertex = `attribute vec2 position; varying vec2 uv;
     void main() { uv = position * .5 + .5; gl_Position = vec4(position, 0., 1.); }`;
   const fragment = `precision mediump float;
     varying vec2 uv; uniform sampler2D artwork; uniform float time;
-    uniform vec2 pointer; uniform float strength; uniform vec2 cover;
+    uniform vec2 pointer; uniform float strength; uniform vec2 cover; uniform float scroll;
     void main() {
       vec2 p = vec2(uv.x, 1. - uv.y);
-      float t = time;
+      float t = time + scroll * 3.5;
       vec2 drift = vec2(
         sin(p.y * 8. + t * .31) + .45 * sin(p.x * 11. - t * .19),
         cos(p.x * 7. - t * .27) + .40 * sin(p.y * 13. + t * .16));
@@ -56,11 +56,12 @@ export function createLiquidAura(canvas, fallback, { disabled = false } = {}) {
     if (buffer) gl.deleteBuffer(buffer);
     if (program) gl.deleteProgram(program);
     if (vs) gl.deleteShader(vs); if (fs) gl.deleteShader(fs);
-    return { supported: false, setPlaying() {}, destroy() {} };
+    return { supported: false, setPlaying() {}, setScrollProgress() {}, destroy() {} };
   }
-  const uniforms = Object.fromEntries(['time', 'pointer', 'strength', 'cover'].map(name => [name, gl.getUniformLocation(program, name)]));
+  const uniforms = Object.fromEntries(['time', 'pointer', 'strength', 'cover', 'scroll'].map(name => [name, gl.getUniformLocation(program, name)]));
   let ready = false, inView = false, raf = 0, last = 0, elapsed = 0, disposed = false;
   let userPaused = false;
+  let scroll = 1;
   let playing = !media.matches && !disabled, targetX = 0, targetY = 0, x = 0, y = 0;
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   function size() {
@@ -76,6 +77,7 @@ export function createLiquidAura(canvas, fallback, { disabled = false } = {}) {
   function render() {
     if (!ready || disposed) return;
     gl.uniform1f(uniforms.time, elapsed);
+    gl.uniform1f(uniforms.scroll, scroll);
     gl.uniform1f(uniforms.strength, 1);
     gl.uniform2f(uniforms.pointer, x, y);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
@@ -136,6 +138,11 @@ export function createLiquidAura(canvas, fallback, { disabled = false } = {}) {
     supported: true,
     get playing() { return playing; },
     get ready() { return ready; },
+    setScrollProgress(value) {
+      if (!playing) return;
+      const next = Math.max(0, Math.min(1, value));
+      scroll = next;
+    },
     setPlaying(value) { userPaused = !value; playing = Boolean(value) && !media.matches && !disabled; sync(); },
     destroy() {
       disposed = true; cancelAnimationFrame(raf); observer.disconnect(); resize.disconnect();

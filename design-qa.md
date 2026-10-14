@@ -1,54 +1,39 @@
-# Design QA — approved liquid work exhibition
+# Design QA — continuous hero-to-work flow
 
 final result: passed
 
-## Target and state
+## Scope and reference
 
-User explicitly approved the live study on 2026-10-14 and authorized adding it to the website. The selected design is option 1, refined with living violet liquid and then the real marathon page capture in the left display. The existing hero, services, contact and nine archived projects remain functional.
+2026-10-14: the user requested a flowing connection between the approved hero and liquid exhibition, removal of the whole copyright/location/scroll-cue/manifesto strip, and preservation of archived projects. This is a scoped motion/layout revision. Prior full exhibition QA: qa-work-liquid/design-qa-before-flow.md.
 
-Source visual truth: qa-work-liquid/source-scene.png, captured from the approved study at http://127.0.0.1:8791/. Implementation: http://127.0.0.1:8792/#work.
+User annotations: qa-flow-transition/user-before-gap.png and user-remove-strip.png. Browser baseline: existing public branch preview. Implementation: http://127.0.0.1:8793/.
 
-## Normalization and comparison
+## Combined visual comparison
 
-Both source and implementation were browser-captured at 1440 × 1300 CSS pixels. The scene regions are 1440 × 1021 raster pixels, clipped from viewport screenshots using DOM-measured region bounds (source-rect.json and implementation-rect.json). No stretching or density scaling was applied. Both are settled exhibition states; exact liquid phase varies with time.
+Inspected qa-flow-transition/comparison-transition.jpg and comparison-boundary.jpg together. Baseline left, implementation right. Both viewport captures use 1440 × 1000 CSS pixels and identical 1425 × 990 raster size, with work top at 600px. Baseline scroll 1200px; implementation scroll 700px because the dead space has been removed. No stretching or density scaling. Focused comparison uses identical y=350–850 crops. Liquid phases differ with time; entering project type is intentionally dimmer before completing its scroll arrival.
 
-Combined comparison inputs inspected:
+Final capture 15-handoff-final.png: arrival 0.32863. The same transparent artwork crosses the garment and section boundary rather than starting in a separate rectangular block. 14-gallery-final.png shows the settled exhibition at arrival 1, work top 110px. Approved website screenshots and desktop arrangement remain intact.
 
-- qa-work-liquid/comparison-scene.jpg — approved source left, integrated site right, same-size scene crops.
-- qa-work-liquid/comparison-type.jpg — display typography, supporting copy and e-shop caption.
-- qa-work-liquid/comparison-project.jpg — real marathon screenshot, aspect, framing, transparency and edge lighting.
+Reviewed typography (Anton/Inter, wrapping), spacing/display geometry, approved black/violet tokens, image quality, real project names/categories, and icon assets. Removed strip has zero DOM instances. Footer copyright, email-only contact and lower archive remain intact; zero forms.
 
-Required surfaces:
+## Corrections
 
-- Typography: same self-hosted Anton display scale, two-line wrapping, line height and Inter supporting text. Production captions use the existing medium Inter face; the study synthesized a slightly heavier heading weight. Accepted P3 difference.
-- Spacing/layout: same staggered display placement, scene aspect and copy position on desktop. E-shop caption sits slightly higher to keep its link clear of the lower display. The pause control moves from the study toolbar into the section eyebrow. Both intentional integration choices.
-- Colors/tokens: approved #0B090F, #291440, #A879FF and #F2EEF5 retained. The same generated liquid field and O motif are used as separately compressed transparent WebP layers. Time-dependent flow phase is expected to differ between captures.
-- Image quality: real store capture and user-approved real marathon detail, stable and naturally proportioned. Comparison-project.jpg confirms subject and crop match; compression introduces no actionable visual loss. Existing licensed icon assets are reused.
-- Copy/content: project names and categories match the approved study. Nine real archive links remain. Contact is email-only; there are zero forms. Study labels and implementation notes are absent from the customer-facing website.
+- P2: hero CTA overlapped the work eyebrow in the first attempt (04-handoff.png). Hero copy now leaves before the garment; invisible controls become inert and return on reverse scroll. Final 15, mobile 08 and tall-window 11 confirm clean separation.
+- P2: upward decoration initially caused mobile horizontal overflow. Section now clips horizontally but retains vertical overflow for the liquid bridge. No overflow at 320, 390 or 768px.
+- Desktop stage bounded to 940px. At 1440 × 1300, work starts at document y=1300 instead of y=2340. 10-tall-initial.png and 11-tall-handoff.png show the shorter composition.
 
-## Findings and correction history
+No actionable P0/P1/P2 findings remain. 13-gallery.png is an unsettled anchor capture and excluded. 05 and 07 precede final stage-height normalization; 15 is the final accepted handoff.
 
-P2-1: At 768px, the desktop stagger put the BeCool.sk caption underneath the larger shop display (08-tablet.png). Changed the stacking breakpoint from 700 to 900px. Re-captured 10-tablet-fixed.png and 11-tablet-lower-fixed.png: projects and captions now stack without collisions. Desktop composition is unchanged. No actionable P0/P1/P2 findings remain.
+## Verification
 
-P2-2: Final public review at 1042px showed the shop caption arrow meeting the upper edge of the lower display. For widths 901–1100px, moved this arrow beside its caption and reserved horizontal space for it. The large desktop and stacked layouts remain unchanged. Narrow desktop evidence: 14-narrow-fixed.png.
+- Native scroll drives shirt emergence, reversible project arrival and liquid phase from measured geometry. Reverse capture 06 restores arrival 0 and shirt progress 0.71365.
+- Mobile handoff 08 visually inspected; stacked projects preserved. 320/390/768px overflow checked. Mobile menu opens/navigates/closes correctly.
+- Settled desktop gallery 14 inspected. Pause/resume aria-pressed false/true verified; archive opens/closes with exactly nine links.
+- ?motion=off: complete static content, no overlap, hidden motion control, no inert hero content. 12-static.png visually inspected.
+- Browser console: no errors/warnings. Contact links and zero forms checked.
+- Liquid phase only changes a scalar, preserving the capped 30fps render loop. Existing lazy loading, offscreen pause and static fallback remain.
+- npm test: 14/14 pass, including bounded/reversible/proportional handoff. Production build: 33 allowlisted public files. JS syntax and staged whitespace checks pass.
 
-Initial 01-desktop.png captured an in-flight anchor/viewport adjustment and 02-integrated-scene.png was an invalid clipped capture. These are diagnostic captures, excluded from the accepted comparison. 03-main-viewport.png and its main-scene.png crop are the settled accepted evidence.
+## Limits and publication
 
-## Interaction and responsive verification
-
-- 1440px: full scene, project links, native archive open/close with exactly nine links, pause/resume and correct aria-pressed state.
-- 390px: native menu opens and navigates to work, closes correctly; both project displays and captions reviewed in 05-mobile-top.png and 06-mobile-lower.png.
-- 320px: no horizontal overflow; both project images loaded; 07-mobile-320.png.
-- 768px: initial collision fixed and reviewed as described above.
-- ?motion=off: root motion state off, liquid state still, motion control hidden; 09-static.png.
-- Browser console: no errors or warnings. All observed images load. Existing mailto contact and absence of forms verified.
-- Asset module is lazy-imported near the work scene. Rendering uses at most 30fps, limited DPR, native intersection/visibility pauses and a static image fallback.
-- 13 existing tests pass. Production build emits 32 allowlisted public files. JS syntax and git diff whitespace checks pass.
-
-## Scope and remaining limits
-
-System reduced-motion changes, unavailable WebGL and context-loss fallback are implemented and reviewed in source; GPU loss and OS-level reduced-motion emulation were not forced in the browser. No additional backend or paid service is involved. Existing optional inquiry backend remains unused. No main-domain switch is included: the established branch preview is the publication target for this update.
-
-Earlier hero QA is preserved in qa-purple-motion/design-qa-before-liquid.md. Public deployment verification will be recorded in qa-work-liquid/PUBLIC.md after the build completes.
-
-Public verification completed: Cloudflare build 17851dfb-24a0-4dd7-b9c3-e7b9e51ce0bd succeeded for implementation commit 519addd. All six new/changed client modules and media checked over HTTP match local SHA256. The public browser reports webgl-texture / flowing; pause changes to still and resumes correctly, zero forms/broken images/console errors. See qa-work-liquid/PUBLIC.md and 13-public-final.png. Wrangler 4.150.0 dry-run also passed.
+OS-level reduced-motion switching and forced WebGL context loss were not emulated; source paths remain implemented. Publication targets the established branch preview, not a main-domain switch. Live verification: qa-flow-transition/PUBLIC.md after deployment.

@@ -7,6 +7,13 @@ export function scrollProgress(scrollY, start, sectionHeight, viewportHeight) {
   return distance > 0 ? clamp((scrollY - start) / distance) : 0;
 }
 
+// One reversible handoff: the exhibition arrives as the shirt leaves the hero.
+export function workArrival(scrollY, workStart, viewportHeight) {
+  if (viewportHeight <= 0) return 1;
+  const progress = clamp((viewportHeight * 0.88 - (workStart - scrollY)) / (viewportHeight * 0.63));
+  return progress * progress * (3 - 2 * progress);
+}
+
 export function approach(current, target, elapsed) {
   const next = current + (target - current) * (1 - Math.exp(-elapsed / 85));
   return Math.abs(target - next) < 0.0001 ? target : next;

@@ -1,0 +1,27 @@
+[
+  {
+    "file": "services.css",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "app.js",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "flow.css",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "file": "liquid-aura.js",
+    "http": 200,
+    "committed_sha256_match": true
+  },
+  {
+    "services_css": true,
+    "service_features": 2,
+    "service_renderer": true
+  }
+]

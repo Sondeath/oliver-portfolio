@@ -57,6 +57,7 @@
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="work.css" />
     <link rel="stylesheet" href="flow.css" />
+    <link rel="stylesheet" href="services.css" />
     <script src="app.js" type="module"></script>
   </head>
   <body>
@@ -334,13 +335,17 @@
         tabindex="-1"
         aria-labelledby="services-title"
       >
-        <div class="section-top reveal">
-          <p class="eyebrow">Čo môžeme vytvoriť</p>
-          <span class="micro">Od obrazovky po reálny svet</span>
+        <div class="services-flow" aria-hidden="true">
+          <img class="services-aura services-aura-fallback" src="assets/work-liquid/liquid-aura.webp" alt="" width="1490" height="1056" loading="lazy" />
+          <canvas class="services-aura" hidden></canvas>
+        </div>
+        <div class="section-top services-top">
+          <p class="eyebrow">Čo robím</p>
+          <div class="services-controls"><button class="services-motion-toggle" type="button" aria-pressed="true" hidden>Pozastaviť pohyb</button><span class="micro">Od obrazovky po reálny svet</span></div>
         </div>
         <div class="services-heading reveal">
           <h2 class="section-title" id="services-title">
-            Vaša značka.<br />Viac možností<span class="accent">.</span>
+            VAŠA ZNAČKA.<br />VIAC MOŽNOSTÍ<span class="accent">.</span>
           </h2>
           <p>
             Začnime tým, čo práve potrebujete.<br />Jednotlivé služby môžeme
@@ -348,36 +353,36 @@
           </p>
         </div>
         <a
-          class="service-row reveal"
+          class="service-feature service-feature--web"
           href="mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20web%20alebo%20e-shop"
-          ><span class="micro">01</span>
-          <h3>Weby a e-shopy</h3>
-          <p>
+          ><span class="service-number micro">01 / DIGITÁLNE</span>
+          <h3>Weby<br />a e-shopy<span class="accent">.</span></h3>
+          <div class="service-body"><p>
             Firemné weby, portfóliá a e-shopy.<br />Od návrhu po funkčné
             riešenie.
-          </p>
-          <img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /><span
+          </p><span class="service-action">Preberme váš web<img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /></span></div>
+          <img class="service-art service-art--web" src="assets/hero-purple/monitor.webp" alt="" width="1280" height="1536" loading="lazy" /><span
             class="sr-only"
           >
             — napísať e-mail</span
           ></a
         >
         <a
-          class="service-row reveal"
+          class="service-feature service-feature--merch"
           href="mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20textil%20a%20reklamn%C3%A9%20predmety"
-          ><span class="micro">02</span>
-          <h3>Textil a predmety</h3>
-          <p>
+          ><span class="service-number micro">02 / FYZICKY</span>
+          <h3>Textil<br />a predmety<span class="accent">.</span></h3>
+          <div class="service-body"><p>
             Tričká, tašky a reklamné predmety.<br />Konkrétne produkty a
             možnosti dohodneme.
-          </p>
-          <img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /><span
+          </p><span class="service-action">Dajme značke tvar<img class="icon" src="assets/icons/arrow-up-right.svg" alt="" /></span></div>
+          <img class="service-art service-art--merch" src="assets/hero-purple/shirt.webp" alt="" width="1280" height="1280" loading="lazy" /><span
             class="sr-only"
           >
             — napísať e-mail</span
           ></a
         >
-        <details class="automation-details reveal">
+        <details class="automation-details">
           <summary>
             <span class="micro">03</span>
             <h3>Aj menej rutiny.</h3>

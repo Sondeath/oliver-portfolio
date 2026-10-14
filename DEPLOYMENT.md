@@ -55,6 +55,13 @@ The removed copyright/location/scroll-cue/manifesto strip stays absent; footer
 copyright, primary CTA and archived projects are preserved. Reduced motion
 uses separate static layouts with no overlap or hidden hero content.
 
+services.css extends the approved type and raster material into the services
+section. The two main service links retain their mailto destinations; automation
+remains native details. A second lazy liquid renderer uses the already cached
+artwork and shares pause preference with the exhibition. Illustrations have
+subtle reversible scroll displacement. ResizeObserver remeasures services
+after archive or automation expansion, and motion=off keeps a static layout.
+
 prefers-reduced-motion disables the scroll timeline, pointer movement, looping
 cue and reveal animations, and presents the complete static composition.
 For a reproducible still preview, append ?motion=off to the URL. This is also

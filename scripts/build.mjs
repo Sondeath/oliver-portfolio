@@ -40,6 +40,7 @@ export const files = [
   "styles.css",
   "work.css",
   "flow.css",
+  "services.css",
   "app.js",
   "motion.js",
   "liquid-aura.js",

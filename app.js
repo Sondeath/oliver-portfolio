@@ -6,6 +6,7 @@ const heroCopy = document.querySelector(".hero-copy");
 const viewport = document.querySelector(".hero-viewport");
 const scene = document.querySelector(".scene-depth");
 const work = document.querySelector("#work");
+const services = document.querySelector("#services");
 const header = document.querySelector(".site-header");
 const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 const forcedStill =
@@ -83,19 +84,23 @@ let progress = 0,
   target = 0,
   arrival = 0,
   arrivalTarget = 0,
+  servicesProgress = 0,
+  servicesTarget = 0,
   tiltX = 0,
   tiltY = 0,
   targetX = 0,
   targetY = 0;
 let frame = 0,
   lastTime = 0;
-let workStart = 0, liquidEffect;
+let workStart = 0, servicesStart = 0, servicesHeight = 0, liquidEffect, servicesEffect;
 const nav = [...document.querySelectorAll(".desktop-nav a")];
 function measure() {
   start = hero.getBoundingClientRect().top + window.scrollY;
   sectionHeight = hero.offsetHeight;
   viewportHeight = viewport.offsetHeight;
   workStart = work.getBoundingClientRect().top + window.scrollY;
+  servicesStart = services.getBoundingClientRect().top + window.scrollY;
+  servicesHeight = services.offsetHeight;
   update();
 }
 function render(now) {
@@ -103,19 +108,22 @@ function render(now) {
   lastTime = now;
   progress = motionDisabled() ? 0 : approach(progress, target, elapsed);
   arrival = motionDisabled() ? 1 : approach(arrival, arrivalTarget, elapsed);
+  servicesProgress = motionDisabled() ? 0 : approach(servicesProgress, servicesTarget, elapsed);
   tiltX = approach(tiltX, targetX, elapsed);
   tiltY = approach(tiltY, targetY, elapsed);
   root.style.setProperty("--hero-progress", progress.toFixed(5));
   root.style.setProperty("--work-arrival", arrival.toFixed(5));
+  root.style.setProperty("--services-progress", servicesProgress.toFixed(5));
   const heroHidden = !motionDisabled() && arrival >= 0.2;
   if (heroCopy.inert !== heroHidden) heroCopy.inert = heroHidden;
   liquidEffect?.setScrollProgress(arrival);
+  servicesEffect?.setScrollProgress(servicesProgress);
   const stage =
     progress < 0.05 ? "0" : progress < 0.35 ? "1" : progress < 0.72 ? "2" : "3";
   if (root.dataset.stage !== stage) root.dataset.stage = stage;
   scene.style.setProperty("--scene-tilt-x", tiltX.toFixed(3) + "deg");
   scene.style.setProperty("--scene-tilt-y", tiltY.toFixed(3) + "deg");
-  if (progress !== target || arrival !== arrivalTarget || tiltX !== targetX || tiltY !== targetY) {
+  if (progress !== target || arrival !== arrivalTarget || servicesProgress !== servicesTarget || tiltX !== targetX || tiltY !== targetY) {
     frame = requestAnimationFrame(render);
   } else {
     frame = 0;
@@ -130,6 +138,7 @@ function update() {
     ? 0
     : scrollProgress(window.scrollY, start, sectionHeight, viewportHeight);
   arrivalTarget = motionDisabled() ? 1 : workArrival(window.scrollY, workStart, Math.min(window.innerHeight, viewportHeight));
+  servicesTarget = motionDisabled() ? 0 : scrollProgress(window.scrollY, servicesStart - window.innerHeight, servicesHeight + window.innerHeight * 2, window.innerHeight);
   header.classList.toggle("is-scrolled", window.scrollY > 80);
   const length = root.scrollHeight - window.innerHeight;
   root.style.setProperty(
@@ -171,35 +180,49 @@ reduced.addEventListener("change", () => {
 window.addEventListener("scroll", update, { passive: true });
 window.addEventListener("resize", measure, { passive: true });
 new ResizeObserver(measure).observe(hero);
+// Archive and automation expansion move the services without resizing the hero.
+const contentResize = new ResizeObserver(measure);
+contentResize.observe(work);
+contentResize.observe(services);
 document.fonts.ready.then(measure);
 measure();
 
-// Prepare the liquid artwork only as the work section approaches the viewport.
-const workScene = document.querySelector(".work-scene");
-const workMotion = document.querySelector(".work-motion-toggle");
-const workLoader = new IntersectionObserver((entries) => {
-  if (!entries.some((entry) => entry.isIntersecting)) return;
-  workLoader.disconnect();
-  import("./liquid-aura.js").then(({ createLiquidAura }) => {
-    const canvas = workScene.querySelector("canvas");
-    const effect = createLiquidAura(canvas, workScene.querySelector(".work-aura-fallback"), { disabled: forcedStill });
-    liquidEffect = effect;
-    effect.setScrollProgress(arrival);
-    const syncControl = () => {
-      workMotion.hidden = !effect.ready || motionDisabled();
-      workMotion.setAttribute("aria-pressed", String(Boolean(effect.playing)));
-      workMotion.textContent = effect.playing ? "Pozastaviť pohyb" : "Spustiť pohyb";
-    };
-    workScene.addEventListener("liquidstatechange", syncControl);
-    workMotion.addEventListener("click", () => {
-      effect.setPlaying(!effect.playing);
-      effect.setScrollProgress(arrival);
-    });
-    syncControl();
-    window.addEventListener("pagehide", (event) => { if (!event.persisted) effect.destroy(); });
-  }).catch(() => { workMotion.hidden = true; });
-}, { rootMargin: "400px" });
-workLoader.observe(workScene);
+// Both sections share the same material and pause preference, loaded near view.
+const effects = [];
+let liquidPaused = false;
+for (const config of [
+  { scene: document.querySelector(".work-scene"), control: document.querySelector(".work-motion-toggle"), fallback: ".work-aura-fallback", kind: "work" },
+  { scene: document.querySelector(".services-flow"), control: document.querySelector(".services-motion-toggle"), fallback: ".services-aura-fallback", kind: "services" },
+]) {
+  const { scene: liquidScene, control } = config;
+  const loader = new IntersectionObserver((entries) => {
+    if (!entries.some((entry) => entry.isIntersecting)) return;
+    loader.disconnect();
+    import("./liquid-aura.js").then(({ createLiquidAura }) => {
+      const effect = createLiquidAura(liquidScene.querySelector("canvas"), liquidScene.querySelector(config.fallback), { disabled: forcedStill });
+      effects.push(effect);
+      if (config.kind === "work") liquidEffect = effect;
+      else servicesEffect = effect;
+      effect.setPlaying(!liquidPaused);
+      effect.setScrollProgress(config.kind === "work" ? arrival : servicesProgress);
+      const syncControl = () => {
+        control.hidden = !effect.ready || motionDisabled();
+        control.setAttribute("aria-pressed", String(Boolean(effect.playing)));
+        control.textContent = effect.playing ? "Pozastaviť pohyb" : "Spustiť pohyb";
+      };
+      liquidScene.addEventListener("liquidstatechange", syncControl);
+      control.addEventListener("click", () => {
+        liquidPaused = effect.playing;
+        effects.forEach((item) => item.setPlaying(!liquidPaused));
+        liquidEffect?.setScrollProgress(arrival);
+        servicesEffect?.setScrollProgress(servicesProgress);
+      });
+      syncControl();
+      window.addEventListener("pagehide", (event) => { if (!event.persisted) effect.destroy(); });
+    }).catch(() => { control.hidden = true; });
+  }, { rootMargin: "400px" });
+  loader.observe(liquidScene);
+}
 
 // Small pointer responses belong to the object being explored, never the cursor.
 document.querySelectorAll(".magnetic, .project-image").forEach((element) => {

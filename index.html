@@ -55,6 +55,7 @@
     <link rel="preload" href="assets/hero-purple/monitor.webp" as="image" />
     <link rel="preload" href="assets/hero-purple/shirt.webp" as="image" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="work.css" />
     <script src="app.js" type="module"></script>
   </head>
   <body>
@@ -179,96 +180,35 @@
           </div>
         </div>
       </section>
-      <section
-        class="work-section section-pad"
-        id="work"
-        tabindex="-1"
-        aria-labelledby="work-title"
-      >
-        <div class="section-top reveal">
-          <p class="eyebrow">Vybrané práce</p>
-          <span class="micro">01 — 02</span>
-        </div>
-        <div class="work-layout">
-          <div class="work-intro reveal">
-            <h2 class="section-title" id="work-title">
-              Z nápadu<br />do reality<span class="accent">.</span>
-            </h2>
-            <p>
-              Od firemnej prezentácie po nákupný košík. Dva projekty, dva rôzne
-              ciele. Rovnaká pozornosť k detailu.
-            </p>
-            <a class="text-link" href="#archive"
-              >Ďalšie projekty<img
-                class="icon"
-                src="assets/icons/arrow-down.svg"
-                alt=""
-            /></a>
+      <section class="work-section" id="work" tabindex="-1" aria-labelledby="work-title">
+        <div class="work-scene">
+          <img class="work-mark" src="assets/work-liquid/odtlacok-o.webp" width="1254" height="1254" loading="lazy" alt="" />
+          <img class="work-aura work-aura-fallback" src="assets/work-liquid/liquid-aura.webp" width="1490" height="1056" loading="lazy" alt="" />
+          <canvas class="work-aura" aria-hidden="true" hidden></canvas>
+          <div class="work-top">
+            <p>VYBRANÉ PRÁCE</p>
+            <div class="work-controls"><button class="work-motion-toggle" type="button" aria-pressed="true" hidden>Pozastaviť pohyb</button><span>01 — 02</span></div>
           </div>
-          <article class="project reveal">
-            <a
-              class="project-image"
-              href="https://shop.becool.sk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Pozrieť BeCool Shop — otvorí sa v novom okne"
-              ><img
-                src="assets/projects/becool-shop-square.jpg"
-                alt="Skutočná úvodná stránka BeCool Shop so športovým vybavením a kategóriami"
-                width="985"
-                height="946"
-                loading="lazy" /><span class="project-visit"
-                >Pozrieť projekt<img
-                  class="icon"
-                  src="assets/icons/arrow-up-right.svg"
-                  alt="" /></span
-            ></a>
-            <div class="project-caption">
-              <div>
-                <h3>BeCool Shop</h3>
-                <p>E-shop na Shoptete</p>
-              </div>
-              <a
-                class="project-arrow"
-                href="https://shop.becool.sk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Otvoriť BeCool Shop v novom okne"
-                ><img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-              /></a>
+          <div class="work-copy reveal">
+            <h2 class="work-title" id="work-title">Z NÁPADU<br />DO REALITY<span class="accent">.</span></h2>
+            <p>Dva projekty. Dva rôzne ciele.<br />Rovnaká pozornosť k detailu.</p>
+          </div>
+          <article class="work-project work-project--shop reveal">
+            <a class="work-display" href="https://shop.becool.sk/" target="_blank" rel="noopener noreferrer" aria-label="Pozrieť BeCool Shop — otvorí sa v novom okne">
+              <img src="assets/projects/becool-shop-square.jpg" alt="Skutočná úvodná stránka BeCool Shop so športovým vybavením a kategóriami" width="985" height="946" loading="lazy" />
+            </a>
+            <div class="work-caption">
+              <h3>BeCool Shop</h3><p>E-shop na Shoptete</p>
+              <a href="https://shop.becool.sk/" target="_blank" rel="noopener noreferrer" aria-label="Otvoriť BeCool Shop v novom okne"><img class="icon" src="assets/icons/arrow-up-right.svg" width="32" height="32" alt="" /></a>
             </div>
           </article>
-          <article class="project reveal">
-            <a
-              class="project-image"
-              href="https://www.becool.sk/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Pozrieť BeCool.sk — otvorí sa v novom okne"
-              ><img
-                src="assets/projects/becool-square.jpg"
-                alt="Skutočná úvodná stránka BeCool s prezentáciou športových podujatí a cateringu"
-                width="1000"
-                height="960"
-                loading="lazy" /><span class="project-visit"
-                >Pozrieť projekt<img
-                  class="icon"
-                  src="assets/icons/arrow-up-right.svg"
-                  alt="" /></span
-            ></a>
-            <div class="project-caption">
-              <div>
-                <h3>BeCool.sk</h3>
-                <p>Webová prezentácia</p>
-              </div>
-              <a
-                class="project-arrow"
-                href="https://www.becool.sk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Otvoriť BeCool.sk v novom okne"
-                ><img class="icon" src="assets/icons/arrow-up-right.svg" alt=""
-              /></a>
+          <article class="work-project work-project--web reveal">
+            <a class="work-display" href="https://www.becool.sk/" target="_blank" rel="noopener noreferrer" aria-label="Pozrieť BeCool.sk — otvorí sa v novom okne">
+              <img src="assets/projects/becool-marathon.jpg" alt="Web BeCool.sk — bežec v cieli ČSOB Bratislava Marathon" width="1265" height="712" loading="lazy" />
+            </a>
+            <div class="work-caption">
+              <h3>BeCool.sk</h3><p>Webová prezentácia</p>
+              <a href="https://www.becool.sk/" target="_blank" rel="noopener noreferrer" aria-label="Otvoriť BeCool.sk v novom okne"><img class="icon" src="assets/icons/arrow-up-right.svg" width="32" height="32" alt="" /></a>
             </div>
           </article>
         </div>

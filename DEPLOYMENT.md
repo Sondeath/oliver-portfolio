@@ -35,6 +35,15 @@ Its progress follows the measured sticky interval, supports reverse scrolling,
 and gently damps updates independently of screen refresh rate. Pointer depth is
 limited to devices with a fine mouse pointer. Animation work stops when settled.
 
+The approved work exhibition uses separate transparent WebP artwork in
+assets/work-liquid. liquid-aura.js gently displaces that texture with WebGL;
+actual project screenshots, headings and links remain stable HTML. The module
+loads when the work scene approaches the viewport, pauses offscreen and when
+the document is hidden, and provides a native pause/resume button. It respects
+the system reduced-motion preference and ?motion=off, and retains a static
+image when WebGL is unavailable. Tablet and mobile layouts stack the projects.
+The left display shows the approved real ČSOB Bratislava Marathon page capture.
+
 prefers-reduced-motion disables the scroll timeline, pointer movement, looping
 cue and reveal animations, and presents the complete static composition.
 For a reproducible still preview, append ?motion=off to the URL. This is also

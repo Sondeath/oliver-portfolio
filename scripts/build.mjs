@@ -38,8 +38,10 @@ export function publicationOrigin(env = process.env) {
 export const files = [
   "index.html",
   "styles.css",
+  "work.css",
   "app.js",
   "motion.js",
+  "liquid-aura.js",
   "favicon.svg",
   "assets/fonts/anton-regular.ttf",
   "assets/fonts/ANTON-OFL.txt",
@@ -51,6 +53,9 @@ export const files = [
   "assets/hero-purple/social-preview.jpg",
   "assets/projects/becool-square.jpg",
   "assets/projects/becool-shop-square.jpg",
+  "assets/projects/becool-marathon.jpg",
+  "assets/work-liquid/liquid-aura.webp",
+  "assets/work-liquid/odtlacok-o.webp",
   ...(await readdir(resolve(root, "assets/icons")))
     .filter((name) => name.endsWith(".svg") || name === "LICENSE")
     .map((name) => "assets/icons/" + name),

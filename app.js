@@ -162,6 +162,28 @@ new ResizeObserver(measure).observe(hero);
 document.fonts.ready.then(measure);
 measure();
 
+// Prepare the liquid artwork only as the work section approaches the viewport.
+const workScene = document.querySelector(".work-scene");
+const workMotion = document.querySelector(".work-motion-toggle");
+const workLoader = new IntersectionObserver((entries) => {
+  if (!entries.some((entry) => entry.isIntersecting)) return;
+  workLoader.disconnect();
+  import("./liquid-aura.js").then(({ createLiquidAura }) => {
+    const canvas = workScene.querySelector("canvas");
+    const effect = createLiquidAura(canvas, workScene.querySelector(".work-aura-fallback"), { disabled: forcedStill });
+    const syncControl = () => {
+      workMotion.hidden = !effect.ready || motionDisabled();
+      workMotion.setAttribute("aria-pressed", String(Boolean(effect.playing)));
+      workMotion.textContent = effect.playing ? "Pozastaviť pohyb" : "Spustiť pohyb";
+    };
+    workScene.addEventListener("liquidstatechange", syncControl);
+    workMotion.addEventListener("click", () => effect.setPlaying(!effect.playing));
+    syncControl();
+    window.addEventListener("pagehide", (event) => { if (!event.persisted) effect.destroy(); });
+  }).catch(() => { workMotion.hidden = true; });
+}, { rootMargin: "400px" });
+workLoader.observe(workScene);
+
 // Small pointer responses belong to the object being explored, never the cursor.
 document.querySelectorAll(".magnetic, .project-image").forEach((element) => {
   element.addEventListener("pointermove", (event) => {

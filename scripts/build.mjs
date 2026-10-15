@@ -42,6 +42,7 @@ const sourceFiles = [
   "work.css",
   "flow.css",
   "services.css",
+  "process.css",
   "contact.css",
   "locale.css",
   "app.js",

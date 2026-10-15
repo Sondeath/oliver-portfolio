@@ -40,3 +40,7 @@ No actionable P0/P1/P2 findings remain in the reviewed scope.
 ## Project stories update
 
 2026-10-15. The user-approved SK/EN stories for BeCool Shop and BeCool.sk are now part of the project presentation. Full delivery from design to launch and the Shoptet platform are confirmed by the user. Desktop text follows the two displays; mobile text follows each corresponding project. Responsive screenshots, checks and successful public deployment are recorded in qa-project-stories/QA.md and qa-project-stories/PUBLIC.md. All 18 tests pass; build remains 43 public files.
+
+## Collaboration process update
+
+2026-10-15. A four-step SK/EN section now connects services with contact: email, scope/price agreement, design and realization, and launch or product handover. Desktop uses a sticky introduction and a reversible scroll thread; mobile stacks readable full-width descriptions. The existing raster material continues through the section. Responsive, static-mode and localization checks are recorded in qa-process-flow/QA.md, with deployment evidence in PUBLIC.md. All 18 tests pass; build publishes 44 files.

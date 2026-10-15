@@ -1,0 +1,64 @@
+/* A single thread takes the visitor from services to the final invitation. */
+:root { --process-progress: 1; }
+.process-section {
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  overflow-x: clip;
+  overflow-y: visible;
+  padding-top: 30px;
+  padding-bottom: 72px;
+}
+.process-flow { position: absolute; inset: -180px 0 -180px; z-index: -1; pointer-events: none; }
+.process-aura {
+  width: 100%; height: 100%; max-width: none; object-fit: cover;
+  opacity: .28; transform: rotate(180deg);
+  mask-image: linear-gradient(to bottom, transparent, #000 25%, #000 72%, transparent);
+}
+.motion-ready .process-aura { translate: 0 calc(20px - 40px * var(--process-progress)); }
+.process-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.1fr);
+  gap: 7%;
+  max-width: 1356px;
+  margin-inline: auto;
+}
+.process-intro { position: sticky; top: 132px; align-self: start; padding-top: 20px; }
+.process-intro > .eyebrow { font-size: 12px; color: #c3a1f9; letter-spacing: .16em; margin-bottom: 30px; }
+.process-title { font-family: Anton, Impact, sans-serif; font-weight: 400; font-size: clamp(52px, 6vw, 88px); line-height: 1.07; letter-spacing: -.018em; }
+.process-description { color: #bfb1d0; max-width: 350px; font-size: 15px; line-height: 1.75; margin-top: 28px; }
+.process-intro > .text-link { margin-top: 26px; font-size: 14px; }
+.process-roadmap { position: relative; padding-left: 30px; }
+.process-track { position: absolute; left: 0; top: 22px; bottom: 24px; width: 1px; background: #574663; }
+.process-track > span { display: block; width: 100%; height: 100%; background: var(--accent); box-shadow: 0 0 15px #a879ff70; transform-origin: top; transform: scaleY(var(--process-progress)); }
+.process-steps { margin: 0; padding: 0; list-style: none; }
+.process-step { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 24px; padding: 22px 0 26px; border-bottom: 1px solid #57466380; }
+.process-step:last-child { border-bottom: 0; }
+.process-number { font-family: Anton, Impact, sans-serif; font-size: 64px; line-height: 1.05; letter-spacing: -.02em; color: #a879ff; opacity: .65; }
+.process-step h3 { font-family: Anton, Impact, sans-serif; font-weight: 400; font-size: clamp(26px, 2.5vw, 36px); line-height: 1.2; letter-spacing: -.01em; margin-bottom: 12px; }
+.process-step p { color: #bfb1d0; font-size: 14px; line-height: 1.75; max-width: 500px; }
+@media (max-width: 1100px) {
+  .process-grid { grid-template-columns: minmax(0, .95fr) minmax(0, 1.1fr); gap: 5%; }
+  .process-title { font-size: clamp(42px, 5.8vw, 64px); }
+  .process-roadmap { padding-left: 22px; }
+  .process-step { grid-template-columns: 48px minmax(0, 1fr); gap: 18px; }
+  .process-number { font-size: 50px; }
+}
+@media (max-width: 760px) {
+  .process-section { padding-top: 20px; padding-bottom: 38px; }
+  .process-flow { inset-block: -140px; }
+  .process-aura { opacity: .24; }
+  .process-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .process-intro { position: static; padding-top: 0; }
+  .process-intro > .eyebrow { font-size: 10px; margin-bottom: 24px; }
+  .process-title { font-size: clamp(42px, 11.8vw, 82px); }
+  .process-description { font-size: 14px; max-width: 420px; margin-top: 22px; }
+  .process-intro > .text-link { margin-top: 20px; font-size: 13px; }
+  .process-roadmap { padding-left: 20px; }
+  .process-step { grid-template-columns: 42px minmax(0, 1fr); gap: 14px 16px; align-items: center; padding: 24px 0 28px; }
+  .process-number { font-size: 46px; }
+  .process-step-body { display: contents; }
+  .process-step h3 { font-size: 28px; margin: 0; }
+  .process-step p { grid-column: 1 / -1; }
+}
+@media print { .process-flow, .process-track { display: none; } .process-intro { position: static; } }

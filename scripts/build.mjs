@@ -9,9 +9,9 @@ import {
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { renderPage } from "./render-page.mjs";
+import { productionOrigin, crawlerFiles } from "./seo.mjs";
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const output = resolve(root, "dist");
-const productionOrigin = "https://oliverlibic.dev";
 const branchPreviewOrigin =
   "https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev";
 
@@ -36,8 +36,7 @@ export function publicationOrigin(env = process.env) {
   return url.origin;
 }
 // Explicit publication list: reviews, source code, prompts and secrets stay private.
-const sourceFiles = [
-  "index.html",
+const styleFiles = [
   "styles.css",
   "work.css",
   "flow.css",
@@ -45,28 +44,34 @@ const sourceFiles = [
   "process.css",
   "contact.css",
   "locale.css",
+];
+const sourceFiles = [
+  "index.html",
   "app.js",
   "motion.js",
   "liquid-aura.js",
   "favicon.svg",
-  "assets/fonts/anton-regular.ttf",
+  "assets/fonts/anton-regular.woff2",
   "assets/fonts/ANTON-OFL.txt",
-  "assets/fonts/inter-regular.ttf",
-  "assets/fonts/inter-medium.ttf",
+  "assets/fonts/inter-regular.woff2",
+  "assets/fonts/inter-medium.woff2",
   "assets/fonts/OFL.txt",
   "assets/hero-purple/monitor.webp",
   "assets/hero-purple/shirt.webp",
+  ...["monitor", "shirt"].flatMap(name => [480, 800].map(width => `assets/hero-purple/${name}-${width}.webp`)),
   "assets/hero-purple/social-preview.jpg",
   ...(await readdir(resolve(root, "assets/projects/live")))
     .filter((name) => name.endsWith(".webp"))
     .map((name) => "assets/projects/live/" + name),
-  "assets/work-liquid/liquid-aura.webp",
-  "assets/work-liquid/odtlacok-o.webp",
+  "assets/work-liquid/liquid-aura-960.webp",
+  "assets/work-liquid/odtlacok-o-640.webp",
+  "assets/work-liquid/odtlacok-o-800.webp",
+  "assets/work-liquid/odtlacok-o-1254.webp",
   ...(await readdir(resolve(root, "assets/icons")))
     .filter((name) => name.endsWith(".svg") || name === "LICENSE")
     .map((name) => "assets/icons/" + name),
 ];
-export const files = [...sourceFiles, "en/index.html"];
+export const files = [...sourceFiles, "site.css", "robots.txt", "sitemap.xml", "en/index.html"];
 export async function build() {
   const origin = publicationOrigin();
   // Verify the resolved absolute deletion target; never carry removed assets forward.
@@ -86,6 +91,12 @@ export async function build() {
   await writeFile(resolve(output, "index.html"), renderPage(template, "sk", origin));
   await mkdir(resolve(output, "en"), { recursive: true });
   await writeFile(resolve(output, "en/index.html"), renderPage(template, "en", origin));
+  // Keep authoring files separate; preserve their cascade in one network request.
+  const styles = await Promise.all(styleFiles.map(file => readFile(resolve(root, file), "utf8")));
+  await writeFile(resolve(output, "site.css"), styles.join("\n"));
+  const { robots, sitemap } = crawlerFiles(origin);
+  await writeFile(resolve(output, "robots.txt"), robots);
+  await writeFile(resolve(output, "sitemap.xml"), sitemap);
   return files.length;
 }
 if (resolve(process.argv[1] || "") === fileURLToPath(import.meta.url))

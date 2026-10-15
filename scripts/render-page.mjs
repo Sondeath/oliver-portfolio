@@ -1,4 +1,5 @@
 import { copy, richCopyKeys } from "../content/site-copy.mjs";
+import { productionOrigin, structuredData } from "./seo.mjs";
 
 const escape = (value) => value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 export function renderPage(template, language, origin) {
@@ -28,7 +29,9 @@ export function renderPage(template, language, origin) {
   html = html.replace(/(<link rel="canonical" href=")[^"]+"/, `$1${origin}${path}"`);
   html = html.replace(/(<meta property="og:url" content=")[^"]+"/, `$1${origin}${path}"`);
   html = html.replace("</head>", `<meta property="og:locale" content="${language === "en" ? "en_GB" : "sk_SK"}" />\n</head>`);
-  if (origin !== "https://oliverlibic.dev") html = html.replace("</head>", '<meta name="robots" content="noindex, nofollow" />\n</head>');
+  const schema = JSON.stringify(structuredData(language, origin, text("meta.description"))).replaceAll("<", "\\u003c");
+  html = html.replace("</head>", `<script type="application/ld+json">${schema}</script>\n</head>`);
+  if (origin !== productionOrigin) html = html.replace("</head>", '<meta name="robots" content="noindex, nofollow" />\n</head>');
   if (/\bdata-copy(?:-attr)?=/.test(html)) throw new Error("Unrendered copy marker");
   return html;
 }

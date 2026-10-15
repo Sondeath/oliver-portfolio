@@ -26,7 +26,7 @@ test("both languages cover every copy key and render complete static pages", () 
     assert.ok(html.includes(`aria-label="${copy[language]["menu.open"]}"`));
     assert.ok(html.includes(copy[language]["services.merch.email"]));
     assert.ok(html.includes('src="/app.js"'));
-    assert.ok(html.includes('href="/locale.css"'));
+    assert.ok(html.includes('href="/site.css"'));
     assert.doesNotMatch(html, /<(?:script|link|img)\b[^>]*(?:src|href)="(?:assets\/|app\.js|styles\.css)/);
   }
 });

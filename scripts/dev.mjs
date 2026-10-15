@@ -18,6 +18,8 @@ const mime = {
   ".jpg": "image/jpeg",
   ".webp": "image/webp",
   ".ttf": "font/ttf",
+  ".woff2": "font/woff2",
+  ".xml": "application/xml; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
 };
 const allowed = new Set(files);

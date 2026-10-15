@@ -48,3 +48,7 @@ No actionable P0/P1/P2 findings remain in the reviewed scope.
 ## Launch readiness audit
 
 2026-10-15. Current audit and fresh screenshots are in [qa-launch-readiness/QA.md](qa-launch-readiness/QA.md). Responsive images, smaller local WOFF2 fonts and a combined stylesheet preserve the approved design. Mobile performance increased from 91 to 97; final SK/EN mobile runs both scored 97, while desktop scored 100/96. Production has a bilingual sitemap, robots.txt, canonical/alternate metadata and structured identity data; the preview remains noindex. Twenty tests pass and the build publishes 50 allowed files. Public preview builds succeeded; the main-domain cutover is still pending. No launch blockers were found within the tested scope; physical-device and field-performance limits are documented in the report.
+
+## Service pages
+
+2026-10-15. Website/shop and clothing/product presentations now open their own SK/EN service pages. The approved black/violet visual system continues with focused offers, real web project stories, tailored processes, native FAQs, cross-links and editable email briefs. Interaction-triggered liquid enhancement with a limited pixel budget fixed a costly desktop startup. Final website-service lab performance is 96 mobile / 100 desktop. All 22 tests pass; build emits 56 public files and the production sitemap covers six localized URLs. Screenshots, final build verification and the pending production SEO 100/100 measurement are documented in [qa-service-pages/QA.md](qa-service-pages/QA.md).

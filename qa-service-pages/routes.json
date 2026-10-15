@@ -1,0 +1,72 @@
+[
+  {
+    "path": "/weby-a-eshopy/",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/weby-a-eshopy/",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/textil-a-predmety/",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/textil-a-predmety/",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/en/websites-and-shops/",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/en/websites-and-shops/",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/en/clothing-and-merch/",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/en/clothing-and-merch/",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/weby-a-eshopy?motion=off",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/weby-a-eshopy/?motion=off",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/en/clothing-and-merch?motion=off",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/en/clothing-and-merch/?motion=off",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/service-page.js",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/service-page.js",
+    "type": "text/javascript; charset=utf-8"
+  },
+  {
+    "path": "/service-page.css",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/service-page.css",
+    "type": "text/css; charset=utf-8"
+  },
+  {
+    "path": "/content/service-pages.mjs",
+    "status": 404
+  },
+  {
+    "path": "/qa-service-pages/QA.md",
+    "status": 404
+  },
+  {
+    "path": "/unknown/",
+    "status": 404
+  },
+  {
+    "production_sitemap": [
+      "https://oliverlibic.dev/",
+      "https://oliverlibic.dev/en/",
+      "https://oliverlibic.dev/weby-a-eshopy/",
+      "https://oliverlibic.dev/en/websites-and-shops/",
+      "https://oliverlibic.dev/textil-a-predmety/",
+      "https://oliverlibic.dev/en/clothing-and-merch/"
+    ]
+  }
+]

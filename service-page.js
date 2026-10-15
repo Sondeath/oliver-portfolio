@@ -49,7 +49,7 @@ addEventListener("resize", schedule);
 reduced.addEventListener("change", () => { root.dataset.motion = disabled() ? "off" : "on"; schedule(); });
 update();
 
-// Show the static artwork first; compile the ambient field after the page loads.
+// Keep initial reading inexpensive. Enhance the poster on the first interaction.
 if (!disabled()) {
   const field = document.querySelector(".detail-flow");
   const start = () => {
@@ -58,7 +58,7 @@ if (!disabled()) {
     if (!entries.some(entry => entry.isIntersecting)) return;
     loader.disconnect();
     import("./liquid-aura.js").then(({ createLiquidAura }) => {
-      const effect = createLiquidAura(field.querySelector("canvas"), field.querySelector("img"));
+      const effect = createLiquidAura(field.querySelector("canvas"), field.querySelector("img"), { pixelBudget: 450000 });
       if (!effect.supported) return;
       const control = document.querySelector(".detail-motion-toggle");
       const syncControl = () => {
@@ -82,6 +82,10 @@ if (!disabled()) {
     if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 1500 });
     else setTimeout(start, 200);
   };
-  if (document.readyState === "complete") afterLoad();
-  else addEventListener("load", afterLoad, { once: true });
+  const onIntent = () => {
+    for (const event of ["scroll", "pointerdown", "keydown"]) removeEventListener(event, onIntent);
+    if (document.readyState === "complete") afterLoad();
+    else addEventListener("load", afterLoad, { once: true });
+  };
+  for (const event of ["scroll", "pointerdown", "keydown"]) addEventListener(event, onIntent, { once: true, passive: true });
 }

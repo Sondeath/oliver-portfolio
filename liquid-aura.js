@@ -1,5 +1,5 @@
 /** Animate the supplied raster artwork only. No libraries or network services. */
-export function createLiquidAura(canvas, fallback, { disabled = false } = {}) {
+export function createLiquidAura(canvas, fallback, { disabled = false, pixelBudget = Infinity } = {}) {
   const media = matchMedia('(prefers-reduced-motion: reduce)');
   const section = canvas.parentElement;
   let gl;
@@ -66,7 +66,7 @@ export function createLiquidAura(canvas, fallback, { disabled = false } = {}) {
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   function size() {
     const rect = canvas.getBoundingClientRect();
-    const ratio = Math.min(devicePixelRatio || 1, 1.35, 1536 / Math.max(rect.width, 1));
+    const ratio = Math.min(devicePixelRatio || 1, 1.35, 1536 / Math.max(rect.width, 1), Math.sqrt(pixelBudget / Math.max(1, rect.width * rect.height)));
     canvas.width = Math.max(1, Math.round(rect.width * ratio));
     canvas.height = Math.max(1, Math.round(rect.height * ratio));
     gl.viewport(0, 0, canvas.width, canvas.height);

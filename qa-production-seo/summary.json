@@ -1,0 +1,385 @@
+{
+  "scope": "Production HTML served locally; not a live-domain PageSpeed report",
+  "productionOrigin": "https://oliverlibic.dev",
+  "sourceCommit": "f32bd179178d37845843fcae3e7c67f516a4a07e",
+  "results": [
+    {
+      "page": "home",
+      "language": "sk",
+      "path": "/",
+      "auditedUrl": "http://127.0.0.1:8790/",
+      "productionCanonical": "https://oliverlibic.dev/",
+      "score": 100,
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-15T21:03:09.700Z",
+      "htmlSha256": "342d088988bca3c694feaa9574c99e778b8d4a85ad5f0e2e90d00c183047dbef",
+      "audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn’t blocked from indexing",
+          "score": 1
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "page": "home",
+      "language": "en",
+      "path": "/en/",
+      "auditedUrl": "http://127.0.0.1:8790/en/",
+      "productionCanonical": "https://oliverlibic.dev/en/",
+      "score": 100,
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-15T21:03:15.572Z",
+      "htmlSha256": "9ecc254ca99a3829f1c1d51c51686cfc6a6cd77c148512f98eec7158d32fcf00",
+      "audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn’t blocked from indexing",
+          "score": 1
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "page": "web",
+      "language": "sk",
+      "path": "/weby-a-eshopy/",
+      "auditedUrl": "http://127.0.0.1:8790/weby-a-eshopy/",
+      "productionCanonical": "https://oliverlibic.dev/weby-a-eshopy/",
+      "score": 100,
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-15T21:03:20.701Z",
+      "htmlSha256": "a2934f975515877877b88a19f9b2a064938faaa7b950c52b2b610a2df48d8043",
+      "audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn’t blocked from indexing",
+          "score": 1
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "page": "web",
+      "language": "en",
+      "path": "/en/websites-and-shops/",
+      "auditedUrl": "http://127.0.0.1:8790/en/websites-and-shops/",
+      "productionCanonical": "https://oliverlibic.dev/en/websites-and-shops/",
+      "score": 100,
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-15T21:03:25.772Z",
+      "htmlSha256": "eadcc19ab8756b4152eabf32ebdef342b3f4a085f052c6466914c15c227bd32f",
+      "audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn’t blocked from indexing",
+          "score": 1
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "page": "merch",
+      "language": "sk",
+      "path": "/textil-a-predmety/",
+      "auditedUrl": "http://127.0.0.1:8790/textil-a-predmety/",
+      "productionCanonical": "https://oliverlibic.dev/textil-a-predmety/",
+      "score": 100,
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-15T21:03:30.871Z",
+      "htmlSha256": "2278584443e650eb3ab8f7c11f2a12db1c076fc72aa74e83b3bc88e8815f37d8",
+      "audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn’t blocked from indexing",
+          "score": 1
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1
+        }
+      ]
+    },
+    {
+      "page": "merch",
+      "language": "en",
+      "path": "/en/clothing-and-merch/",
+      "auditedUrl": "http://127.0.0.1:8790/en/clothing-and-merch/",
+      "productionCanonical": "https://oliverlibic.dev/en/clothing-and-merch/",
+      "score": 100,
+      "lighthouseVersion": "13.5.0",
+      "fetchTime": "2026-10-15T21:03:35.889Z",
+      "htmlSha256": "62fedd3d21f9a89b9389a10b57a256e3010bace53805a27be5bdd194cae2026c",
+      "audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn’t blocked from indexing",
+          "score": 1
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1
+        }
+      ]
+    }
+  ]
+}

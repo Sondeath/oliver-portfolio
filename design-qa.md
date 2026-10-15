@@ -52,3 +52,7 @@ No actionable P0/P1/P2 findings remain in the reviewed scope.
 ## Service pages
 
 2026-10-15. Website/shop and clothing/product presentations now open their own SK/EN service pages. The approved black/violet visual system continues with focused offers, real web project stories, tailored processes, native FAQs, cross-links and editable email briefs. Interaction-triggered liquid enhancement with a limited pixel budget fixed a costly desktop startup. Final website-service lab performance is 96 mobile / 100 desktop. All 22 tests pass; build emits 56 public files and the production sitemap covers six localized URLs. Screenshots, final build verification and the pending production SEO 100/100 measurement are documented in [qa-service-pages/QA.md](qa-service-pages/QA.md).
+
+## Production SEO verification
+
+2026-10-15. All six pages have now been measured with Lighthouse 13.5.0 against the production HTML served locally, with production canonicals and permitted indexing. Every page scored 100/100 SEO, with all ten weighted checks passing. Original HTML/JSON reports, hashes and the inspected overview are in [qa-production-seo/README.md](qa-production-seo/README.md). This supersedes the previously pending local production verification; actual live-domain deployment/measurement remains pending. The workers.dev preview remains intentionally noindex and its PageSpeed score of 69 is unchanged.

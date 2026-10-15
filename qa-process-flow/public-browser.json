@@ -1,0 +1,82 @@
+[
+  {
+    "observed": {
+      "brokenLoadedImages": [],
+      "email": "mailto:libic.oliver@gmail.com?subject=M%C3%A1m%20n%C3%A1pad%20na%20projekt",
+      "forms": 0,
+      "heading": "OD E-MAILU\nPO HOTOVO.",
+      "language": "sk",
+      "overflow": 0,
+      "phase": "0.41273",
+      "sectionTop": 111.76042175292967,
+      "steps": [
+        {
+          "body": "Čo potrebujete, pre koho to je a kedy by ste to chceli mať hotové. Pokojne aj pár viet a odkaz na niečo, čo sa vám páči.",
+          "heading": "Napíšete mi.",
+          "role": "listitem"
+        },
+        {
+          "body": "Dohodneme si rozsah, cenu a termín. Pri webe aj obsah a funkcie, pri predmetoch výber produktov, množstvo a možnosti potlače.",
+          "heading": "Dohodneme smer.",
+          "role": "listitem"
+        },
+        {
+          "body": "Pripravím návrh a prejdeme si pripomienky. Po schválení sa pustím do webu alebo doladíme podklady pre potlač a výrobu.",
+          "heading": "Návrh a realizácia.",
+          "role": "listitem"
+        },
+        {
+          "body": "Web po spoločnej kontrole spustíme a ukážem vám, ako ho spravovať. Pri textile a predmetoch dotiahneme výrobu a dohodneme odovzdanie.",
+          "heading": "Hotové ide k vám.",
+          "role": "listitem"
+        }
+      ],
+      "url": "https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/#process",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "console": []
+  },
+  {
+    "observed": {
+      "brokenLoadedImages": [],
+      "email": "mailto:libic.oliver@gmail.com?subject=I%20have%20a%20project%20in%20mind",
+      "forms": 0,
+      "heading": "FROM HELLO\nTO HANDOVER.",
+      "language": "en",
+      "overflow": 0,
+      "phase": "0.38231",
+      "sectionTop": 111.76042175292967,
+      "steps": [
+        {
+          "body": "Tell me what you need, who it’s for and when you’d like it ready. A few lines and a link to something you like are a good start.",
+          "heading": "Say hello.",
+          "role": "listitem"
+        },
+        {
+          "body": "We’ll agree on the scope, price and timing. For a website, that includes content and features. For branded products, we’ll choose the items, quantities and print options.",
+          "heading": "Agree on a plan.",
+          "role": "listitem"
+        },
+        {
+          "body": "I’ll put together a design and we’ll go through your feedback. Once you’re happy with it, I’ll build the website or prepare the artwork for print and production.",
+          "heading": "Design and make.",
+          "role": "listitem"
+        },
+        {
+          "body": "We’ll check the website together, launch it and I’ll show you how to manage it. For clothing and branded products, we’ll complete production and arrange the handover.",
+          "heading": "Ready for you.",
+          "role": "listitem"
+        }
+      ],
+      "url": "https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/en/#process",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    "console": []
+  }
+]

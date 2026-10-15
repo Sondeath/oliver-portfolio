@@ -1,0 +1,283 @@
+- banner:
+  - link "PageSpeed Insights logo PageSpeed Insights":
+    - /url: ./
+    - img "PageSpeed Insights logo"
+    - generic: PageSpeed Insights
+  - button "Skopírovať odkaz":
+    - generic: Skopírovať odkaz
+  - generic: Dokumenty
+  - link "Dokumenty":
+    - /url: https://developers.google.com/speed/docs/insights/v5/about
+- generic: Poskytovanie služieb a analýza návštevnosti na tomto webe sú založené na súboroch cookie od Googlu.
+- generic: Ďalšie informácie
+- link "Ďalšie informácie":
+  - /url: https://policies.google.com/technologies/cookies
+- button "OK, dobre":
+  - generic: OK, dobre
+- generic: Hlásenie z 15. 10. 2026, 21:31:15
+- textbox:
+  - /placeholder: Zadajte adresu webovej stránky
+  - text: https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/en/
+- paragraph: Zadajte platnú webovú adresu
+- button "Analyzovať":
+  - generic: Analyzovať
+- tablist:
+  - tab "Mobil" [selected]:
+    - generic: smartphone
+    - generic: Mobil
+  - tab "Desktop":
+    - generic: computer
+    - generic: Desktop
+- tabpanel "Mobil":
+  - generic: Zistite, akú skúsenosť majú vaši skutoční používatelia
+  - button "button":
+  - generic: Žiadne údaje
+  - separator
+  - generic: Diagnostika výkonnostných problémov
+  - article:
+    - link "97 Výkonnosť":
+      - /url: "#performance"
+      - generic: "97"
+      - generic: Výkonnosť
+    - link "100 Dostupnosť":
+      - /url: "#accessibility"
+      - generic: "100"
+      - generic: Dostupnosť
+    - link "100 Osvedčené postupy":
+      - /url: "#best-practices"
+      - generic: "100"
+      - generic: Osvedčené postupy
+    - link "69 SEO":
+      - /url: "#seo"
+      - generic: "69"
+      - generic: SEO
+    - link "2/2 Agentské prehliadanie":
+      - /url: "#agentic-browsing"
+      - generic: 2/2
+      - generic: Agentské prehliadanie
+    - text: Hodnoty sú odhady, ktoré sa môžu líšiť.
+    - link "Skóre výkonnosti sa vypočítava":
+      - /url: https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/?utm_source=lighthouse&utm_medium=lr
+    - text: priamo z týchto metrík.
+    - link "Zobraziť kalkulačku":
+      - /url: https://googlechrome.github.io/lighthouse/scorecalc/#FCP=1352&LCP=1652&TBT=0&CLS=0&SI=4216&TTI=1652&device=mobile&version=13.5.0
+    - generic: 0–49
+    - generic: 50–89
+    - generic: 90–100
+    - img "Final Screenshot"
+    - checkbox "Toggle the display of metric descriptions"
+    - generic: Metriky
+    - generic: Rozbaliť zobrazenie
+    - generic: First Contentful Paint
+    - generic: 1,4 s
+    - generic: Largest Contentful Paint
+    - generic: 1,7 s
+    - generic: Total Blocking Time
+    - generic: 0 ms
+    - generic: Cumulative Layout Shift
+    - generic: "0"
+    - generic: Speed Index
+    - generic: 4,2 s
+    - list:
+      - listitem: Captured at 15. 10. 2026, 21:31 SELČ
+      - listitem: Emulované zariadenie Moto G Power with Lighthouse 13.5.0
+      - listitem: Okamžitý odchod
+      - listitem: Počiatočné načítanie stránky
+      - listitem: Pomalé obmedzenie toku dát 4G
+      - listitem: Using HeadlessChromium 153.0.8010.36 with lr
+    - button "Zobraziť stromovú mapu"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - img "Screenshot"
+    - generic: "Zobraziť kontroly relevantné pre:"
+    - radio "All" [checked]
+    - generic: All
+    - radio "FCP"
+    - generic "First Contentful Paint": FCP
+    - radio "LCP"
+    - generic "Largest Contentful Paint": LCP
+    - radio "CLS"
+    - generic "Cumulative Layout Shift": CLS
+    - generic: Štatistiky
+    - generic "Žiadosti o blokovanie vykreslenia —Uloží sa asi o 420 ms rýchlejšie":
+      - generic: Žiadosti o blokovanie vykreslenia
+      - text: —Uloží sa asi o 420 ms rýchlejšie
+    - generic "Vynútené preformátovanie":
+      - generic: Vynútené preformátovanie
+    - generic "Rozdelenie vykreslenia najväčšieho prvku":
+      - generic: Rozdelenie vykreslenia najväčšieho prvku
+    - generic "Nepriame vyhľadávanie žiadostí o vykreslenie najväčšieho prvku":
+      - generic: Nepriame vyhľadávanie žiadostí o vykreslenie najväčšieho prvku
+    - generic "Strom dependencií siete":
+      - generic: Strom dependencií siete
+    - generic "Zlepšenie zobrazovania obrázkov —Môže byť menšia o 660 kB":
+      - generic: Zlepšenie zobrazovania obrázkov
+      - text: —Môže byť menšia o 660 kB
+    - text: Tieto štatistiky sú k dispozícii aj v nástrojoch pre vývojárov v prehliadači Chrome na paneli výkonnosti. Ak si chcete zobraziť podrobnejšie informácie,
+    - link "zaznamenajte stopu":
+      - /url: https://developer.chrome.com/docs/devtools/performance/reference?utm_source=lighthouse&utm_medium=lr
+    - text: .
+    - generic: Diagnostika
+    - generic "Prvky obrázkov nemajú explicitné hodnoty width a height":
+      - text: Prvky obrázkov nemajú explicitné hodnoty
+      - code: width
+      - text: a
+      - code: height
+    - generic "Minifikujte súbory CSS —Môže byť menšia o 3 kB":
+      - generic: Minifikujte súbory CSS
+      - text: —Môže byť menšia o 3 kB
+    - text: Ďalšie informácie o výkonnosti vašej aplikácie. Tieto hodnoty
+    - link "priamo ovplyvňujú":
+      - /url: https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/?utm_source=lighthouse&utm_medium=lr
+    - text: skóre výkonnosti.
+    - generic "Absolvované kontroly (19) Zobraziť":
+      - generic: Absolvované kontroly (19)
+      - generic: Zobraziť
+    - text: — — —
+    - heading "100 Dostupnosť" [level=2]:
+      - generic: "100"
+      - generic: Dostupnosť
+    - text: Tieto kontroly zvýrazňujú príležitosti na
+    - link "zlepšenie dostupnosti vašej webovej aplikácie":
+      - /url: https://developer.chrome.com/docs/lighthouse/accessibility/?utm_source=lighthouse&utm_medium=lr
+    - text: . Automatické rozpoznávanie môže rozpoznať iba podskupinu problémov a nezaručuje dostupnosť vašej webovej aplikácie, preto odporúčame použiť aj
+    - link "manuálne testovanie":
+      - /url: https://web.dev/articles/how-to-review?utm_source=lighthouse&utm_medium=lr
+    - text: .
+    - generic "Ďalšie položky na manuálnu kontrolu (10) Skryť":
+      - generic: Ďalšie položky na manuálnu kontrolu (10)
+      - generic: Skryť
+    - generic "Interactive controls are keyboard focusable":
+      - generic: Interactive controls are keyboard focusable
+    - generic "Interactive elements indicate their purpose and state":
+      - generic: Interactive elements indicate their purpose and state
+    - generic "The page has a logical tab order":
+      - generic: The page has a logical tab order
+    - generic "Visual order on the page follows DOM order":
+      - generic: Visual order on the page follows DOM order
+    - generic "User focus is not accidentally trapped in a region":
+      - generic: User focus is not accidentally trapped in a region
+    - generic "The user's focus is directed to new content added to the page":
+      - generic: The user's focus is directed to new content added to the page
+    - generic "HTML5 landmark elements are used to improve navigation":
+      - generic: HTML5 landmark elements are used to improve navigation
+    - generic "Offscreen content is hidden from assistive technology":
+      - generic: Offscreen content is hidden from assistive technology
+    - generic "Custom controls have associated labels":
+      - generic: Custom controls have associated labels
+    - generic "Custom controls have ARIA roles":
+      - generic: Custom controls have ARIA roles
+    - text: Tieto položky sa zaoberajú oblasťami, ktoré automatické testovanie nemôže obsiahnuť. Ďalšie informácie získate v
+    - link "sprievodcovi vykonávaním kontroly dostupnosti":
+      - /url: https://web.dev/articles/how-to-review?utm_source=lighthouse&utm_medium=lr
+    - text: .
+    - generic "Absolvované kontroly (27) Zobraziť":
+      - generic: Absolvované kontroly (27)
+      - generic: Zobraziť
+    - generic "Nehodí sa (36) Zobraziť":
+      - generic: Nehodí sa (36)
+      - generic: Zobraziť
+    - heading "100 Osvedčené postupy" [level=2]:
+      - generic: "100"
+      - generic: Osvedčené postupy
+    - generic: Dôvera a zabezpečenie
+    - generic "Zaistite, aby PZO účinne blokovali útoky XSS":
+      - generic: Zaistite, aby PZO účinne blokovali útoky XSS
+    - generic "Používajte silné pravidlá HSTS":
+      - generic: Používajte silné pravidlá HSTS
+    - generic "Zabezpečte správne izolovanie pôvodného zdroja pomocou hlavičky COOP":
+      - generic: Zabezpečte správne izolovanie pôvodného zdroja pomocou hlavičky COOP
+    - generic "Implementujte XFO alebo PZO a zmiernite tak riziko clickjackingu":
+      - generic: Implementujte XFO alebo PZO a zmiernite tak riziko clickjackingu
+    - generic "Zmiernite riziko skriptovania medzi webmi založeného na modeli DOM pomocou direktívy Trusted Types":
+      - generic: Zmiernite riziko skriptovania medzi webmi založeného na modeli DOM pomocou direktívy Trusted Types
+    - generic: Kompatibilita prehliadača
+    - generic "Funkcie Baseline":
+      - generic: Funkcie Baseline
+    - generic "Absolvované kontroly (13) Zobraziť":
+      - generic: Absolvované kontroly (13)
+      - generic: Zobraziť
+    - generic "Nehodí sa (2) Zobraziť":
+      - generic: Nehodí sa (2)
+      - generic: Zobraziť
+    - heading "69 SEO" [level=2]:
+      - generic: "69"
+      - generic: SEO
+    - text: Tieto kontroly zaisťujú, že vaša stránka nasleduje radu týkajúcu sa základnej optimalizácie pre vyhľadávače. Vašu pozíciu vo vyhľadávaní vrátane výkonnosti v prehľade
+    - link "Core Web Vitals":
+      - /url: https://web.dev/explore/vitals?utm_source=lighthouse&utm_medium=lr
+    - text: môže ovplyvňovať mnoho faktorov, ktoré tu Lighthouse neuvádza.
+    - link "Ďalšie informácie o programe Google Search Essentials":
+      - /url: https://support.google.com/webmasters/answer/35769
+    - generic: Prehľadávanie a indexovanie
+    - generic "Stránka má blokované indexovanie":
+      - generic: Stránka má blokované indexovanie
+    - generic: Prehľadávače potrebujú prístup k vašej aplikácii, aby sa mohla zobraziť vo výsledkoch vyhľadávania.
+    - generic "Ďalšie položky na manuálnu kontrolu (1) Zobraziť":
+      - generic: Ďalšie položky na manuálnu kontrolu (1)
+      - generic: Zobraziť
+    - generic: Ak chcete skontrolovať ďalšie osvedčené postupy SEO, spusťte na svojom webe tieto ďalšie nástroje na overenie.
+    - generic "Absolvované kontroly (9) Zobraziť":
+      - generic: Absolvované kontroly (9)
+      - generic: Zobraziť
+    - heading "2/2 Agentské prehliadanie" [level=2]:
+      - generic: 2/2
+      - generic: Agentské prehliadanie
+    - text: Tieto kontroly zaisťujú vysokokvalitné
+    - link "prehliadateľné weby pre agentov umelej inteligencie":
+      - /url: https://goo.gle/lighthouse-agentic-web
+    - text: a overujú správnosť integrácií WebMCP. Táto kategória je stále vo vývoji a môže sa zmeniť.
+    - generic "Absolvované kontroly (2) Zobraziť":
+      - generic: Absolvované kontroly (2)
+      - generic: Zobraziť
+    - text: — —
+    - generic "Nehodí sa (5) Zobraziť":
+      - generic: Nehodí sa (5)
+      - generic: Zobraziť
+- text: — — — — — — — —
+- contentinfo:
+  - generic: Viac na webe PageSpeed Insights
+  - link "Novinky":
+    - /url: https://developers.google.com/speed/docs/insights/release_notes
+  - link "Dokumentácia":
+    - /url: https://developers.google.com/speed/docs/insights/v5/about
+  - link "Ďalšie informácie o výkonnosti webov":
+    - /url: https://developers.google.com/speed
+  - link "Spýtať sa otázky na webe Stack Overflow":
+    - /url: https://stackoverflow.com/questions/tagged/pagespeed-insights
+  - link "Distribučný zoznam":
+    - /url: https://groups.google.com/g/pagespeed-insights-discuss
+  - generic: Súvisiaci obsah
+  - link "Novinky":
+    - /url: https://developer.chrome.com/blog
+  - link "Web Fundamentals":
+    - /url: https://developers.google.com/focus/web-development
+  - link "Prípadové štúdie":
+    - /url: https://web.dev/case-studies
+  - link "Podcasty":
+    - /url: https://web.dev/shows
+  - generic: Možnosti kontaktovania
+  - link "Twitter":
+    - /url: https://twitter.com/ChromiumDev
+  - link "YouTube":
+    - /url: https://www.youtube.com/user/ChromeDevelopers
+  - link "Google Developers Logo":
+    - /url: https://developers.google.com/
+    - img "Google Developers Logo"
+  - link "Chrome":
+    - /url: https://developer.chrome.com/
+  - link "Firebase":
+    - /url: https://firebase.google.com/
+  - link "Všetky služby":
+    - /url: https://developers.google.com/products/
+  - link "Zmluvné podmienky a pravidlá ochrany súkromia":
+    - /url: https://policies.google.com/
+  - text: Viac sa dozviete v
+  - link "pravidlách webu Google Developers":
+    - /url: https://developers.google.com/terms/site-policies
+  - text: .

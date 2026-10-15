@@ -1,0 +1,56 @@
+[
+  {
+    "path": "/",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/en/",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/en/",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/en?motion=off",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/en/?motion=off",
+    "type": "text/html; charset=utf-8"
+  },
+  {
+    "path": "/robots.txt",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/robots.txt",
+    "type": "text/plain; charset=utf-8"
+  },
+  {
+    "path": "/sitemap.xml",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/sitemap.xml",
+    "type": "application/xml; charset=utf-8"
+  },
+  {
+    "path": "/site.css",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/site.css",
+    "type": "text/css; charset=utf-8"
+  },
+  {
+    "path": "/assets/fonts/anton-regular.woff2",
+    "status": 200,
+    "url": "http://127.0.0.1:8787/assets/fonts/anton-regular.woff2",
+    "type": "font/woff2"
+  },
+  {
+    "path": "/qa-launch-readiness/QA.md",
+    "status": 404
+  },
+  {
+    "path": "/scripts/seo.mjs",
+    "status": 404
+  },
+  {
+    "path": "/does-not-exist",
+    "status": 404
+  }
+]

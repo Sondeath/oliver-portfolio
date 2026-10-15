@@ -44,3 +44,7 @@ No actionable P0/P1/P2 findings remain in the reviewed scope.
 ## Collaboration process update
 
 2026-10-15. A four-step SK/EN section now connects services with contact: email, scope/price agreement, design and realization, and launch or product handover. Desktop uses a sticky introduction and a reversible scroll thread; mobile stacks readable full-width descriptions. The existing raster material continues through the section. Responsive, static-mode and localization checks are recorded in qa-process-flow/QA.md, with deployment evidence in PUBLIC.md. All 18 tests pass; build publishes 44 files.
+
+## Launch readiness audit
+
+2026-10-15. Current audit and fresh screenshots are in [qa-launch-readiness/QA.md](qa-launch-readiness/QA.md). Responsive images, smaller local WOFF2 fonts and a combined stylesheet preserve the approved design. Mobile performance increased from 91 to 97; final SK/EN mobile runs both scored 97, while desktop scored 100/96. Production has a bilingual sitemap, robots.txt, canonical/alternate metadata and structured identity data; the preview remains noindex. Twenty tests pass and the build publishes 50 allowed files. Public preview builds succeeded; the main-domain cutover is still pending. No launch blockers were found within the tested scope; physical-device and field-performance limits are documented in the report.

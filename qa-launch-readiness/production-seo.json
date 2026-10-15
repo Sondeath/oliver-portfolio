@@ -1,0 +1,63 @@
+[
+  {
+    "file": "index.html",
+    "canonical": [
+      "https://oliverlibic.dev/"
+    ],
+    "alternates": [
+      {
+        "rel": "alternate",
+        "hreflang": "sk",
+        "href": "https://oliverlibic.dev/"
+      },
+      {
+        "rel": "alternate",
+        "hreflang": "en",
+        "href": "https://oliverlibic.dev/en/"
+      },
+      {
+        "rel": "alternate",
+        "hreflang": "x-default",
+        "href": "https://oliverlibic.dev/"
+      }
+    ],
+    "robots": [],
+    "description": [
+      "Som Oliver. Navrhujem a tvorím weby a e-shopy. Vašu značku dostanem aj na tričká, tašky a ďalšie reklamné predmety. Pozrite si moje práce a ozvite sa mi."
+    ]
+  },
+  {
+    "file": "en/index.html",
+    "canonical": [
+      "https://oliverlibic.dev/en/"
+    ],
+    "alternates": [
+      {
+        "rel": "alternate",
+        "hreflang": "sk",
+        "href": "https://oliverlibic.dev/"
+      },
+      {
+        "rel": "alternate",
+        "hreflang": "en",
+        "href": "https://oliverlibic.dev/en/"
+      },
+      {
+        "rel": "alternate",
+        "hreflang": "x-default",
+        "href": "https://oliverlibic.dev/"
+      }
+    ],
+    "robots": [],
+    "description": [
+      "I’m Oliver. I design and build websites and online shops, and help bring your brand to shirts, bags and everyday items. Take a look at my work and get in touch."
+    ]
+  },
+  {
+    "sitemap": [
+      "https://oliverlibic.dev/",
+      "https://oliverlibic.dev/en/"
+    ],
+    "robots": "User-agent: *\nDisallow: /api/\n\nSitemap: https://oliverlibic.dev/sitemap.xml\n"
+  }
+]

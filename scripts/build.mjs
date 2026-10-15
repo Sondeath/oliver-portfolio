@@ -10,6 +10,8 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { renderPage } from "./render-page.mjs";
 import { productionOrigin, crawlerFiles } from "./seo.mjs";
+import { routes } from "../content/routes.mjs";
+import { renderServicePage } from "./render-service-page.mjs";
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const output = resolve(root, "dist");
 const branchPreviewOrigin =
@@ -48,6 +50,8 @@ const styleFiles = [
 const sourceFiles = [
   "index.html",
   "app.js",
+  "service-page.js",
+  "service-page.css",
   "motion.js",
   "liquid-aura.js",
   "favicon.svg",
@@ -71,7 +75,8 @@ const sourceFiles = [
     .filter((name) => name.endsWith(".svg") || name === "LICENSE")
     .map((name) => "assets/icons/" + name),
 ];
-export const files = [...sourceFiles, "site.css", "robots.txt", "sitemap.xml", "en/index.html"];
+const serviceFiles = Object.entries(routes).filter(([page]) => page !== "home").flatMap(([, languages]) => Object.values(languages).map(path => path.slice(1) + "index.html"));
+export const files = [...sourceFiles, "site.css", "robots.txt", "sitemap.xml", "en/index.html", ...serviceFiles];
 export async function build() {
   const origin = publicationOrigin();
   // Verify the resolved absolute deletion target; never carry removed assets forward.
@@ -91,6 +96,14 @@ export async function build() {
   await writeFile(resolve(output, "index.html"), renderPage(template, "sk", origin));
   await mkdir(resolve(output, "en"), { recursive: true });
   await writeFile(resolve(output, "en/index.html"), renderPage(template, "en", origin));
+  for (const [page, languages] of Object.entries(routes)) {
+    if (page === "home") continue;
+    for (const [language, path] of Object.entries(languages)) {
+      const destination = resolve(output, path.slice(1), "index.html");
+      await mkdir(dirname(destination), { recursive: true });
+      await writeFile(destination, renderServicePage(template, page, language, origin));
+    }
+  }
   // Keep authoring files separate; preserve their cascade in one network request.
   const styles = await Promise.all(styleFiles.map(file => readFile(resolve(root, file), "utf8")));
   await writeFile(resolve(output, "site.css"), styles.join("\n"));

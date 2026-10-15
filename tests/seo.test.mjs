@@ -13,7 +13,7 @@ test("only production advertises indexable SK and EN URLs to crawlers", () => {
     assert.match(robots, /Disallow: \/api\//);
     assert.doesNotMatch(robots, /Disallow: \/\s*$/m);
     const production = origin === productionOrigin;
-    assert.equal((sitemap.match(/<loc>/g) || []).length, production ? 2 : 0);
+    assert.equal((sitemap.match(/<loc>/g) || []).length, production ? 6 : 0);
     assert.equal(robots.includes("Sitemap:"), production);
     assert.doesNotMatch(sitemap, /<lastmod>/); // Never invent content modification dates.
     for (const language of ["sk", "en"]) {

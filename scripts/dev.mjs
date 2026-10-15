@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { resolve, extname } from "node:path";
 import worker from "../worker.js";
 import { build, output, files } from "./build.mjs";
+import { routes } from "../content/routes.mjs";
 await build();
 const arg = (name) => {
   const index = process.argv.indexOf(name);
@@ -56,8 +57,9 @@ const server = http.createServer(async (req, res) => {
       res.end();
       return;
     }
-    if (url.pathname === "/en") {
-      res.writeHead(308, { Location: "/en/" + url.search });
+    const slashDestination = Object.values(routes).flatMap(Object.values).find(path => path !== "/" && path.slice(0, -1) === url.pathname);
+    if (slashDestination) {
+      res.writeHead(308, { Location: slashDestination + url.search });
       res.end();
       return;
     }

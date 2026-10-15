@@ -36,3 +36,7 @@ Nine assets were captured through the browser from actual websites: two featured
 All 18 tests pass, including copy-key parity, static localization, language-specific metadata, native URLs, missing-copy failures and project asset provenance/count. Build emits 43 explicitly allowed public files. QA files, copy sources and render scripts are excluded from publication. Whitespace/syntax checks pass. Public branch deployment verification is recorded in qa-bilingual/PUBLIC.md; the main domain remains outside this preview update.
 
 No actionable P0/P1/P2 findings remain in the reviewed scope.
+
+## Project stories update
+
+2026-10-15. The user-approved SK/EN stories for BeCool Shop and BeCool.sk are now part of the project presentation. Full delivery from design to launch and the Shoptet platform are confirmed by the user. Desktop text follows the two displays; mobile text follows each corresponding project. Responsive screenshots, checks and successful public deployment are recorded in qa-project-stories/QA.md and qa-project-stories/PUBLIC.md. All 18 tests pass; build remains 43 public files.

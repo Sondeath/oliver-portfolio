@@ -2,7 +2,7 @@
 
 final result: passed
 
-2026-10-15. Scope: human-written Slovak and English copy, native language switching, real website previews. The approved black/violet layout, Anton/Inter typography, monitor/shirt scroll sequence and shared liquid effects remain the visual reference. Previous QA is preserved in qa-bilingual/design-qa-before-bilingual.md.
+2026-10-15. Scope: natural Slovak and English copy, native language switching, real website previews. The approved black/violet layout, Anton/Inter typography, monitor/shirt scroll sequence and shared liquid effects remain the visual reference. Previous QA is preserved in qa-bilingual/design-qa-before-bilingual.md.
 
 ## Copy and visual review
 

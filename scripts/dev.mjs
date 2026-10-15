@@ -54,8 +54,14 @@ const server = http.createServer(async (req, res) => {
       res.end();
       return;
     }
+    if (url.pathname === "/en") {
+      res.writeHead(308, { Location: "/en/" + url.search });
+      res.end();
+      return;
+    }
     let name =
       decodeURIComponent(url.pathname).replace(/^\/+/, "") || "index.html";
+    if (name.endsWith("/")) name += "index.html";
     if (!allowed.has(name)) {
       res.writeHead(404);
       res.end("Not found");

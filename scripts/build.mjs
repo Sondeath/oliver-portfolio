@@ -8,6 +8,7 @@ import {
 } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { renderPage } from "./render-page.mjs";
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const output = resolve(root, "dist");
 const productionOrigin = "https://oliverlibic.dev";
@@ -35,13 +36,14 @@ export function publicationOrigin(env = process.env) {
   return url.origin;
 }
 // Explicit publication list: reviews, source code, prompts and secrets stay private.
-export const files = [
+const sourceFiles = [
   "index.html",
   "styles.css",
   "work.css",
   "flow.css",
   "services.css",
   "contact.css",
+  "locale.css",
   "app.js",
   "motion.js",
   "liquid-aura.js",
@@ -54,21 +56,22 @@ export const files = [
   "assets/hero-purple/monitor.webp",
   "assets/hero-purple/shirt.webp",
   "assets/hero-purple/social-preview.jpg",
-  "assets/projects/becool-square.jpg",
-  "assets/projects/becool-shop-square.jpg",
-  "assets/projects/becool-marathon.jpg",
+  ...(await readdir(resolve(root, "assets/projects/live")))
+    .filter((name) => name.endsWith(".webp"))
+    .map((name) => "assets/projects/live/" + name),
   "assets/work-liquid/liquid-aura.webp",
   "assets/work-liquid/odtlacok-o.webp",
   ...(await readdir(resolve(root, "assets/icons")))
     .filter((name) => name.endsWith(".svg") || name === "LICENSE")
     .map((name) => "assets/icons/" + name),
 ];
+export const files = [...sourceFiles, "en/index.html"];
 export async function build() {
   const origin = publicationOrigin();
   // Verify the resolved absolute deletion target; never carry removed assets forward.
   if (output !== resolve(root, "dist")) throw new Error("Unsafe build output");
   await rm(output, { recursive: true, force: true });
-  for (const file of files) {
+  for (const file of sourceFiles) {
     const destination = resolve(output, file);
     if (
       !destination.startsWith(output + "/") &&
@@ -78,17 +81,10 @@ export async function build() {
     await mkdir(dirname(destination), { recursive: true });
     await copyFile(resolve(root, file), destination);
   }
-  const index = resolve(output, "index.html");
-  let html = (await readFile(index, "utf8")).replaceAll(
-    productionOrigin,
-    origin,
-  );
-  if (origin !== productionOrigin)
-    html = html.replace(
-      "</head>",
-      '<meta name="robots" content="noindex, nofollow">\n</head>',
-    );
-  await writeFile(index, html);
+  const template = await readFile(resolve(root, "index.html"), "utf8");
+  await writeFile(resolve(output, "index.html"), renderPage(template, "sk", origin));
+  await mkdir(resolve(output, "en"), { recursive: true });
+  await writeFile(resolve(output, "en/index.html"), renderPage(template, "en", origin));
   return files.length;
 }
 if (resolve(process.argv[1] || "") === fileURLToPath(import.meta.url))

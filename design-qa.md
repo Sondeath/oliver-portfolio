@@ -1,36 +1,38 @@
-# Design QA — closing imprint and contact invitation
+# Design QA — Slovak / English and real project captures
 
 final result: passed
 
-## Scope and references
+2026-10-15. Scope: human-written Slovak and English copy, native language switching, real website previews. The approved black/violet layout, Anton/Inter typography, monitor/shirt scroll sequence and shared liquid effects remain the visual reference. Previous QA is preserved in qa-bilingual/design-qa-before-bilingual.md.
 
-2026-10-15. User requested rethinking the bottom “Poďme na to” section. This continues the selected black/violet type and raster material system. Baseline: qa-contact-finale/01-before.jpg, public contact/footer. Visual vocabulary: approved Anton/Inter, liquid-aura.webp and odtlacok-o.webp already used in projects. Implementation: http://127.0.0.1:8795/#contact; stable preview port 8787 was restarted with the updated 35-file allowlist. Earlier QA preserved in qa-contact-finale/design-qa-before-contact.md.
+## Copy and visual review
 
-## Visual comparison
+Both versions describe Oliver's offer in the first person, without invented results, client quotes or production guarantees. English is written for an English reader rather than translated word for word. Services explain websites/online shops and clothing/branded products; automation remains an optional disclosure. Every contact action still leads to email. No form or subscription was added.
 
-Inspected comparison-finale.jpg (baseline left, revised right) and comparison-contact-region.jpg. Both source/full implementation use 1042 × 1292 CSS viewports, equal 1027 × 1273 raster captures at the contact anchor, clamped to the bottom of the document. Footer top is 1212.18px in both. Contact begins at 625.13px before and 406.46px after because the deliberate finale is taller. No stretching. Focused comparison crops each section at its actual boundary using raster/viewport scale and top-aligns them on a neutral canvas; source 1027 × 578, implementation 1027 × 794. Extra space beneath the shorter source is comparison padding, not UI.
+Inspected comparison-copy.jpg: before and revised SK root at the same 1280 × 720 CSS viewport and 1265 × 712 raster size. Captures are placed side by side without stretching. The revised description is more concrete; the header adds a compact SK/EN switch. Type scale, artwork and composition match the approved design.
 
-The new contact replaces the opaque purple band with continuous actual liquid artwork and the approved O imprint. The entire two-line invitation now links to email; address remains separately readable below. Oversized type is intentional. On short desktop windows, the invitation is visible immediately and the address/footer follow through native scrolling.
+Reviewed SK and EN at desktop, tablet and mobile widths (1440, 1280, 768, 390 and 320px). Evidence is in the numbered qa-bilingual/*.jpg captures. English headline, service descriptions, email actions and contact finale fit their layouts. Archive thumbnails sit beside project names and descriptions on desktop and stack the labels on mobile. Supporting text retains the existing muted violet palette. Fine-pointer hover colours appear in a few responsive captures; these are interaction states, not OS touch simulation.
 
-Required surfaces:
-- Typography: existing Anton regular for the giant two-line invitation, Inter for kicker, description, labels and address. Explicit line break and narrow-screen scaling preserve readable text. No font substitutions or truncated content.
-- Layout: stable foreground text, large O behind the invitation, subtle reversible O departure/arrival, liquid extending 320px upward (220 mobile). Footer separates with one thin rule. At mobile widths, address and personal copy stack.
-- Tokens: approved ink, violet, accent and off-white retained. Supporting text #BFB1D0. Hover turns the invitation violet only for fine hover pointers; focus has a visible outline. No generated gradient substitutes for imagery; CSS gradients are compositing masks only.
-- Asset fidelity: the existing transparent raster O and liquid texture are reused at their natural ratios. Existing arrow icon retained. No new media payload or imitation SVG artwork. Foreground text stays sharp and stable.
-- Content: concise personal invitation, explicit email address, no form or provider signup. Both main invitation and address use mailto:libic.oliver@gmail.com. Footer copyright, location, Instagram and return-to-top links retained.
+## Real work
 
-## Fixes and accepted states
+Nine assets were captured through the browser from actual websites: two featured projects and seven archive entries. qa-bilingual/project-sources.json records source URLs, viewport, capture date, raster sizes and output sizes. The contact sheet was inspected; originals are retained in qa-bilingual/sources/. Images were resized/compressed as WebP, without generated website content. Public assets total 703 KiB (720 KB) and archive thumbnails load lazily.
 
-P2: at 320px, the title plus arrow/gap exceeded the invitation row by about 5px. Reduced the narrowest scale from 27vw to 26vw. Final title 209.61px + arrow 36px + gap 12px fits inside 260.67px. No horizontal overflow or hidden controls remain.
+- BeCool Shop: homepage, with native optional cookies disabled and the informational toast dismissed.
+- BeCool.sk: actual ČSOB Bratislava Marathon event page, retaining the approved finish-line image.
+- Nedelka: past-events archive because the homepage currently has no upcoming events.
+- BeCool Catering, Zakopane Night Run, VibeClub, Bratislava Marathon / BeCool Sport, PH Sport Horses and Jump Studio: real pages, with captions reflecting their observed content.
+- Ghostlayer redirects to the old personal portfolio and is omitted at the user's explicit request. Marek Radič's domain failed DNS resolution and is temporarily omitted rather than given a fabricated screenshot.
 
-04-mobile.jpg and 05-mobile-320.jpg include the fine-pointer hover color while testing responsive viewports. This is an intentional interaction state, not the neutral mobile appearance. 06-mobile-320-final.jpg and 08-mobile-neutral.jpg are the accepted neutral final captures. Initial 02-desktop.jpg uses the normal 1280 × 720 browser viewport; 03-desktop-matched.jpg is the normalized comparison source. 07-static.jpg is the settled reduced-motion-equivalent preview.
+## Behaviour and fixes
 
-## Behavior and verification
+- Static / and /en/ pages have localized copy, alt text, accessible labels, email subjects and motion controls. Root-relative assets load on both paths. Native language links work without a translation runtime.
+- Language switching keeps the current section, query parameters and the open archive/automation disclosure when it occupies the reading area. Verified contact, services, archive, automation and ?motion=off switches. Fixed an initial case where a small part of an open archive above the header could pull the reader back to projects.
+- Mobile dialog opens/closes and supports language changes. At 768px the full English header fits without collisions; mobile navigation starts at 760px. No document horizontal overflow was found at tested sizes.
+- Pause/resume labels are localized. After lazy initialization, all three liquid controls agree on paused state. Existing motion renderer and scroll choreography are retained. ?motion=off hides motion controls in both languages and keeps content and email links available.
+- Fixed template rendering of valid multiline closing tags so adjacent hero lines, service links and footer links remain intact. Regression coverage checks these structures.
+- Browser console has no errors/warnings in the final local review. No broken loaded images and no forms. Physical touch, GPU loss and OS preference switching were not forced; existing reduced-motion/fallback handling is unchanged.
 
-- 320, 390, 1042 and 1280px reviewed with no document horizontal overflow. Static 1440px also reviewed. Native mobile menu reaches contact and closes. Footer return-to-top restores scroll 0, work arrival 0 and accessible hero controls.
-- Shared pause switches all three initialized liquid canvases to still and all three buttons to aria-pressed false; resuming restores motion. New field retains the existing lazy loader, capped 30fps, offscreen/visibility pause and static fallback.
-- ?motion=off: contact progress 1, controls hidden; initialized service/contact canvases still. Work canvas may stay uninitialized while offscreen, as intended. Static content, contact links and footer remain available.
-- Correct email URLs inspected without launching a mail client. Browser console on desktop/mobile has no errors or warnings. No forms and no broken loaded images.
-- Existing 14 tests pass, including the same reversible bounded workArrival helper now driving contact entry. Production build emits 35 public files. JS syntax and staged whitespace checks pass.
+## Build and publication
 
-No actionable P0/P1/P2 findings remain. Physical touch input, OS preference switching and GPU-loss fallback were not forced; their behavior is handled in CSS/source and inherited from the tested renderer. Public branch preview remains the publication target, with verification in qa-contact-finale/PUBLIC.md.
+All 18 tests pass, including copy-key parity, static localization, language-specific metadata, native URLs, missing-copy failures and project asset provenance/count. Build emits 43 explicitly allowed public files. QA files, copy sources and render scripts are excluded from publication. Whitespace/syntax checks pass. Public branch deployment verification is recorded in qa-bilingual/PUBLIC.md; the main domain remains outside this preview update.
+
+No actionable P0/P1/P2 findings remain in the reviewed scope.

@@ -46,8 +46,35 @@ menu.querySelectorAll("a").forEach((link) => {
       requestAnimationFrame(() => target.focus({ preventScroll: true }));
   });
 });
-window.matchMedia("(min-width: 561px)").addEventListener("change", (event) => {
+window.matchMedia("(min-width: 761px)").addEventListener("change", (event) => {
   if (event.matches && menu.open) menu.close();
+});
+
+// Keep native, shareable language URLs and the section the visitor is reading.
+for (const id of ["archive", "automation"]) {
+  if (window.location.hash === `#${id}`) document.getElementById(id).open = true;
+}
+document.querySelectorAll("[data-language]").forEach((link) => {
+  link.addEventListener("click", () => {
+    const destination = new URL(link.href);
+    destination.search = window.location.search;
+    destination.hash = window.location.hash;
+    const readingTop = header.getBoundingClientRect().bottom;
+    const readingLine = readingTop + Math.min(160, (innerHeight - readingTop) / 3);
+    for (const section of document.querySelectorAll("main > section[id]")) {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= readingLine && rect.bottom > readingLine)
+        destination.hash = section.id === "top" ? "" : section.id;
+    }
+    for (const id of ["archive", "automation"]) {
+      const detail = document.getElementById(id);
+      const rect = detail.getBoundingClientRect();
+      const visible = Math.max(0, Math.min(rect.bottom, innerHeight) - Math.max(rect.top, readingTop));
+      if (detail.open && visible > Math.min(rect.height, innerHeight - readingTop) / 2)
+        destination.hash = id;
+    }
+    link.href = destination.pathname + destination.search + destination.hash;
+  });
 });
 
 document.querySelectorAll('a[href="#archive"]').forEach((link) => {
@@ -220,7 +247,7 @@ for (const config of [
       const syncControl = () => {
         control.hidden = !effect.ready || motionDisabled();
         control.setAttribute("aria-pressed", String(Boolean(effect.playing)));
-        control.textContent = effect.playing ? "Pozastaviť pohyb" : "Spustiť pohyb";
+        control.textContent = effect.playing ? control.dataset.pauseLabel : control.dataset.resumeLabel;
       };
       liquidScene.addEventListener("liquidstatechange", syncControl);
       control.addEventListener("click", () => {

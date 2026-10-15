@@ -28,7 +28,7 @@ export function renderServicePage(template, page, language, origin) {
   let prefix = template.slice(0, template.indexOf('    <main id="main"'))
     .replace('src="/app.js"', 'src="/service-page.js"')
     .replace(/    <link rel="preload" as="image"[^>]+>\s*/g, "")
-    .replace('<link rel="stylesheet" href="/site.css" />', `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${sizes}" />\n    <link rel="stylesheet" href="/site.css" />\n    <link rel="stylesheet" href="/service-page.css" />`)
+    .replace('<link rel="stylesheet" href="/site.css" />', `<link rel="preload" as="image" imagesrcset="${srcset}" imagesizes="${sizes}" />\n    <link rel="stylesheet" href="/service-page.css" />`)
     .replace('<body>', `<body class="service-page service-page--${page}">`)
     .replace('class="wordmark" href="#top"', `class="wordmark" href="${home}"`)
     .replaceAll('href="#work"', `href="${home}#work"`)

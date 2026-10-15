@@ -49,10 +49,12 @@ addEventListener("resize", schedule);
 reduced.addEventListener("change", () => { root.dataset.motion = disabled() ? "off" : "on"; schedule(); });
 update();
 
-// A single, lazy liquid field uses the same lightweight renderer as the portfolio.
+// Show the static artwork first; compile the ambient field after the page loads.
 if (!disabled()) {
   const field = document.querySelector(".detail-flow");
-  const loader = new IntersectionObserver(entries => {
+  const start = () => {
+    if (disabled()) return;
+    const loader = new IntersectionObserver(entries => {
     if (!entries.some(entry => entry.isIntersecting)) return;
     loader.disconnect();
     import("./liquid-aura.js").then(({ createLiquidAura }) => {
@@ -73,6 +75,13 @@ if (!disabled()) {
       syncControl();
       addEventListener("pagehide", e => { if (!e.persisted) effect.destroy(); });
     }).catch(() => {}); // The image remains available if WebGL is unavailable.
-  }, { rootMargin: "200px" });
-  loader.observe(field);
+    }, { rootMargin: "200px" });
+    loader.observe(field);
+  };
+  const afterLoad = () => {
+    if ("requestIdleCallback" in window) requestIdleCallback(start, { timeout: 1500 });
+    else setTimeout(start, 200);
+  };
+  if (document.readyState === "complete") afterLoad();
+  else addEventListener("load", afterLoad, { once: true });
 }

@@ -107,6 +107,9 @@ export async function build() {
   // Keep authoring files separate; preserve their cascade in one network request.
   const styles = await Promise.all(styleFiles.map(file => readFile(resolve(root, file), "utf8")));
   await writeFile(resolve(output, "site.css"), styles.join("\n"));
+  // Service pages need shared typography/navigation, without the homepage scenes.
+  const serviceStyles = await Promise.all(["styles.css", "locale.css", "service-page.css"].map(file => readFile(resolve(root, file), "utf8")));
+  await writeFile(resolve(output, "service-page.css"), serviceStyles.join("\n"));
   const { robots, sitemap } = crawlerFiles(origin);
   await writeFile(resolve(output, "robots.txt"), robots);
   await writeFile(resolve(output, "sitemap.xml"), sitemap);

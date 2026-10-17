@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { resolve, extname } from "node:path";
 import worker from "../worker.js";
 import { build, output, files } from "./build.mjs";
-import { routes } from "../content/routes.mjs";
+import { routes, retiredPageRedirects } from "../content/routes.mjs";
 await build();
 const arg = (name) => {
   const index = process.argv.indexOf(name);
@@ -23,7 +23,7 @@ const mime = {
   ".xml": "application/xml; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
 };
-const allowed = new Set(files);
+const allowed = new Set(files.filter(file => file !== "_redirects"));
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, "http://" + req.headers.host);
@@ -54,6 +54,14 @@ const server = http.createServer(async (req, res) => {
     }
     if (req.method !== "GET" && req.method !== "HEAD") {
       res.writeHead(405);
+      res.end();
+      return;
+    }
+    const retiredDestination = retiredPageRedirects[url.pathname];
+    if (retiredDestination) {
+      const destination = new URL(retiredDestination, url);
+      destination.search = url.search;
+      res.writeHead(301, { Location: destination.pathname + destination.search + destination.hash });
       res.end();
       return;
     }

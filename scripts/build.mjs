@@ -10,8 +10,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { renderPage } from "./render-page.mjs";
 import { productionOrigin, crawlerFiles } from "./seo.mjs";
-import { routes } from "../content/routes.mjs";
-import { renderServicePage } from "./render-service-page.mjs";
+import { retiredPageRedirects } from "../content/routes.mjs";
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const output = resolve(root, "dist");
 const branchPreviewOrigin =
@@ -50,8 +49,6 @@ const styleFiles = [
 const sourceFiles = [
   "index.html",
   "app.js",
-  "service-page.js",
-  "service-page.css",
   "motion.js",
   "liquid-aura.js",
   "favicon.svg",
@@ -75,8 +72,7 @@ const sourceFiles = [
     .filter((name) => name.endsWith(".svg") || name === "LICENSE")
     .map((name) => "assets/icons/" + name),
 ];
-const serviceFiles = Object.entries(routes).filter(([page]) => page !== "home").flatMap(([, languages]) => Object.values(languages).map(path => path.slice(1) + "index.html"));
-export const files = [...sourceFiles, "site.css", "robots.txt", "sitemap.xml", "en/index.html", ...serviceFiles];
+export const files = [...sourceFiles, "site.css", "robots.txt", "sitemap.xml", "en/index.html", "_redirects"];
 export async function build() {
   const origin = publicationOrigin();
   // Verify the resolved absolute deletion target; never carry removed assets forward.
@@ -96,20 +92,11 @@ export async function build() {
   await writeFile(resolve(output, "index.html"), renderPage(template, "sk", origin));
   await mkdir(resolve(output, "en"), { recursive: true });
   await writeFile(resolve(output, "en/index.html"), renderPage(template, "en", origin));
-  for (const [page, languages] of Object.entries(routes)) {
-    if (page === "home") continue;
-    for (const [language, path] of Object.entries(languages)) {
-      const destination = resolve(output, path.slice(1), "index.html");
-      await mkdir(dirname(destination), { recursive: true });
-      await writeFile(destination, renderServicePage(template, page, language, origin));
-    }
-  }
   // Keep authoring files separate; preserve their cascade in one network request.
   const styles = await Promise.all(styleFiles.map(file => readFile(resolve(root, file), "utf8")));
   await writeFile(resolve(output, "site.css"), styles.join("\n"));
-  // Service pages need shared typography/navigation, without the homepage scenes.
-  const serviceStyles = await Promise.all(["styles.css", "locale.css", "service-page.css"].map(file => readFile(resolve(root, file), "utf8")));
-  await writeFile(resolve(output, "service-page.css"), serviceStyles.join("\n"));
+  await writeFile(resolve(output, "_redirects"), Object.entries(retiredPageRedirects)
+    .map(([path, destination]) => `${path} ${destination} 301`).join("\n") + "\n");
   const { robots, sitemap } = crawlerFiles(origin);
   await writeFile(resolve(output, "robots.txt"), robots);
   await writeFile(resolve(output, "sitemap.xml"), sitemap);

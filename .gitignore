@@ -7,6 +7,8 @@ examples/
 .claude/
 node_modules/
 dist/
+.playwright-cli/
+output/playwright/
 .wrangler/
 .dev.vars
 .dev.vars.*

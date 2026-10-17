@@ -13,7 +13,7 @@ test("only production advertises indexable SK and EN URLs to crawlers", () => {
     assert.match(robots, /Disallow: \/api\//);
     assert.doesNotMatch(robots, /Disallow: \/\s*$/m);
     const production = origin === productionOrigin;
-    assert.equal((sitemap.match(/<loc>/g) || []).length, production ? 6 : 0);
+    assert.equal((sitemap.match(/<loc>/g) || []).length, production ? 2 : 0);
     assert.equal(robots.includes("Sitemap:"), production);
     assert.doesNotMatch(sitemap, /<lastmod>/); // Never invent content modification dates.
     for (const language of ["sk", "en"]) {
@@ -25,6 +25,7 @@ test("only production advertises indexable SK and EN URLs to crawlers", () => {
       assert.equal(page.url, url);
       assert.equal(page.inLanguage, language);
       assert.ok(html.includes(`rel="canonical" href="${url}"`));
+      assert.doesNotMatch(html, /href="\/(?:weby-a-eshopy|textil-a-predmety|en\/(?:websites-and-shops|clothing-and-merch))\//);
       if (production) assert.ok(sitemap.includes(`<loc>${url}</loc>`));
       assert.doesNotMatch(JSON.stringify(schema), /"(?:aggregateRating|review|telephone)":/);
     }
@@ -33,6 +34,9 @@ test("only production advertises indexable SK and EN URLs to crawlers", () => {
 
 test("every image candidate and font is publishable, while QA/source files stay private", async () => {
   const publicFiles = new Set(files);
+  assert.deepEqual(files.filter(file => file.endsWith(".html")).sort(), ["en/index.html", "index.html"]);
+  assert.ok(publicFiles.has("_redirects"));
+  assert.ok(!publicFiles.has("service-page.js") && !publicFiles.has("service-page.css"));
   for (const name of ["robots.txt", "sitemap.xml", "site.css", "en/index.html"]) assert.ok(publicFiles.has(name));
   assert.ok(files.every(file => !/^(qa-|design-|content\/|tests\/|scripts\/)|\.(ttf|prompt\.txt)$/.test(file)));
   const imagePaths = [...template.matchAll(/(?:src="|(?:srcset|imagesrcset)="|, )(\/assets\/[^\s",]+)/g)].map(match => match[1].slice(1));

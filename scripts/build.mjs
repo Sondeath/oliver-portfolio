@@ -45,6 +45,7 @@ const styleFiles = [
   "process.css",
   "contact.css",
   "locale.css",
+  "brand.css",
 ];
 const sourceFiles = [
   "index.html",
@@ -52,6 +53,8 @@ const sourceFiles = [
   "motion.js",
   "liquid-aura.js",
   "favicon.svg",
+  "assets/brand/main-logo-384.webp",
+  "assets/brand/main-logo-768.webp",
   "assets/fonts/anton-regular.woff2",
   "assets/fonts/ANTON-OFL.txt",
   "assets/fonts/inter-regular.woff2",

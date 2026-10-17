@@ -238,12 +238,24 @@ measure();
 // The page shares one material and pause preference, loaded near each section.
 const effects = [];
 let liquidPaused = false;
+const motionControl = document.querySelector(".footer-motion-toggle");
+const syncMotionControl = () => {
+  motionControl.hidden = !effects.some(effect => effect.ready) || motionDisabled();
+  motionControl.setAttribute("aria-pressed", String(!liquidPaused));
+  motionControl.setAttribute("aria-label", liquidPaused ? motionControl.dataset.resumeLabel : motionControl.dataset.pauseLabel);
+};
+motionControl.addEventListener("click", () => {
+  liquidPaused = !liquidPaused;
+  effects.forEach(effect => effect.setPlaying(!liquidPaused));
+  syncMotionControl();
+});
+reduced.addEventListener("change", syncMotionControl);
 for (const config of [
-  { scene: document.querySelector(".work-scene"), control: document.querySelector(".work-motion-toggle"), fallback: ".work-aura-fallback", kind: "work" },
-  { scene: document.querySelector(".services-flow"), control: document.querySelector(".services-motion-toggle"), fallback: ".services-aura-fallback", kind: "services" },
-  { scene: document.querySelector(".contact-flow"), control: document.querySelector(".contact-motion-toggle"), fallback: ".contact-aura-fallback", kind: "contact" },
+  { scene: document.querySelector(".work-scene"), fallback: ".work-aura-fallback", kind: "work" },
+  { scene: document.querySelector(".services-flow"), fallback: ".services-aura-fallback", kind: "services" },
+  { scene: document.querySelector(".contact-flow"), fallback: ".contact-aura-fallback", kind: "contact" },
 ]) {
-  const { scene: liquidScene, control } = config;
+  const { scene: liquidScene } = config;
   const loader = new IntersectionObserver((entries) => {
     if (!entries.some((entry) => entry.isIntersecting)) return;
     loader.disconnect();
@@ -255,22 +267,10 @@ for (const config of [
       else contactEffect = effect;
       effect.setPlaying(!liquidPaused);
       effect.setScrollProgress(config.kind === "work" ? arrival : config.kind === "services" ? servicesProgress : contactProgress);
-      const syncControl = () => {
-        control.hidden = !effect.ready || motionDisabled();
-        control.setAttribute("aria-pressed", String(Boolean(effect.playing)));
-        control.textContent = effect.playing ? control.dataset.pauseLabel : control.dataset.resumeLabel;
-      };
-      liquidScene.addEventListener("liquidstatechange", syncControl);
-      control.addEventListener("click", () => {
-        liquidPaused = effect.playing;
-        effects.forEach((item) => item.setPlaying(!liquidPaused));
-        liquidEffect?.setScrollProgress(arrival);
-        servicesEffect?.setScrollProgress(servicesProgress);
-        contactEffect?.setScrollProgress(contactProgress);
-      });
-      syncControl();
+      liquidScene.addEventListener("liquidstatechange", syncMotionControl);
+      syncMotionControl();
       window.addEventListener("pagehide", (event) => { if (!event.persisted) effect.destroy(); });
-    }).catch(() => { control.hidden = true; });
+    }).catch(syncMotionControl);
   }, { rootMargin: "400px" });
   loader.observe(liquidScene);
 }

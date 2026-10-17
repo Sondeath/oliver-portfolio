@@ -52,16 +52,6 @@
   margin-bottom: 42px;
 }
 .contact-top .eyebrow { color: #c3a1f9; font-size: 12px; letter-spacing: .16em; }
-.contact-motion-toggle {
-  font-size: 11px;
-  color: #bfb1d0;
-  line-height: 1.4;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid #76658b;
-  padding: 8px 0;
-}
-.contact-motion-toggle:hover { color: var(--white); border-color: var(--accent); }
 .contact-kicker { font-size: clamp(16px, 1.6vw, 24px); color: #bfb1d0; margin-bottom: 16px; }
 .contact-invitation { display: flex; justify-content: space-between; align-items: flex-end; gap: 30px; padding-bottom: 12px; }
 .contact-title {
@@ -70,6 +60,8 @@
   font-weight: 400;
   line-height: 1.02;
   letter-spacing: -.018em;
+  /* Anton's uppercase caron extends above its line box. Reserve its ink area. */
+  padding-top: .24em;
   transition: color .4s;
 }
 .contact-arrow {
@@ -94,6 +86,24 @@
 .contact-email > .icon { width: 25px; height: 25px; }
 .site-footer { position: relative; z-index: 1; background: var(--ink); }
 .site-footer::before { content: ""; position: absolute; inset: 0 var(--gutter) auto; height: 1px; background: var(--line); }
+.footer-motion-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.footer-motion-toggle[hidden] { display: none; }
+.footer-motion-toggle:hover { color: var(--white); border-color: var(--accent); }
+.footer-motion-toggle[aria-pressed="true"] .motion-play-icon,
+.footer-motion-toggle[aria-pressed="false"] .motion-pause-icon { display: none; }
 @media (min-width: 1490px) {
   .contact-section > :not(.contact-flow):not(.contact-mark) { max-width: 1356px; margin-inline: auto; }
   .contact-mark { right: calc((100vw - 1490px) / 2 - 70px); }
@@ -110,7 +120,6 @@
   .contact-mark { top: 12%; right: -23%; width: 94%; opacity: .3; }
   .contact-section .contact-top { gap: 14px; margin-bottom: 35px; }
   .contact-top .eyebrow { font-size: 9px; letter-spacing: .1em; max-width: 180px; }
-  .contact-motion-toggle { font-size: 10px; flex-shrink: 0; }
   .contact-kicker { font-size: 15px; margin-bottom: 15px; }
   .contact-invitation { gap: 12px; padding-bottom: 0; }
   .contact-title { font-size: clamp(90px, 27vw, 185px); line-height: 1.04; }
@@ -133,4 +142,4 @@
   .contact-invitation:hover .contact-arrow { translate: none; }
 }
 html[data-motion="off"] .contact-invitation:hover .contact-arrow { translate: none; }
-@media print { .contact-flow, .contact-motion-toggle, .contact-mark { display: none; } }
+@media print { .contact-flow, .footer-motion-toggle, .contact-mark { display: none; } }

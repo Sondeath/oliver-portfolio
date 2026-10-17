@@ -1,0 +1,8 @@
+{
+  "status": "combined visual shown; awaiting feedback before implementation",
+  "image": "navrh-hybrid-odtlacok-prenos.png",
+  "userSelection": "Strong preference for yellow Odtlačok design, with the garment-emerging-from-monitor effect from Prenos.",
+  "preserve": ["Acid yellow and black identity", "Large condensed ZANECHAJTE ODTLAČOK headline", "Tactile distressed O imprint", "Single continuous monitor-to-textile scene", "Off-white real-work chapter"],
+  "motionIntent": "On opening, establish typography and screen; on native scroll, progressively reveal the fabric emerging toward the viewer. Carry the O signature into selected work. Keep usable CTAs visible and provide a static reduced-motion composition.",
+  "implementationNotes": ["Separate screen, fabric, foreground and imprint layers for actual motion; do not animate a flattened entire-page screenshot", "Use the real BeCool Shop capture for actual work", "Generated small text is draft and needs copy cleanup", "Keep merchandise explicitly conceptual", "Existing email integration remains deferred; no payment or signup required for visual work"]
+}

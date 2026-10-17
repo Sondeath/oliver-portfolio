@@ -1,0 +1,12 @@
+Use case: product-mockup
+Asset type: transparent isolated raster monitor layer for animated premium black and purple portfolio hero; display approx 600x650 CSS pixels.
+Input image 1 is a style and perspective reference ONLY. Create a separate monitor asset, not a webpage screenshot.
+Primary request: ONLY one complete thin modern matte-black desktop computer monitor and its small black stand, fully isolated on genuine transparent alpha background. Do not include any shirt, garment, fabric, physical letter, or website layout surrounding it.
+Composition/framing: vertical canvas approximately 1024x1200. Match reference monitor perspective: monitor almost facing viewer, slightly turned, its left edge visible. Screen upper left around 16% x,15% y; upper right around88% x,6% y; lower right85% x,70% y; lower left14% x,77% y. Black understated stand occupies lower area. Entire object inside frame with at least5% clear margins. NO cropped edges.
+Screen: deep black, large distressed lilac capital O emblem centered, muted texture and fine speckle. O is clearly readable and not stretched. It is flat content on the monitor screen, NO shirt or external material. Minimal browser chrome with three tiny colored dots allowed. No brand name, no tiny fake headings, no nav labels, no UI text.
+Style: photorealistic high-end product rendering, crisp material texture, modest reflections, premium studio visual.
+Lighting/mood: subtle purple rim-light around black monitor, controlled lilac edge highlights, no glowing haze outside cutout, no floor, no background shadow plane.
+Palette: almost black #0B090F monitor, dark purple #291440 subtle edges, lilac #A879FF printed screen O.
+Constraints: genuine transparent alpha surrounding only this monitor; no baked black background, checkerboard or grid. No external shirt, garment or cloth, no human or hand, no other props. Preserve coherent slim frame, clear screen and complete stand.
+
+CRITICAL PERSPECTIVE CORRECTION: The monitor top edge MUST RISE toward the right. Upper LEFT corner y=15%, upper RIGHT corner y=6%. The RIGHT edge is FARTHER UP THE CANVAS than the left edge. View monitor from slightly its RIGHT side, right frame visible. Lower right corner y=70%, lower left y=77%. This must match input reference 1 (portfolio design), not the reversed previous object. Keep all other constraints including no garment and real alpha. The monitor must be smaller inside the canvas than a tight crop, with generous clear transparent margin all around.

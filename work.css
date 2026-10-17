@@ -1,0 +1,186 @@
+/* Approved liquid exhibition. The artwork moves behind stable HTML projects. */
+.work-section {
+  background: var(--ink);
+  padding: 0 0 64px;
+}
+.work-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  width: 100%;
+  max-width: 1490px;
+  aspect-ratio: 1490 / 1056;
+  margin-inline: auto;
+}
+.work-mark {
+  position: absolute;
+  left: 27%;
+  top: 2%;
+  width: 44%;
+  height: 58%;
+  object-fit: contain;
+  opacity: .38;
+  z-index: -2;
+  pointer-events: none;
+}
+.work-aura {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+  z-index: -1;
+  pointer-events: none;
+}
+.work-aura-fallback { opacity: .65; }
+.work-top {
+  position: absolute;
+  inset: 5% 4.5% auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  color: #c3a1f9;
+  font-size: clamp(10px, 1vw, 15px);
+  letter-spacing: .2em;
+  line-height: 1.4;
+  z-index: 4;
+}
+.work-copy { position: absolute; top: 10%; left: 4.5%; z-index: 3; }
+.work-title {
+  font-family: Anton, Impact, sans-serif;
+  font-size: clamp(80px, 9.5vw, 142px);
+  font-weight: 400;
+  line-height: 1.03;
+  letter-spacing: -.018em;
+}
+.work-copy > p {
+  color: #bfb1d0;
+  line-height: 1.45;
+  font-size: clamp(14px, 1.4vw, 21px);
+  margin-top: 18px;
+}
+.work-project { position: absolute; }
+.work-display {
+  display: block;
+  border: 1px solid #8760b1;
+  padding: 13px;
+  background: #060508;
+  border-radius: 10px;
+  box-shadow: 0 0 12px #a879ff26;
+  overflow: hidden;
+  transition: box-shadow .5s;
+}
+.work-display:hover, .work-display:focus-visible { box-shadow: 0 0 30px #a879ff55; }
+.work-display > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.work-project--shop { width: 45%; left: 51%; top: 11%; }
+.work-project--shop .work-display {
+  aspect-ratio: 1;
+  transform: perspective(1500px) rotateY(-9deg) rotateZ(4deg);
+}
+.work-project--shop .work-caption {
+  position: absolute;
+  right: 99%;
+  top: 40%;
+  width: 155px;
+}
+.work-caption { line-height: 1.35; }
+.work-caption h3 { font-size: clamp(18px, 1.5vw, 23px); font-weight: 500; margin-bottom: 6px; }
+.work-caption p { font-size: clamp(13px, 1.1vw, 17px); color: #bfb1d0; }
+.work-caption .work-story-inline { display: none; }
+.work-caption a { display: inline-flex; margin-top: 12px; padding: 4px; margin-left: -4px; }
+.work-caption .icon {
+  width: 32px;
+  height: 32px;
+  filter: brightness(0) saturate(100%) invert(78%) sepia(20%) saturate(586%) hue-rotate(217deg);
+}
+.work-project--web { left: 4.5%; top: 49%; width: 44%; }
+.work-project--web .work-display {
+  aspect-ratio: 1.6;
+  transform: perspective(1500px) rotateY(7deg) rotateZ(-3deg);
+}
+.work-project--web .work-caption {
+  position: absolute;
+  left: 109%;
+  bottom: 3%;
+  width: 240px;
+}
+/* The same copy has a spacious desktop position and follows its screen on mobile.
+   display:none keeps the alternate presentation out of the accessibility tree. */
+.work-stories {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 6.5%;
+  max-width: 1490px;
+  margin: -20px auto 0;
+  padding: 0 min(4.5%, 67.05px) 42px;
+}
+.work-story-summary--shop { grid-column: 2; grid-row: 1; }
+.work-story-summary--web { grid-column: 1; grid-row: 1; }
+.work-story-summary > p { color: #bfb1d0; font-size: 15px; line-height: 1.75; }
+.work-story-summary > .work-story-label { color: #c3a1f9; font-size: 12px; margin-bottom: 14px; letter-spacing: .04em; }
+.work-section .archive-details {
+  margin: 0 max(4.5%, calc((100% - 1356px) / 2));
+  border-color: #574663;
+}
+.work-section .archive-details > summary { font-size: 20px; padding-block: 24px; }
+@media (min-width: 1490px) { .work-title { font-size: 142px; } }
+@media (min-width: 901px) and (max-width: 1000px) {
+  .work-project--shop .work-caption { width: 150px; }
+  .work-project--web .work-caption { width: 160px; }
+  .work-display { padding: 8px; }
+  .work-copy > p { font-size: 14px; }
+  .work-title { font-size: 9.5vw; }
+  .work-caption h3 { font-size: 17px; }
+  .work-caption p { font-size: 12px; }
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .work-project--shop .work-caption { width: 170px; padding-right: 38px; }
+  .work-project--shop .work-caption h3 { font-size: 17px; }
+  .work-project--shop .work-caption p { font-size: 12px; }
+  .work-project--shop .work-caption a { position: absolute; right: 0; top: 0; margin: 0; }
+  .work-project--shop .work-caption .icon { width: 24px; height: 24px; }
+}
+@media (max-width: 900px) {
+  .work-section { padding-bottom: 42px; }
+  .work-scene {
+    aspect-ratio: auto;
+    padding: 32px 6% 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  .work-top { position: relative; inset: auto; font-size: 10px; min-height: 32px; letter-spacing: .14em; }
+  .work-copy { position: relative; inset: auto; }
+  .work-title { font-size: clamp(62px, 18vw, 120px); }
+  .work-copy > p { font-size: 15px; }
+  .work-mark { left: 20%; top: 3%; width: 90%; height: 36%; }
+  .work-aura { opacity: .75; }
+  .work-project--shop, .work-project--web { position: relative; inset: auto; width: 100%; margin: 0; }
+  .work-display { padding: 8px; }
+  .work-project--shop .work-display { aspect-ratio: 1.08; transform: perspective(900px) rotateY(-5deg) rotateZ(2deg); }
+  .work-project--web .work-display { aspect-ratio: 1.6; transform: perspective(900px) rotateY(5deg) rotateZ(-2deg); }
+  .work-project--shop .work-caption, .work-project--web .work-caption {
+    position: relative;
+    inset: auto;
+    width: auto;
+    margin-top: 24px;
+    padding-right: 0;
+  }
+  .work-caption h3 { font-size: 23px; }
+  .work-caption p { font-size: 14px; }
+  .work-caption h3, .work-caption > p:not(.work-story-inline) { padding-right: 50px; }
+  .work-caption .work-story-inline { display: block; margin-top: 18px; font-size: 14px; line-height: 1.75; max-width: 620px; }
+  .work-stories { display: none; }
+  .work-caption a { position: absolute; right: 0; top: 0; margin: 0; }
+  .work-section .archive-details { margin-inline: 6%; }
+  .work-section .archive-details > summary { font-size: 16px; padding-block: 22px; }
+}

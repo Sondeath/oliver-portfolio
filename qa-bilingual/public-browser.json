@@ -1,0 +1,73 @@
+{
+  "observed": {
+    "archive": true,
+    "canonical": "https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/en/",
+    "forms": 0,
+    "lang": "en",
+    "overflow": 0,
+    "projects": [
+      {
+        "height": 1085,
+        "loaded": true,
+        "src": "/assets/projects/live/becool-shop.webp",
+        "width": 1085
+      },
+      {
+        "height": 800,
+        "loaded": true,
+        "src": "/assets/projects/live/becool-marathon.webp",
+        "width": 1280
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/nedelka.webp",
+        "width": 960
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/catering.webp",
+        "width": 960
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/zakopane.webp",
+        "width": 960
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/vibe.webp",
+        "width": 960
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/marathon.webp",
+        "width": 960
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/horses.webp",
+        "width": 960
+      },
+      {
+        "height": 600,
+        "loaded": true,
+        "src": "/assets/projects/live/jump.webp",
+        "width": 960
+      }
+    ],
+    "rows": 7,
+    "url": "https://codex-digital-merch-oliver-portfolio.oliver-6b1.workers.dev/en/#work"
+  },
+  "console": [],
+  "automatedHttpProbe": {
+    "status": 403,
+    "cloudflareCode": 1010,
+    "byteHashVerification": "Not performed. Verified through the normal browser instead."
+  }
+}

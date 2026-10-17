@@ -1,0 +1,187 @@
+{
+  "status": "Používateľ zvolil návrh 2; lokálna implementácia je pripravená. Rozsah výroby a dodania ešte treba potvrdiť.",
+  "locale": "sk",
+  "identity": {
+    "name": "Oliver Libič",
+    "email": "libic.oliver@gmail.com",
+    "location": "Bratislava, Slovensko"
+  },
+  "navigation": {
+    "services": "Služby",
+    "work": "Realizácie",
+    "process": "Ako spolupracujeme",
+    "about": "O mne",
+    "contact": "Nezáväzný dopyt",
+    "skip": "Preskočiť na obsah",
+    "openMenu": "Otvoriť menu",
+    "closeMenu": "Zavrieť menu"
+  },
+  "hero": {
+    "eyebrow": "Osobný partner pre vašu firmu",
+    "title": "Weby a reklamné predmety pre vašu firmu.",
+    "description": "Navrhnem a vytvorím firemný web alebo e-shop. Pomôžem vám aj s tričkami a ďalšími reklamnými predmetmi s vašou značkou.",
+    "primaryAction": "Nezáväzný dopyt",
+    "secondaryAction": "Pozrieť realizácie"
+  },
+  "services": [
+    {
+      "id": "website",
+      "title": "Weby a e-shopy",
+      "description": "Predstavte svoju firmu, služby alebo produkty na prehľadnom webe. Spoločne pripravíme riešenie podľa toho, čo majú návštevníci na stránke urobiť.",
+      "examples": [
+        "Firemný web",
+        "Prezentačná stránka",
+        "E-shop"
+      ],
+      "action": "Mám záujem o web"
+    },
+    {
+      "id": "textile",
+      "title": "Reklamný textil",
+      "description": "Tričká s vašou značkou pre tím, podujatie alebo zákazníkov. Napíšte mi svoju predstavu a požadované množstvo; možnosti a rozsah spolu doladíme.",
+      "examples": [
+        "Tričká pre tím",
+        "Textil na podujatie",
+        "Vlastný merch"
+      ],
+      "action": "Mám záujem o textil",
+      "requiresConfirmationBeforePublication": "Potvrdiť rozsah návrhu, zabezpečenia potlače a dodania. Ďalšie druhy textilu doplniť podľa dostupnej ponuky."
+    },
+    {
+      "id": "promotional",
+      "title": "Reklamné predmety",
+      "description": "Predmety s vaším logom ako darček, súčasť podujatia alebo každodennej prezentácie firmy. Pomôžem vám premyslieť výber podľa príležitosti a rozpočtu.",
+      "examples": [],
+      "action": "Mám záujem o reklamné predmety",
+      "requiresConfirmationBeforePublication": "Konkrétne kategórie, materiály, výrobné možnosti a dodanie doplniť podľa potvrdenej ponuky."
+    },
+    {
+      "id": "automation",
+      "title": "Automatizácie a prepojenia",
+      "description": "Opakujete každý deň rovnaké kroky? Pozrieme sa, ktoré nástroje sa dajú prepojiť a kde vám automatizácia môže ušetriť manuálnu prácu.",
+      "examples": [
+        "Make",
+        "n8n",
+        "Prepojenie nástrojov"
+      ],
+      "action": "Chcem prebrať automatizáciu",
+      "placement": "Doplnková služba; zachovať zo súčasného webu."
+    }
+  ],
+  "work": {
+    "title": "Vybrané realizácie",
+    "intro": "Pozrite si konkrétne projekty a úlohu, ktorú som pri nich riešil.",
+    "projects": [
+      {
+        "name": "BeCool.sk",
+        "type": "Webový dizajn a realizácia",
+        "description": "Dve oblasti jednej agentúry na jednom mieste. Úvodná stránka pomáha návštevníkom vybrať si medzi športovými podujatiami a cateringom.",
+        "url": "https://www.becool.sk/"
+      },
+      {
+        "name": "BeCool Shop",
+        "type": "E-shop",
+        "description": "E-shop na Shoptete so športovým vybavením a merchom podujatí. Prehľadné kategórie pomáhajú návštevníkom nájsť požadovaný produkt.",
+        "url": "https://shop.becool.sk/"
+      }
+    ],
+    "action": "Pozrieť projekt",
+    "externalLinkNotice": "Otvorí sa v novom okne",
+    "archiveAction": "Ďalšie realizácie",
+    "conceptImageCaption": "Ukážkový koncept — ilustračná vizualizácia, nie dokončená zákazka"
+  },
+  "process": {
+    "title": "Ako spolupracujeme",
+    "steps": [
+      {
+        "title": "Poviete mi, čo potrebujete",
+        "description": "Stačí stručná predstava. Ak ešte nemáte presné zadanie, pomôžem vám ho ujasniť."
+      },
+      {
+        "title": "Dohodneme rozsah a cenu",
+        "description": "Podľa zadania pripravím ponuku. Pred začiatkom si potvrdíme, čo je súčasťou práce a aký je termín."
+      },
+      {
+        "title": "Doladíme návrh",
+        "description": "Prejdeme si podklady a návrh riešenia. Detaily si odsúhlasíme pred realizáciou."
+      },
+      {
+        "title": "Zrealizujeme dohodnuté zadanie",
+        "description": "Práca pokračuje podľa potvrdeného rozsahu. Spôsob odovzdania alebo dodania dohodneme podľa služby."
+      }
+    ]
+  },
+  "about": {
+    "title": "Som Oliver. Váš priamy kontakt.",
+    "paragraphs": [
+      "Pôsobím v Bratislave a prepájam dizajn s tvorbou webov. Záleží mi na tom, aby výsledok dobre vyzeral a dával zmysel ľuďom, ktorí ho používajú.",
+      "Zadanie aj priebeh práce riešite priamo so mnou. Pýtam sa, navrhujem možnosti a dbám na to, aby sme mali jasno v tom, čo spolu pripravujeme."
+    ],
+    "action": "Preberme váš projekt"
+  },
+  "faq": [
+    {
+      "question": "Musím mať presné zadanie?",
+      "answer": "Nie. Napíšte mi, čo potrebujete dosiahnuť, a spolu ujasníme vhodný rozsah."
+    },
+    {
+      "question": "Môžem dopytovať viac služieb naraz?",
+      "answer": "Áno. Vo formulári môžete vybrať viac možností a opísať spoločné zadanie."
+    },
+    {
+      "question": "Čo ovplyvňuje cenu?",
+      "answer": "Pri webe najmä rozsah obsahu a funkcií. Pri textile a predmetoch výber produktu, množstvo a spôsob označenia. Konkrétnu cenu dohodneme podľa zadania."
+    },
+    {
+      "question": "Čo ak ešte nemám logo alebo podklady?",
+      "answer": "Spomeňte to v dopyte. Dohodneme, čo bude potrebné pripraviť a či s tým viem pomôcť."
+    },
+    {
+      "question": "Je odoslanie formulára záväzná objednávka?",
+      "answer": "Nie. Formulár slúži na prvý kontakt a prípravu cenovej ponuky. Zákazku potvrdíme až po dohode o rozsahu, cene a termíne."
+    }
+  ],
+  "inquiry": {
+    "title": "Čo môžem pripraviť pre vašu firmu?",
+    "description": "Vyberte službu a stručne opíšte svoju predstavu. Ak si nie ste istí, vyberte možnosť Potrebujem poradiť.",
+    "fields": {
+      "services": "O čo máte záujem?",
+      "name": "Meno",
+      "email": "E-mail",
+      "company": "Firma — voliteľné",
+      "phone": "Telefón — voliteľné",
+      "description": "Čo potrebujete pripraviť?",
+      "quantity": "Približný počet kusov — ak ho poznáte",
+      "deadline": "Požadovaný termín — voliteľné",
+      "budget": "Predstava o rozpočte — voliteľné",
+      "advice": "Potrebujem poradiť"
+    },
+    "descriptionHint": "Pri webe opíšte jeho účel. Pri reklamných predmetoch uveďte typ produktu, príležitosť a predstavu o označení.",
+    "logoHint": "Logo ani hotové podklady teraz nepotrebujete prikladať. Ich zaslanie dohodneme následne.",
+    "submit": "Poslať nezáväzný dopyt",
+    "submitting": "Odosielam…",
+    "success": "Ďakujem, váš dopyt som prijal. Ďalší postup dohodneme e-mailom.",
+    "uncertain": "Prijatie dopytu sa nepodarilo potvrdiť. Zadanie zostáva vyplnené; môžete skúsiť odoslanie znova alebo mi napísať e-mail.",
+    "error": "Dopyt sa nepodarilo odoslať. Skúste to znova alebo napíšte na libic.oliver@gmail.com.",
+    "rateLimited": "Formulár bol odoslaný príliš často. Skúste to o chvíľu alebo použite e-mail.",
+    "validation": {
+      "services": "Vyberte aspoň jednu službu alebo možnosť Potrebujem poradiť.",
+      "name": "Vyplňte svoje meno.",
+      "email": "Zadajte platnú e-mailovú adresu.",
+      "description": "Stručne opíšte svoje zadanie.",
+      "quantity": "Zadajte kladný počet kusov alebo pole nechajte prázdne."
+    },
+    "copyEmail": "Skopírovať e-mail",
+    "emailCopied": "E-mailová adresa je skopírovaná.",
+    "fallback": "Radšej napíšete priamo?",
+    "privacyLinkLabel": "Informácie o spracovaní osobných údajov",
+    "privacyPublicationNote": "Odkaz musí viesť na skutočné informácie o prevádzkovateľovi a použitom doručovaní. Nevytvárať nefunkčný odkaz ani všeobecný sľub bez zvolenej prevádzky."
+  },
+  "publicationConstraints": [
+    "Nevkladať vymyslené ceny, referencie, klientov, minimálne množstvá ani termíny odpovede.",
+    "Neprisľubovať vlastnú výrobu, sklad ani konkrétne dodanie bez potvrdenia.",
+    "Rozsah reklamných produktov je potrebné potvrdiť pred publikovaním.",
+    "Úspešné prijatie dopytu zobraziť iba po potvrdenom prijatí serverom.",
+    "Portfólio a automatizácie zo súčasného webu zachovať."
+  ]
+}

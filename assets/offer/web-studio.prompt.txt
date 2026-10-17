@@ -1,0 +1,10 @@
+Use case: product-mockup
+Asset type: raster product photography for the left website offer panel of a portfolio site, displayed about 520 by 400 CSS pixels.
+Primary request: Generate exactly one polished realistic dark laptop product photograph, closely matching the laptop composition in reference image 1, with the actual existing BeCool shop screenshot in reference image 2 faithfully presented on the laptop screen.
+Input images: Image 1 (navrh-2.png) is composition, camera angle, laptop styling and dark studio mood reference only. Extract no page text, buttons, layout borders or other products. Image 2 (becool-shop-square.jpg) is the exact screen content source. Preserve its real BeCool branding, runners hero photo, shop.becool title, navigation and four sport category tiles; show its top website portion on the screen as a natural desktop browser viewport. Do not invent a different store.
+Scene/backdrop: seamless near-uniform dark charcoal #101111 studio floor and background, restrained subtle soft contact shadow.
+Subject: one unbranded premium dark aluminum laptop, open, slight three-quarter frontal angle, camera just above keyboard level, full screen and full base visible.
+Style/medium: photorealistic product photography, precise realistic laptop proportions and screen perspective.
+Composition/framing: 1200 by 900 landscape 4:3 image, laptop centered and occupying about 88 percent width, full object uncropped with at least five percent safety margins on every edge. Screen dominates but keyboard base remains clearly visible.
+Lighting/mood: soft natural studio light with gentle edge highlights and a subtle contact shadow, neutral tones, no dramatic glow.
+Constraints: Only laptop and its contact shadow against charcoal background. No UI text, headlines, buttons, captions or text outside the laptop. No merchandise, people outside the screen, extra devices, logos on the laptop chassis, watermark, borders or decorative props. Render the BeCool screenshot on the screen faithfully with its existing content and no fabricated clients.

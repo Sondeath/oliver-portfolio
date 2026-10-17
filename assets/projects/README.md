@@ -1,5 +1,7 @@
 # Project preview sources
 
+- `becool-marathon.jpg`: https://www.becool.sk/podujatia/csob-maraton — actual browser capture, 1265 × 712 pixels, 2026-10-14. Selected by Oliver for the left display in the liquid work exhibition. JPEG export quality 93; no compositing or changes to the client page.
+
 - `becool-square.jpg`: fresh 1000 × 960 browser capture of https://www.becool.sk/ for the featured card, 2026-09-07.
 
 Screenshots captured from the existing portfolio's linked public websites on 2026-09-07 in the Codex in-app browser. JPEG files are compressed copies of the original PNG captures.

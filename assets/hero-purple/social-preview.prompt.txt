@@ -1,0 +1,9 @@
+Use case: ads-marketing
+Asset type: polished website Open Graph social share card, LANDSCAPE exactly1200×630 px, opaque background. Not a website screenshot or UI proposal.
+Input image1: final monitor product reference. Input image2: final black cotton shirt reference. Input image3: approved portfolio design reference for typography, mood and concept. Preserve the actual black monitor and lilac distressed O and black shirt with matching lilac O identity.
+Composition: bold premium editorial split. Left54% text on almost-black #0B090F; right46% photoreal monitor behind a dimensional black t-shirt emerging forward out of the screen, physically convincing folded black fabric joining screen to shirt. Monitor angled slightly with upper edge rising toward right, lilac #A879FF O in display. Shirt projects toward lower foreground, no person. Full important content inside48px safe margins. Objects may overlap slightly into central gap but must not obscure headline.
+Typography: VERY large ultra-condensed tall heavy sans-serif uppercase headline warm-white #F2EEF5, two clean stacked lines. EXACT headline verbatim: "ZANECHAJTE" then "ODTLAČOK." Accents correct: Č in ODTLAČOK. Letterforms tall and narrow like selected reference. Main headline must be immediately legible in small link preview.
+Top left smaller clean sans-serif EXACT name: "Oliver Libič".
+Bottom left medium-size clear text EXACT: "Weby. E-shopy. Textil. Predmety.".
+No other text or labels, no buttons, no URLs, no fake web navigation, no border.
+Mood and lighting: almost black canvas, rich dark purple #291440 atmospheric glow only behind object, lilac #A879FF rim light, tactile black fabric details visible. Distressed print O echoes actual assets. High-end creative studio campaign design, restrained, strong negative space and contrast. Avoid gray flat background, neon rainbow, stock template look or extra decorations.

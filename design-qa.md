@@ -1,105 +1,58 @@
-# Dark studio redesign — design QA, 2026-09-07
+# Design QA — Slovak / English and real project captures
 
 final result: passed
 
-## Target and evidence
+2026-10-15. Scope: natural Slovak and English copy, native language switching, real website previews. The approved black/violet layout, Anton/Inter typography, monitor/shirt scroll sequence and shared liquid effects remain the visual reference. Previous QA is preserved in qa-bilingual/design-qa-before-bilingual.md.
 
-Selected target: option 1, continuous dark studio.
-Source visual: `design-directions/selected-dark-studio.png` (921 × 1708 pixels).
-Local implementation: http://127.0.0.1:8765/
-Final comparison capture: `qa-dark-studio/12-final-comparison.png` (921 × 2087 pixels).
-State: top of page, dark theme, archive and biography collapsed.
+## Copy and visual review
 
-Comparison used both source and implementation images together in the same tool input.
-The final browser viewport was 936 × 1708 CSS pixels; the screenshot backend produced
-a 921-pixel-wide content image. Comparison is aligned by the actual 921-pixel raster width.
-The longer document is deliberate: the live page retains an expandable project archive,
-biography, real email and copy control absent from the image mock. No claim of pixel equality.
-The screenshot backend controls output density; no assumed deviceScaleFactor override.
+Both versions describe Oliver's offer in the first person, without invented results, client quotes or production guarantees. English is written for an English reader rather than translated word for word. Services explain websites/online shops and clothing/branded products; automation remains an optional disclosure. Every contact action still leads to email. No form or subscription was added.
 
-Additional desktop evidence:
-- `qa-dark-studio/08-desktop-1440.png` — 1440 × 900 CSS viewport; output 1425 × 891.
-- `qa-dark-studio/10-desktop-services.png` — focused services/contact inspection.
-- `qa-dark-studio/09-archive-open.png` — archive expanded.
-Mobile evidence:
-- `qa-dark-studio/03-mobile-hero.png` — 390 × 844 CSS; output 375 × 812.
-- `qa-dark-studio/04-mobile-menu.png` — modal navigation.
-- `qa-dark-studio/05-mobile-about.png` — biography opened by navigation.
-- `qa-dark-studio/06-mobile-contact.png` — contact and copy feedback.
-- `qa-dark-studio/07-mobile-320.png` — narrow 320 × 740 CSS viewport.
-The source has no mobile composition: mobile is a responsive adaptation.
-Hero, project names and body copy are readable in the full comparison; a separate source
-crop was unnecessary. The services capture additionally checks details at normal desktop size.
+Inspected comparison-copy.jpg: before and revised SK root at the same 1280 × 720 CSS viewport and 1265 × 712 raster size. Captures are placed side by side without stretching. The revised description is more concrete; the header adds a compact SK/EN switch. Type scale, artwork and composition match the approved design.
 
-## Findings and iteration history
+Reviewed SK and EN at desktop, tablet and mobile widths (1440, 1280, 768, 390 and 320px). Evidence is in the numbered qa-bilingual/*.jpg captures. English headline, service descriptions, email actions and contact finale fit their layouts. Archive thumbnails sit beside project names and descriptions on desktop and stack the labels on mobile. Supporting text retains the existing muted violet palette. Fine-pointer hover colours appear in a few responsive captures; these are interaction states, not OS touch simulation.
 
-1. Initial comparison: `01-initial-desktop.png`.
-   - P2: Wide website screenshots cropped project headings and branding in square cards.
-     Fixed by capturing actual sites at a suitable near-square viewport.
-   - P2: Portrait was too large inside its crop and cut off the torso.
-     Fixed image scale, top offset and placement.
-   - P2: Fixed description heights and accumulated gaps weakened section rhythm.
-     Removed fixed text heights, aligned service links with flex layout, tightened transitions.
-2. Second comparison: `02-desktop-refined.png`.
-   - P1: BeCool capture had a browser capture/reflow failure and appeared white.
-     Recaptured using the verified screenshot surface, inspected it, recompressed and reloaded.
-3. Final visual comparisons: `11-final-desktop.png`, then `12-final-comparison.png`.
-   - Project images loaded correctly with legible branding and no clipped main titles.
-   - Original portrait is integrated into the continuous background.
-   - No remaining actionable P0/P1/P2 layout or image findings.
-4. Interaction check found two simultaneous current navigation labels at a section boundary.
-   Replaced independent observer flags with one current-section calculation.
-   Retested at 1440 × 900: Services is the only current item after Services navigation.
-   The final comparison was captured after this change.
+## Real work
 
-## Required fidelity surfaces
+Nine assets were captured through the browser from actual websites: two featured projects and seven archive entries. qa-bilingual/project-sources.json records source URLs, viewport, capture date, raster sizes and output sizes. The contact sheet was inspected; originals are retained in qa-bilingual/sources/. Images were resized/compressed as WebP, without generated website content. Public assets total 703 KiB (720 KB) and archive thumbnails load lazily.
 
-- Typography: self-hosted Inter regular/medium closely follows the selected sans-serif design.
-  Two-line headline, understated section labels and clear project hierarchy preserved.
-  Body copy is intentionally slightly larger than the image mock at smaller desktop widths.
-  Native system monospace is used only for small labels.
-- Layout: one continuous canvas, left copy/right portrait, two equal project cards,
-  three aligned service columns and restrained contact section. Consistent container/gutters.
-  Added archive/biography are compact disclosures rather than new full-size sections.
-- Colors: near-black #101111, off-white text, cobalt #2554ff and lighter blue for small links.
-  Hairlines and subtle project radii retained. No alternating cream/dark panels.
-- Images: original portrait and actual browser captures, not generated identity or website art.
-  BeCool includes its real white product area and Nedelka includes event details; these are
-  intentional differences from the generator's rearranged website previews.
-  Existing Lucide icons plus matching official monitor/cart/zap SVG assets are used.
-- Content: name and real email preserved. Corrected the mock's invented WordPress/WooCommerce
-  attribution to the existing Shoptet project information. Footer uses 2026.
-  All 13 portfolio destinations remain available: 2 featured + 11 in the archive.
+- BeCool Shop: homepage, with native optional cookies disabled and the informational toast dismissed.
+- BeCool.sk: actual ČSOB Bratislava Marathon event page, retaining the approved finish-line image.
+- Nedelka: past-events archive because the homepage currently has no upcoming events.
+- BeCool Catering, Zakopane Night Run, VibeClub, Bratislava Marathon / BeCool Sport, PH Sport Horses and Jump Studio: real pages, with captions reflecting their observed content.
+- Ghostlayer redirects to the old personal portfolio and is omitted at the user's explicit request. Marek Radič's domain failed DNS resolution and is temporarily omitted rather than given a fabricated screenshot.
 
-## Functional and responsive validation
+## Behaviour and fixes
 
-- 320, 390, 921 and 1440 CSS widths checked; no horizontal overflow at tested sizes.
-- Desktop CTA and Work/Services anchors navigate to real sections.
-- Mobile navigation opens as a native modal; close receives focus.
-- Escape closes menu, restores toggle focus, resets aria-expanded and unlocks scrolling.
-- Mobile About closes the menu, expands biography and focuses the destination.
-- Archive expands and collapses; 11 real links are present.
-- Copy button resolves the Clipboard API write and displays its success state.
-  The browser automation clipboard read returned empty; OS clipboard contents were not
-  independently verified. The mailto link remains directly available.
-- Mailto destinations and subjects verified in DOM; no email was sent.
-- All local images loaded; Inter font loaded.
-- Browser console: no warnings/errors returned for the portfolio tab.
-- HTML integrity: unique IDs, all internal anchor targets and referenced local assets exist.
-- `node --check app.js` and `git diff --check` passed.
-- Reduced-motion CSS inspected: smooth scrolling and transitions disabled in that preference.
-  OS preference switching, cross-browser and screen-reader testing were not performed.
+- Static / and /en/ pages have localized copy, alt text, accessible labels, email subjects and motion controls. Root-relative assets load on both paths. Native language links work without a translation runtime.
+- Language switching keeps the current section, query parameters and the open archive/automation disclosure when it occupies the reading area. Verified contact, services, archive, automation and ?motion=off switches. Fixed an initial case where a small part of an open archive above the header could pull the reader back to projects.
+- Mobile dialog opens/closes and supports language changes. At 768px the full English header fits without collisions; mobile navigation starts at 760px. No document horizontal overflow was found at tested sizes.
+- Pause/resume labels are localized. After lazy initialization, all three liquid controls agree on paused state. Existing motion renderer and scroll choreography are retained. ?motion=off hides motion controls in both languages and keeps content and email links available.
+- Fixed template rendering of valid multiline closing tags so adjacent hero lines, service links and footer links remain intact. Regression coverage checks these structures.
+- Browser console has no errors/warnings in the final local review. No broken loaded images and no forms. Physical touch, GPU loss and OS preference switching were not forced; existing reduced-motion/fallback handling is unchanged.
 
-## Follow-up polish
+## Build and publication
 
-- P3: Font rendering and the precise portrait silhouette differ slightly from the generated mock.
-- P3: Real project captures naturally contain more detail than its illustrative previews.
+All 18 tests pass, including copy-key parity, static localization, language-specific metadata, native URLs, missing-copy failures and project asset provenance/count. Build emits 43 explicitly allowed public files. QA files, copy sources and render scripts are excluded from publication. Whitespace/syntax checks pass. Public branch deployment verification is recorded in qa-bilingual/PUBLIC.md; the main domain remains outside this preview update.
 
-## Implementation checklist
+No actionable P0/P1/P2 findings remain in the reviewed scope.
 
-- [x] Implement selected dark design in the existing static portfolio.
-- [x] Preserve actual project/contact data and all portfolio destinations.
-- [x] Correct screenshot cropping, portrait proportions and layout rhythm.
-- [x] Test desktop/mobile navigation and disclosure interactions.
-- [x] Compare final browser rendering with selected visual.
-- [x] Keep the local server available for review.
+## Project stories update
+
+2026-10-15. The user-approved SK/EN stories for BeCool Shop and BeCool.sk are now part of the project presentation. Full delivery from design to launch and the Shoptet platform are confirmed by the user. Desktop text follows the two displays; mobile text follows each corresponding project. Responsive screenshots, checks and successful public deployment are recorded in qa-project-stories/QA.md and qa-project-stories/PUBLIC.md. All 18 tests pass; build remains 43 public files.
+
+## Collaboration process update
+
+2026-10-15. A four-step SK/EN section now connects services with contact: email, scope/price agreement, design and realization, and launch or product handover. Desktop uses a sticky introduction and a reversible scroll thread; mobile stacks readable full-width descriptions. The existing raster material continues through the section. Responsive, static-mode and localization checks are recorded in qa-process-flow/QA.md, with deployment evidence in PUBLIC.md. All 18 tests pass; build publishes 44 files.
+
+## Launch readiness audit
+
+2026-10-15. Current audit and fresh screenshots are in [qa-launch-readiness/QA.md](qa-launch-readiness/QA.md). Responsive images, smaller local WOFF2 fonts and a combined stylesheet preserve the approved design. Mobile performance increased from 91 to 97; final SK/EN mobile runs both scored 97, while desktop scored 100/96. Production has a bilingual sitemap, robots.txt, canonical/alternate metadata and structured identity data; the preview remains noindex. Twenty tests pass and the build publishes 50 allowed files. Public preview builds succeeded; the main-domain cutover is still pending. No launch blockers were found within the tested scope; physical-device and field-performance limits are documented in the report.
+
+## Service pages
+
+2026-10-15. Website/shop and clothing/product presentations now open their own SK/EN service pages. The approved black/violet visual system continues with focused offers, real web project stories, tailored processes, native FAQs, cross-links and editable email briefs. Interaction-triggered liquid enhancement with a limited pixel budget fixed a costly desktop startup. Final website-service lab performance is 96 mobile / 100 desktop. All 22 tests pass; build emits 56 public files and the production sitemap covers six localized URLs. Screenshots, final build verification and the pending production SEO 100/100 measurement are documented in [qa-service-pages/QA.md](qa-service-pages/QA.md).
+
+## Production SEO verification
+
+2026-10-15. All six pages have now been measured with Lighthouse 13.5.0 against the production HTML served locally, with production canonicals and permitted indexing. Every page scored 100/100 SEO, with all ten weighted checks passing. Original HTML/JSON reports, hashes and the inspected overview are in [qa-production-seo/README.md](qa-production-seo/README.md). This supersedes the previously pending local production verification; actual live-domain deployment/measurement remains pending. The workers.dev preview remains intentionally noindex and its PageSpeed score of 69 is unchanged.

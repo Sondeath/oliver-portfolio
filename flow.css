@@ -1,0 +1,122 @@
+/* The same liquid field crosses the hero boundary as the shirt unfolds. */
+:root {
+  --hero-stage-height: clamp(690px, 100svh, 940px);
+  --flow-overlap: clamp(140px, 20svh, 200px);
+  --flow-bridge: clamp(220px, 32svh, 320px);
+  --work-arrival: 1;
+}
+.hero, .hero-viewport {
+  height: var(--hero-stage-height);
+  min-height: var(--hero-stage-height);
+  max-height: none;
+}
+.motion-ready .hero {
+  height: calc(var(--hero-stage-height) + min(60svh, 560px));
+  min-height: 0;
+}
+.hero-copy {
+  top: max(125px, calc(var(--hero-stage-height) * .16));
+}
+.hero-title {
+  font-size: clamp(100px, min(13.7vw, calc(var(--hero-stage-height) * .21)), 218px);
+}
+.hero-line { transform: scaleX(.79); }
+.hero-eyebrow { font-size: 11px; }
+.hero-subtitle { font-size: clamp(21px, 2.1vw, 34px); }
+.hero-description { font-size: clamp(15px, 1.3vw, 19px); max-width: 480px; }
+.hero-actions { margin-top: 32px; gap: 30px; }
+.hero-actions .button { font-size: 16px; min-height: 62px; padding: 18px 28px; }
+.hero-actions .text-link { font-size: 15px; }
+.hero-scene {
+  top: calc(var(--hero-stage-height) * .03);
+  height: var(--hero-stage-height);
+  min-height: 0;
+  width: min(57vw, calc(var(--hero-stage-height) * .78), 850px);
+}
+.shirt-reveal { width: 85%; left: -2%; top: 27%; }
+.motion-ready .hero-copy {
+  opacity: clamp(0, calc(1 - 5 * var(--work-arrival)), 1);
+  translate: 0 calc(-24px * var(--work-arrival));
+}
+.motion-ready .hero-chapter {
+  opacity: calc(1 - var(--work-arrival));
+  translate: 0 calc(-24px * var(--work-arrival));
+}
+.motion-ready .hero-scene {
+  opacity: calc(1 - var(--work-arrival));
+  translate: 0 calc(32px * var(--work-arrival));
+}
+.motion-ready .work-section {
+  margin-top: calc(-1 * var(--flow-overlap));
+  background: transparent;
+  overflow-x: clip;
+  overflow-y: visible;
+}
+.motion-ready .work-scene { overflow: visible; }
+.motion-ready .work-aura {
+  top: calc(-1 * var(--flow-bridge));
+  bottom: auto;
+  height: calc(100% + var(--flow-bridge));
+  mask-image: linear-gradient(to bottom, transparent, #000 19%, #000 88%, transparent);
+}
+.motion-ready .work-copy {
+  opacity: calc(.35 + .65 * var(--work-arrival));
+  translate: 0 calc(28px * (1 - var(--work-arrival)));
+}
+.motion-ready .work-project--shop {
+  translate: 0 calc(50px * (1 - var(--work-arrival)));
+}
+.motion-ready .work-project--web {
+  translate: 0 calc(30px * (1 - var(--work-arrival)));
+}
+html:not(.motion-ready) .hero, html:not(.motion-ready) .hero-viewport {
+  height: var(--hero-stage-height);
+  min-height: var(--hero-stage-height);
+  max-height: none;
+}
+@media (min-width: 901px) and (max-width: 1100px) {
+  .hero-title { font-size: clamp(100px, min(14vw, calc(var(--hero-stage-height) * .21)), 160px); }
+  .hero-subtitle { font-size: 24px; }
+  .hero-description { font-size: 16px; max-width: 400px; }
+  .hero-scene { width: 61vw; right: -5%; top: calc(var(--hero-stage-height) * .09); }
+  .hero-actions { gap: 20px; }
+  .hero-actions .button { padding: 17px 22px; }
+  .hero-actions .text-link { font-size: 13px; }
+}
+@media (max-width: 900px) {
+  :root { --hero-stage-height: 1080px; --flow-overlap: 160px; --flow-bridge: 260px; }
+  .motion-ready .hero { height: calc(var(--hero-stage-height) + min(50svh, 480px)); }
+  .hero-copy { top: 135px; left: var(--gutter); width: 90%; }
+  .hero-title { font-size: clamp(105px, 18vw, 145px); }
+  .hero-subtitle { font-size: 27px; margin-top: 20px; }
+  .hero-description { font-size: 16px; max-width: 390px; margin-top: 20px; }
+  .hero-actions { margin-top: 26px; gap: 20px; }
+  .hero-actions .button { padding: 17px 22px; }
+  .hero-actions .text-link { font-size: 13px; }
+  .hero-scene { width: 65vw; right: -3%; top: 450px; height: 580px; }
+  .shirt-reveal { top: 27%; width: 88%; left: -5%; }
+  .hero-chapter { display: none; }
+}
+@media (max-width: 560px) {
+  :root { --hero-stage-height: 1000px; --flow-overlap: 140px; --flow-bridge: 220px; }
+  .motion-ready .hero { height: calc(var(--hero-stage-height) + min(58svh, 460px)); }
+  .hero-copy { top: 119px; width: calc(100% - 44px); }
+  .hero-eyebrow { font-size: 9px; }
+  .hero-title { font-size: clamp(66px, 20.3vw, 117px); line-height: 1.07; }
+  .hero-line { transform: scaleX(.94); }
+  .hero-subtitle { font-size: clamp(19px, 4.5vw, 25px); margin-top: 18px; }
+  .hero-description { font-size: 14px; max-width: 325px; }
+  .hero-actions { gap: 22px; margin-top: 24px; }
+  .hero-actions .button { min-height: 52px; padding: 15px 21px; font-size: 14px; }
+  .hero-actions .text-link { font-size: 12px; }
+  .hero-scene { width: 104%; right: -10%; top: 480px; height: 490px; }
+  .shirt-reveal { width: 90%; top: 24%; left: -3%; }
+}
+@media (max-width: 360px) {
+  .hero-title { font-size: 19.8vw; }
+  .hero-subtitle { font-size: 18px; }
+  .hero-eyebrow { font-size: 8px; }
+  .hero-actions { gap: 16px; }
+  .hero-actions .button { padding: 14px 17px; }
+  .hero-actions .text-link { font-size: 11px; }
+}

@@ -1,0 +1,16 @@
+{
+  "status": "user authorized functional implementation with approved palette and email-only contact",
+  "visualTarget": "navrh-purple-approved.png",
+  "palette": {"background":"#0B090F","spatialPurple":"#291440","accent":"#A879FF","text":"#F2EEF5"},
+  "scope": ["Selected yellow Odtlačok concept recolored black/purple", "Monitor-to-shirt layered scroll emergence", "BeCool Shop plus BeCool.sk as selected work", "Additional projects in existing expandable archive", "No form; direct owner email only"],
+  "assets": [
+    {"file":"assets/hero-purple/monitor.webp","source":"assets/hero-purple/monitor.png","size":[1159,1358],"use":"independent back layer in hero; purple O on screen"},
+    {"file":"assets/hero-purple/shirt.webp","source":"assets/hero-purple/shirt.png","size":[1254,1254],"use":"independent foreground layer anchored to screen; illustrative merchandise"},
+    {"file":"assets/projects/becool-shop-square.jpg","use":"actual e-commerce project capture"},
+    {"file":"assets/projects/becool-square.jpg","use":"actual corporate site project capture"}
+  ],
+  "desktopLayout": {"gutter":"4.5vw, min24/max80","hero":"sticky 100svh within measured 180svh interval","heading":"Anton condensed, two lines; Inter for UI","work":"editorial intro plus two equal project columns"},
+  "responsiveIntent":"Native desktop viewport composition is shorter than the tall source mock; preserve visual hierarchy and visible email CTA. Mobile uses stacked title, CTA, scene and project sections.",
+  "copyCorrections":"Use actual libic.oliver@gmail.com; remove generated mock footer address and unsupported project marketing claims.",
+  "futureDecisions":"User deferred more detailed project treatment and any form until later. Do not reopen email-service signup."
+}

@@ -1,0 +1,31 @@
+{
+  "observed": {
+    "archiveCount": 7,
+    "brokenLoadedImages": [],
+    "forms": 0,
+    "lang": "sk",
+    "languages": [
+      {
+        "current": "page",
+        "href": "/",
+        "language": "sk"
+      },
+      {
+        "current": null,
+        "href": "/en/",
+        "language": "en"
+      }
+    ],
+    "overflow": 0,
+    "serviceEmails": [
+      "mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20web%20alebo%20e-shop",
+      "mailto:libic.oliver@gmail.com?subject=Dopyt%20%E2%80%94%20textil%20a%20reklamn%C3%A9%20predmety"
+    ],
+    "url": "http://127.0.0.1:8796/#services",
+    "viewport": [
+      1440,
+      900
+    ]
+  },
+  "console": []
+}

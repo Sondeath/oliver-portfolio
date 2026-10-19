@@ -68,6 +68,7 @@ const sourceFiles = [
     .filter((name) => name.endsWith(".webp"))
     .map((name) => "assets/projects/live/" + name),
   "assets/work-liquid/liquid-aura-960.webp",
+  "assets/work-liquid/liquid-aura.webp",
   "assets/work-liquid/odtlacok-o-640.webp",
   "assets/work-liquid/odtlacok-o-800.webp",
   "assets/work-liquid/odtlacok-o-1254.webp",
